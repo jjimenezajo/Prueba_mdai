@@ -1,6 +1,6 @@
 package es.unex.cum.mdai.studient.model;
 
-public class Sesion {
-	
-	
+public enum Prioridad {
+	ALTA,
+	BAJA
 }
