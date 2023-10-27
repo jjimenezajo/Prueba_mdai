@@ -18,20 +18,16 @@ public class Tarea {
 	private Estado estado;
 	
 	public Tarea() {
-		prioridad = null;
-		descripcion = "";
-		estado = Estado.NULO;
+		
 	}
 	public Tarea( Prioridad prioridad, String descripcion) {
+		super();
 		this.prioridad = prioridad;
 		this.descripcion = descripcion;
 		this.estado = Estado.PENDIENTE;
 	}
 	public long getId() {
 		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
 	}
 	public Prioridad getPrioridad() {
 		return prioridad;

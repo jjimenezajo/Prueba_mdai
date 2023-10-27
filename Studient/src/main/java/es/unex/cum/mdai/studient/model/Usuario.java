@@ -16,9 +16,14 @@ public class Usuario {
 	private String correo;
 	private String contrasena;
 	private int monedero;
+	
+	public Usuario() {
+		
+	}
 
 	
 	public Usuario(String email, String password, int monedero) {
+		super();
 		this.correo = email;
 		this.contrasena = password;
 		this.monedero = monedero;
@@ -28,12 +33,6 @@ public class Usuario {
 	public long getId() {
 		return id;
 	}
-
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
 
 	public String getCorreo() {
 		return correo;
