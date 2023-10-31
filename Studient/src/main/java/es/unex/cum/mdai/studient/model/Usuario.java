@@ -24,11 +24,11 @@ public class Usuario {
 	}
 
 	
-	public Usuario(String email, String password, int monedero) {
+	public Usuario(String email, String password) {
 		super();
 		this.correo = email;
 		this.contrasena = password;
-		this.monedero = monedero;
+		this.monedero = 100;
 	}
 
 
