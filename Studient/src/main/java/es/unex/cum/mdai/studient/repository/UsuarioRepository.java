@@ -6,5 +6,6 @@ import es.unex.cum.mdai.studient.model.Usuario;
 
 
 public interface UsuarioRepository extends CrudRepository<Usuario, Long>{
-
+	
+	
 }

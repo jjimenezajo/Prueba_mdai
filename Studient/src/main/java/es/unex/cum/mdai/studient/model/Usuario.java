@@ -2,6 +2,7 @@ package es.unex.cum.mdai.studient.model;
 
 import java.util.Objects;
 
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,6 +17,7 @@ public class Usuario {
 	private String correo;
 	private String contrasena;
 	private int monedero;
+	
 	
 	public Usuario() {
 		
