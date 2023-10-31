@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,7 +21,7 @@ public class Carpeta {
 	private String nombre;
 	private boolean mutabilidad;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	Usuario usuario;
 	
 	@ManyToMany
@@ -63,6 +64,15 @@ public class Carpeta {
 
 	public void setMutabilidad(boolean mutabilidad) {
 		this.mutabilidad = mutabilidad;
+	}
+
+	
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	@Override
