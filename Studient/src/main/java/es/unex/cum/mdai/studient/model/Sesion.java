@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Sesion {
@@ -17,6 +18,8 @@ public class Sesion {
 	private boolean exito;
 	private boolean apuesta;
 	
+	@ManyToOne
+	Usuario usuario;
 	public Sesion() {
 		
 	}
