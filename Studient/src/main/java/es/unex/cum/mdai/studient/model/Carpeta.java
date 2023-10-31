@@ -1,11 +1,14 @@
 package es.unex.cum.mdai.studient.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 
 @Entity
@@ -20,6 +23,9 @@ public class Carpeta {
 	@ManyToOne
 	Usuario usuario;
 	
+	@ManyToMany
+	List<Tarea> tareas;
+	
 	public Carpeta() {
 		
 	}
@@ -28,12 +34,14 @@ public class Carpeta {
 		super();
 		this.nombre = nombre;
 		this.mutabilidad = true;
+		tareas = new ArrayList<>();
 	}
 
 	public Carpeta(String nombre, boolean mutabilidad) {
 		super();
 		this.nombre = nombre;
 		this.mutabilidad = mutabilidad;
+		tareas = new ArrayList<>();
 	}
 
 	public long getId() {
