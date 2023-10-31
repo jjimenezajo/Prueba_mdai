@@ -86,5 +86,9 @@ public class Carpeta {
 	public String toString() {
 		return "Carpeta [id=" + id + ", nombre=" + nombre + ", mutabilidad=" + mutabilidad + "]";
 	}
+	
+	public void addTareas(Tarea t) {
+		tareas.add(t);
+	}
 
 }
