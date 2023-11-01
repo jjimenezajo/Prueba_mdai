@@ -1,7 +1,9 @@
 package es.unex.cum.mdai.studient.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -20,7 +22,8 @@ public class Usuario {
 	private String contrasena;
 	private int monedero;
 	
-	@OneToMany (mappedBy = "usuario", cascade = CascadeType.PERSIST)
+	//@OneToMany (mappedBy = "usuario", cascade = CascadeType.PERSIST) Solo es para probar
+	@OneToMany (mappedBy = "usuario", cascade = CascadeType.ALL)
 	List<Carpeta> carpetas;
 	
 	public Usuario() {
@@ -33,6 +36,7 @@ public class Usuario {
 		this.correo = email;
 		this.contrasena = password;
 		this.monedero = 100;
+		carpetas= new ArrayList<>();
 	}
 
 
@@ -95,5 +99,7 @@ public class Usuario {
 				&& Objects.equals(contrasena, other.contrasena);
 	}
 	
-	
+	public void addCarpeta(Carpeta d) {
+		carpetas.add(d);
+	}
 }

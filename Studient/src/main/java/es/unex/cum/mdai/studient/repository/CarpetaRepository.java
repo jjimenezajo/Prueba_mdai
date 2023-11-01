@@ -8,4 +8,6 @@ import es.unex.cum.mdai.studient.model.Carpeta;
 
 public interface CarpetaRepository extends CrudRepository<Carpeta, Long>{
 
+	Iterable<Carpeta> findByUsuarioId(long id);
+
 }
