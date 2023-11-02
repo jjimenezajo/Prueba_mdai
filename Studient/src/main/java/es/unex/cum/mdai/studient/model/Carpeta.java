@@ -6,9 +6,12 @@ import java.util.Objects;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 
@@ -21,10 +24,10 @@ public class Carpeta {
 	private String nombre;
 	private boolean mutabilidad;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne
 	Usuario usuario;
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER,  cascade = {CascadeType.REMOVE, CascadeType.MERGE})
 	List<Tarea> tareas;
 	
 	public Carpeta() {
@@ -38,10 +41,11 @@ public class Carpeta {
 		tareas = new ArrayList<>();
 	}
 
-	public Carpeta(String nombre, boolean mutabilidad) {
+	public Carpeta(String nombre, boolean mutabilidad, Usuario usuario) {
 		super();
 		this.nombre = nombre;
 		this.mutabilidad = mutabilidad;
+		this.usuario = usuario;
 		tareas = new ArrayList<>();
 	}
 
@@ -70,14 +74,14 @@ public class Carpeta {
 	public Usuario getUsuario() {
 		return usuario;
 	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	
+	public List<Tarea> getTareas() {
+		return tareas;
 	}
-
+	
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, mutabilidad, nombre);
+		return Objects.hash(id, mutabilidad, nombre, tareas, usuario);
 	}
 
 	@Override
@@ -89,14 +93,15 @@ public class Carpeta {
 		if (getClass() != obj.getClass())
 			return false;
 		Carpeta other = (Carpeta) obj;
-		return id == other.id && mutabilidad == other.mutabilidad && Objects.equals(nombre, other.nombre);
-	}
-
-	@Override
-	public String toString() {
-		return "Carpeta [id=" + id + ", nombre=" + nombre + ", mutabilidad=" + mutabilidad + "]";
+		return id == other.id && mutabilidad == other.mutabilidad && Objects.equals(nombre, other.nombre)
+				&& Objects.equals(tareas, other.tareas) && Objects.equals(usuario, other.usuario);
 	}
 	
+	@Override
+	public String toString() {
+		return "Carpeta [id=" + id + ", nombre=" + nombre + ", mutabilidad=" + mutabilidad + ", usuario=" + usuario.getId()+"]";
+	}
+
 	public void addTareas(Tarea t) {
 		tareas.add(t);
 	}

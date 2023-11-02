@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -22,8 +23,8 @@ public class Usuario {
 	private String contrasena;
 	private int monedero;
 	
-	//@OneToMany (mappedBy = "usuario", cascade = CascadeType.PERSIST) Solo es para probar
-	@OneToMany (mappedBy = "usuario", cascade = CascadeType.ALL)
+
+	@OneToMany (mappedBy = "usuario", cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
 	List<Carpeta> carpetas;
 	
 	public Usuario() {
@@ -36,12 +37,7 @@ public class Usuario {
 		this.correo = email;
 		this.contrasena = password;
 		this.monedero = 100;
-		carpetas= new ArrayList<>();
-	}
-
-
-	public long getId() {
-		return id;
+		this.carpetas= new ArrayList<>();
 	}
 
 	public String getCorreo() {
@@ -72,17 +68,26 @@ public class Usuario {
 	public void setMonedero(int monedero) {
 		this.monedero = monedero;
 	}
+	
+	public List<Carpeta> getCarpetas() {
+		return carpetas;
+	}
+	
+	
+
+	public long getId() {
+		return id;
+	}
 
 
-	@Override
-	public String toString() {
-		return "Usuario [id=" + id + ", correo=" + correo + ", contrasena=" + contrasena + ", monedero=" + monedero + "]";
+	public void setId(int id) {
+		this.id = id;
 	}
 
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(correo, id, monedero, contrasena);
+		return Objects.hash(carpetas, contrasena, correo, monedero);
 	}
 
 
@@ -95,10 +100,20 @@ public class Usuario {
 		if (getClass() != obj.getClass())
 			return false;
 		Usuario other = (Usuario) obj;
-		return Objects.equals(correo, other.correo) && id == other.id && monedero == other.monedero
-				&& Objects.equals(contrasena, other.contrasena);
+		return Objects.equals(carpetas, other.carpetas) && Objects.equals(contrasena, other.contrasena)
+				&& Objects.equals(correo, other.correo) && monedero == other.monedero;
 	}
 	
+	
+	
+
+
+	@Override
+	public String toString() {
+		return "Usuario [correo=" + correo + ", contrasena=" + contrasena + ", monedero=" + monedero + "]";
+	}
+
+
 	public void addCarpeta(Carpeta d) {
 		carpetas.add(d);
 	}

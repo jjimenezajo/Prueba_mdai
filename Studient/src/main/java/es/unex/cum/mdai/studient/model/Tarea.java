@@ -1,11 +1,16 @@
 package es.unex.cum.mdai.studient.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Transient;
 
 @Entity
 public class Tarea {
@@ -17,15 +22,22 @@ public class Tarea {
 	private String descripcion;
 	private Estado estado;
 	
+	@ManyToMany(mappedBy = "tareas")
+	List<Carpeta> carpetas;
+	
+	
 	public Tarea() {
 		
 	}
-	public Tarea( Prioridad prioridad, String descripcion) {
+	
+	public Tarea(Prioridad prioridad, String descripcion) {
 		super();
 		this.prioridad = prioridad;
 		this.descripcion = descripcion;
 		this.estado = Estado.PENDIENTE;
+	    this.carpetas = new ArrayList<>();
 	}
+	
 	public long getId() {
 		return id;
 	}
@@ -47,6 +59,11 @@ public class Tarea {
 	public void setEstado(Estado estado) {
 		this.estado = estado;
 	}
+	
+	public List<Carpeta> getCarpetas() {
+		return carpetas;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(descripcion, estado, id, prioridad);
@@ -69,6 +86,9 @@ public class Tarea {
 				+ "]";
 	}
 	
+	public void addCarpeta(Carpeta c) {
+		carpetas.add(c);
+	}
 	
 	
 }
