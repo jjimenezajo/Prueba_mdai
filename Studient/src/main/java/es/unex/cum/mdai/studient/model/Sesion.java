@@ -3,6 +3,7 @@ package es.unex.cum.mdai.studient.model;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,22 +21,34 @@ public class Sesion {
 	
 	@ManyToOne
 	Usuario usuario;
+	
 	public Sesion() {
 		
 	}
 	
-	public Sesion(boolean exito) {
+	public Sesion(Usuario usuario) {
 		super();
 		tiempo = 0;
+		this.apuesta = false;
+		this.exito = false;
+		this.usuario = usuario;
+	}
+	
+	
+	public Sesion(int tiempo, boolean exito, Usuario usuario) {
+		super();
+		this.tiempo = tiempo;
 		this.exito = exito;
 		this.apuesta = false;
+		this.usuario = usuario;
 	}
 
-	public Sesion(int tiempo, boolean exito, boolean apuesta) {
+	public Sesion(int tiempo, boolean exito, boolean apuesta, Usuario usuario) {
 		super();
 		this.tiempo = tiempo;
 		this.exito = exito;
 		this.apuesta = apuesta;
+		this.usuario = usuario;
 	}
 	
 	public long getId() {
@@ -66,9 +79,19 @@ public class Sesion {
 		this.apuesta = apuesta;
 	}
 
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+	
+	
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(apuesta, exito, id, tiempo);
+		return Objects.hash(apuesta, exito, id, tiempo, usuario);
 	}
 
 	@Override
@@ -80,11 +103,12 @@ public class Sesion {
 		if (getClass() != obj.getClass())
 			return false;
 		Sesion other = (Sesion) obj;
-		return apuesta == other.apuesta && exito == other.exito && id == other.id && tiempo == other.tiempo;
+		return apuesta == other.apuesta && exito == other.exito && id == other.id && tiempo == other.tiempo
+				&& Objects.equals(usuario, other.usuario);
 	}
 
 	@Override
 	public String toString() {
-		return "Sesion [id=" + id + ", tiempo=" + tiempo + ", exito=" + exito + ", apuesta=" + apuesta + "]";
+		return "Sesion [id=" + id + ", tiempo=" + tiempo + ", exito=" + exito + ", apuesta=" + apuesta + ", usuario="+usuario.getId()+"]";
 	}
 }

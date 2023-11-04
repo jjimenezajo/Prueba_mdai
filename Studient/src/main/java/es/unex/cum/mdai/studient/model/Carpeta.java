@@ -27,17 +27,18 @@ public class Carpeta {
 	@ManyToOne
 	Usuario usuario;
 	
-	@ManyToMany(fetch = FetchType.EAGER,  cascade = {CascadeType.REMOVE, CascadeType.MERGE})
+	@ManyToMany(cascade = CascadeType.REMOVE)
 	List<Tarea> tareas;
 	
 	public Carpeta() {
 		
 	}
 	
-	public Carpeta(String nombre) {
+	public Carpeta(String nombre, Usuario usuario) {
 		super();
 		this.nombre = nombre;
 		this.mutabilidad = true;
+		this.usuario = usuario;
 		tareas = new ArrayList<>();
 	}
 
@@ -79,6 +80,10 @@ public class Carpeta {
 		return tareas;
 	}
 	
+	public void setTareas(List<Tarea> tareas) {
+		this.tareas = tareas;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id, mutabilidad, nombre, tareas, usuario);

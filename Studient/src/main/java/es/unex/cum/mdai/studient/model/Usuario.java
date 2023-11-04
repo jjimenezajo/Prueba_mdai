@@ -24,8 +24,11 @@ public class Usuario {
 	private int monedero;
 	
 
-	@OneToMany (mappedBy = "usuario", cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
+	@OneToMany (mappedBy = "usuario", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	List<Carpeta> carpetas;
+	
+	@OneToMany (mappedBy="usuario", cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+	List<Sesion> sesiones;
 	
 	public Usuario() {
 		
@@ -38,6 +41,7 @@ public class Usuario {
 		this.contrasena = password;
 		this.monedero = 100;
 		this.carpetas= new ArrayList<>();
+		this.sesiones = new ArrayList<>();
 	}
 
 	public String getCorreo() {
@@ -72,22 +76,28 @@ public class Usuario {
 	public List<Carpeta> getCarpetas() {
 		return carpetas;
 	}
-	
-	
+
+	public void setCarpetas(List<Carpeta> carpetas) {
+		this.carpetas = carpetas;
+	}
+
 
 	public long getId() {
 		return id;
 	}
 
-
-	public void setId(int id) {
-		this.id = id;
+	public List<Sesion> getSesiones() {
+		return sesiones;
 	}
 
 
+	public void setSesiones(List<Sesion> sesiones) {
+		this.sesiones = sesiones;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(carpetas, contrasena, correo, monedero);
+		return Objects.hash(carpetas, contrasena, correo, id, monedero, sesiones);
 	}
 
 
@@ -101,11 +111,9 @@ public class Usuario {
 			return false;
 		Usuario other = (Usuario) obj;
 		return Objects.equals(carpetas, other.carpetas) && Objects.equals(contrasena, other.contrasena)
-				&& Objects.equals(correo, other.correo) && monedero == other.monedero;
+				&& Objects.equals(correo, other.correo) && id == other.id && monedero == other.monedero
+				&& Objects.equals(sesiones, other.sesiones);
 	}
-	
-	
-	
 
 
 	@Override
@@ -116,5 +124,9 @@ public class Usuario {
 
 	public void addCarpeta(Carpeta d) {
 		carpetas.add(d);
+	}
+	
+	public void addSesion(Sesion s) {
+		sesiones.add(s);
 	}
 }

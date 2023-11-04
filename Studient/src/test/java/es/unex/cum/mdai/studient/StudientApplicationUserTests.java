@@ -1,6 +1,5 @@
 package es.unex.cum.mdai.studient;
 
-import java.util.Iterator;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -8,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import es.unex.cum.mdai.studient.model.Carpeta;
-import es.unex.cum.mdai.studient.model.Estado;
 import es.unex.cum.mdai.studient.model.Prioridad;
 import es.unex.cum.mdai.studient.model.Tarea;
 import es.unex.cum.mdai.studient.model.Usuario;
@@ -17,8 +15,7 @@ import es.unex.cum.mdai.studient.repository.TareaRepository;
 import es.unex.cum.mdai.studient.repository.UsuarioRepository;
 
 @SpringBootTest
-class StudientApplicationTests {
-
+public class StudientApplicationUserTests {
 	@Autowired
 	UsuarioRepository usuarioRepository;
 
@@ -28,8 +25,14 @@ class StudientApplicationTests {
 	@Autowired
 	TareaRepository tareaRepository;
 
+
 	@Test
 	void contextLoads() {
+		
+		Iterable<Carpeta> it_c;
+		Iterable<Tarea> i_t;
+		Iterable<Usuario> i_u;
+		Optional<Usuario> it_u;
 
 		// REGISTRO
 		System.out.println();
@@ -52,7 +55,7 @@ class StudientApplicationTests {
 		u.addCarpeta(nulas);
 
 		// intentamos insertar el usuario junto a sus carpetas
-		Optional<Usuario> it_u = usuarioRepository.findById(u.getId());
+		it_u = usuarioRepository.findById(u.getId());
 		if (it_u.isEmpty())
 			usuarioRepository.save(u);
 		else
@@ -72,8 +75,6 @@ class StudientApplicationTests {
 
 		// Aqui intento obtener un usuario por su id y luego obtener las carpetas
 		// asociadas a el por su id
-
-		Iterable<Carpeta> it_c;
 
 		it_u = usuarioRepository.findById(u.getId());
 		if (it_u.isEmpty() == false) {
@@ -125,36 +126,6 @@ class StudientApplicationTests {
 		}
 
 		System.out.println("Tras la inserción el usuario tiene " + contador + " carpetas");
-
-		//MODIFICAR CARPETA
-		System.out.println();
-		System.out.println("MODIFICAR CARPETA");
-		
-		c1.setNombre("GPT");
-		carpetaRepository.save(c1);
-		
-		Optional<Carpeta> carpeta= carpetaRepository.findById(c1.getId());
-		
-		if(carpeta.isEmpty())
-			System.out.println("La carpeta no se ha encontrado");
-		else
-			System.out.println(carpeta.get().toString());
-		
-		//BORRAR CARPETA SIN TAREAS
-		System.out.println();
-		carpetaRepository.delete(c2);
-		
-		System.out.println("Antes de la inserción, el usuario tenía 6 carpetas...");
-		
-		contador=0;
-		
-		it_c = carpetaRepository.findByUsuarioId(u.getId());
-		for (Carpeta elemento : it_c) {
-			System.out.println(elemento.toString());
-			contador++;
-		}
-		
-		System.out.println("Tras el borrado el usuario tiene " + contador + " carpetas");
 		
 		//CREAR TAREAS
 		System.out.println();
@@ -216,95 +187,19 @@ class StudientApplicationTests {
 		t3.addCarpeta(c1);
 		t4.addCarpeta(c1);
 		
+		tareaRepository.save(t1);
+		tareaRepository.save(t2);
+		tareaRepository.save(t3);
+		tareaRepository.save(t4);
 		carpetaRepository.save(c1);
 		
 		System.out.println("INFO: recuperación de información de la base de datos...");
 		
-		carpeta = carpetaRepository.findById(c1.getId());
-		
-		Iterator<Tarea> i_tareas;
-		i_tareas = carpeta.get().getTareas().iterator();
-		while(i_tareas.hasNext()) {
-			Tarea t = i_tareas.next();
-			System.out.println(t.toString());
-			
-		}
-		
-		//MOSTRAR LAS TAREAS DE UNA CARPETA EN UN DETERMINADO ORDEN
-		System.out.println();
-		System.out.println("RECUPERAR TAREAS DE UNA CARPETA");
-		System.out.println("INFO: tareas según su estado y prioridad en la carpeta "+c1.getNombre()+"...");
-		
-		
-		Iterable <Tarea> i_t;
-		i_t=carpetaRepository.orderByTaskPriority(c1.getId());
-		
-		for(Tarea t: i_t) {
+		i_t = carpetaRepository.findAllTareaByCarpetaId(c1.getId());
+
+		for(Tarea t : i_t) {
 			System.out.println(t.toString());
 		}
-		
-		//MODIFICAR UNA TAREA (USUARIO)
-		System.out.println();
-		System.out.println("POSIBILIDADES DE MODIFICACIÓN DE UNA TAREA POR PARTE DEL USUARIO");
-		
-		//modificar un atributo
-		t3.setDescripcion("Revisar informes");
-		t3.setPrioridad(Prioridad.BAJA);
-		
-		tareaRepository.save(t3);
-		
-		i_t = carpetaRepository.orderByTaskPriority(c1.getId());
-		
-		for(Tarea t: i_t) {
-			System.out.println(t.toString());
-		}
-		
-		//TAREAS COMPLETAS Y SIN REALIZAR
-		System.out.println();
-		System.out.println("RECUPERAR TAREAS DE UNA CARPETA");
-		System.out.println("INFO: suponemos que el usuario ha completado y ha dejado sin realizar varias tareas...");
-		System.out.println("INFO: tareas según su estado y prioridad en la carpeta "+c1.getNombre()+"...");
-		
-		t2.setEstado(Estado.COMPLETADO);
-		t2.setPrioridad(null);
-		
-		t3.setEstado(Estado.NULO);
-		t3.setPrioridad(null);
-		
-		tareaRepository.save(t2);
-		tareaRepository.save(t3);
-		
-		i_t=carpetaRepository.orderByTaskPriority(c1.getId());
-		
-		for(Tarea t: i_t) {
-			System.out.println(t.toString());
-		}
-		
-		
-		
-		//mover de carpeta
-		/*Carpeta c3 = new Carpeta("MDADM", true, u);
-		u.addCarpeta(c3);
-		c3.addTareas(t1);
-		
-		carpetaRepository.save(c3);
-		
-		c1.getTareas().remove(t1);
-		carpetaRepository.save(c1);
-		
-		it_c = carpetaRepository.findAll();
-		for(Carpeta c: it_c) {
-			System.out.println(c.toString());
-			i_tareas = c.getTareas().iterator();
-			while(i_tareas.hasNext()) {
-				Tarea tr = i_tareas.next();
-				System.out.println(tr.toString());
-			}
-		}*/
-		
-		//MODIFICAR UNA TAREA (PÁGINA WEB)
-		
-		
 		
 		//BORRAR UNA TAREA
 
@@ -330,21 +225,41 @@ class StudientApplicationTests {
 		
 		
 		// BORRAR CUENTA
-		/*System.out.println("BORRADO DE CUENTA");
+		System.out.println();
+		System.out.println("BORRADO DE CUENTA");
 
 		// intento ver lo que pasa si borro al usuario
+
+		it_c = carpetaRepository.findByUsuarioId(u.getId());
+		for (Carpeta elemento : it_c) {
+			System.out.println("La carpeta "+elemento.getNombre()+" y sus tareas se eliminará");
+			elemento.setTareas(carpetaRepository.findAllTareaByCarpetaId(elemento.getId()));
+			elemento.getTareas().clear();
+			carpetaRepository.save(elemento);
+		}
+		
 		usuarioRepository.delete(u);
 
-		System.out.println("INFO: NO DEBERÍA HABER CARPETAS SI SE BORRARON EN CASCADA");
+		System.out.println("INFO: no deberían mostrarse usuarios...");
+		//VISUALIZAR USUARIOS
+		i_u = usuarioRepository.findAll();
+		for(Usuario usuario : i_u) {
+			System.out.println(u.toString());
+		}
+		
+		System.out.println("INFO: no deberían mostrarse carpetas...");
+		//VISUALIZAR CARPETAS
 		it_c = carpetaRepository.findAll();
-		for (Carpeta elemento : it_c) {
-			System.out.println(elemento.toString());
-			contador++;
-		}*/
-
+		for(Carpeta c : it_c) {
+			System.out.println(c.toString());
+		}
 		
-		
-		
+		System.out.println("INFO: no deberían mostrarse tareas...");
+		//VISUALIZAR TAREAS
+		i_t = tareaRepository.findAll();
+		for(Tarea t : i_t) {
+			System.out.println(t.toString());
+		}
 		
 	}
 }
