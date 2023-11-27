@@ -35,6 +35,7 @@ body {
     background-image: linear-gradient(to top, var(--grisClaro) 0%, white 90%);
     /*Para el degradado del fondo*/
     margin: 0;
+    height: 100%;
     
 }
 
