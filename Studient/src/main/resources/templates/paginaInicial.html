@@ -6,6 +6,12 @@
 <title>Pagina inicial</title>
 </head>
 <body>
+		<script th:if="${mostrarAlerta}" th:inline="javascript">
+        /*<![CDATA[*/
+        alert('[(${mensaje})]');
+        /*]]>*/
+    </script>
+    <header>
 <h1>Hola</h1>
 </body>
 </html>

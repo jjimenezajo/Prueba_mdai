@@ -16,6 +16,11 @@
 
 <body> <!-- Contendra informacion importante para el usuario -->
 
+	<script th:if="${mostrarAlerta}" th:inline="javascript">
+        /*<![CDATA[*/
+        alert('[(${mensaje})]');
+        /*]]>*/
+    </script>
     <header>
 
         <h1 class="titulo">Studient</h1>

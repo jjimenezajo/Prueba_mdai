@@ -14,6 +14,12 @@
 <title>Error</title>
 </head>
 <body>
+	<script th:if="${mostrarAlerta}" th:inline="javascript">
+        /*<![CDATA[*/
+        alert('[(${mensaje})]');
+        /*]]>*/
+    </script>
+    <header>
 	<header>
 
 		<h1 class="titulo">Studient</h1>

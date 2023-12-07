@@ -37,16 +37,28 @@ public class HomeController {
 		if (op.isEmpty()) {
 			System.out.println("No lo encuentra");
 			model.addAttribute("Error", "Las credenciales introducidas no son correctas" );
+			String mensaje=("El usuario introducido no existe");
+			boolean mostrarAlerta=true;
+			model.addAttribute("mensaje", mensaje);
+			model.addAttribute("mostrarAlerta", mostrarAlerta);
 			return "error.html";
 		}else {
 			String contr=op.get().getContrasena();
 			if (contr.equals(usuario.getContrasena())) {
-				System.out.println("Inicio de sesion correcto");
+				boolean mostrarAlerta=true;
+				
+				String mensaje=("Inicio de sesion correcto");
+				model.addAttribute("mensaje", mensaje);
+				model.addAttribute("mostrarAlerta", mostrarAlerta);
 				return "paginaInicial.html";
 			}
 			else {
 				System.out.println("No coincide la contrasena");
 				model.addAttribute("Error", "Error al iniciar sesion, las credenciales introducidas no son correctas" );
+				boolean mostrarAlerta=true;
+				String mensaje=("Las credenciales introducidas no son correctas");
+				model.addAttribute("mensaje", mensaje);
+				model.addAttribute("mostrarAlerta", mostrarAlerta);
 				return "error.html";
 			}
 		}
@@ -64,9 +76,17 @@ public class HomeController {
 		//Esta comprobacion la hago para que no haya personas con el mismo correo registrandose
 		if (op.isEmpty()) {
 			us.insertUsers(usuario.getCorreo(), usuario.getContrasena());
+			boolean mostrarAlerta=true;
+			String mensaje=("Usuario registrado correctamente");
+			model.addAttribute("mensaje", mensaje);
+			model.addAttribute("mostrarAlerta", mostrarAlerta);
 			return "login";
 		}else {
 			model.addAttribute("Error", "No se ha podido crear el usuario introducido" );
+			boolean mostrarAlerta=true;
+			String mensaje=("No se ha podido crear el usuario introducido");
+			model.addAttribute("mensaje", mensaje);
+			model.addAttribute("mostrarAlerta", mostrarAlerta);
 			return "error";
 		}
 	}
