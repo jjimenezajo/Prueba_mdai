@@ -1,12 +1,6 @@
 function validacion() {
     var valido = true;
-    if(validarNombre()==false){
-        alert("No se ha introducido un nombre con caracteres válidos");
-        valido=false;
-    }else if(validarApellidos()==false){
-        alert("No se han introducido mínimo dos apellidos o lleva caracteres inválidos");
-        valido=false;
-    } else if (validarCorreo() == false) {
+    if (validarCorreo() == false) {
         alert("No se ha introducido un correo válido");
         valido = false;
     } else if (validarContrasena() == false) {
@@ -18,23 +12,6 @@ function validacion() {
     }
     return valido;
 }
-
-function validarNombre() {
-    var nombre = document.getElementById("nombre").value;
-    if (!(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/.test(nombre))) {
-        return false;
-    }
-    return true;
-}
-
-function validarApellidos() {
-    var apellidos = document.getElementById("apellidos").value;
-    if (!(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+[\s][a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{1,}$/.test(apellidos))) {
-        return false;
-    }
-    return true;
-}
-
 
 function validarCorreo() {
     var correo = document.getElementById("correo").value;

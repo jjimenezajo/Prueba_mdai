@@ -28,18 +28,18 @@
         <h2>Inicio de Sesión</h2>
         <section class="form-box">
 
-            <form class="formulario" action="@{/doLogin}" method="get" id="form">
+            <form class="formulario" method="get" th:action="@{/doLogin}" th:object="${usuario}" id="form">
                 <fieldset>
 
                     <div class="campo">
                         <label>Correo</label>
-                        <input class="input-text" type="text" required="" placeholder="Mail" id="correo" name="correo">
+                        <input class="input-text" type="text" required="" th:field="*{correo}" placeholder="Mail" id="correo" name="correo">
                         <hr>
                     </div>
                     <br>
                     <div class="campo">
                         <label for="apellidos">Contraseña</label>
-                        <input class="input-text" type="password" required="" id="contrasena" placeholder="Contraseña"
+                        <input class="input-text" type="password" th:field="*{contrasena}" required="" id="contrasena" placeholder="Contraseña"
                             name="contrasena">
                         <hr>
                     </div>

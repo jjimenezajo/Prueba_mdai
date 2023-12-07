@@ -28,18 +28,18 @@
 
 		<section class="form-box">
 			<h2>Registrarse</h2>
-			<form class="formulario" method="post" th:action="@{/doRegister}" id="form">
+			<form class="formulario" method="post" th:action="@{/doRegister}" th:object="${usuarioRegister}" id="form">
 				<fieldset>
 					<div class="campo">
 						<label>Correo</label>
-						<input class="input-text" type="text" required="" placeholder="Mail" id="correo" name="correo">
+						<input class="input-text" type="text" required="" th:field="*{correo}" placeholder="Mail" id="correo" name="correo">
 						<hr>
 					</div>
 					<br>
 
 					<div class="campo">
 						<label for="rep_contrasena">Repetir Contraseña</label>
-						<input class="input-text" type="password" required="" id="rep_contrasena" placeholder="Repetir"
+						<input class="input-text" type="password"  required="" id="rep_contrasena" placeholder="Repetir"
 							name="rep_contrasena">
 						<hr>
 					</div>
@@ -48,7 +48,7 @@
 
 					<div class="campo">
 						<label for="rep_contrasena">Contraseña</label>
-						<input class="input-text" type="password" required="" id="contrasena" placeholder="Contraseña"
+						<input class="input-text" type="password" th:field="*{contrasena}" required="" id="contrasena" placeholder="Contraseña"
 							name="contrasena">
 						<hr>
 					</div>
@@ -60,7 +60,6 @@
 						<!-- <button type="submit">Enviar</button> Tiene cierre y el texto del botón va entre las etiquetas -->
 						<input class="boton w-sm-100" type="reset" id="reset" value="reset" />
 					</div>
-					<input type="hidden" name="action" value="UsuarioAlta" />
 
 				</fieldset>
 			</form>

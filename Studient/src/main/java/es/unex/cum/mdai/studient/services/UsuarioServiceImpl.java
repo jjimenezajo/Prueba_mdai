@@ -1,5 +1,7 @@
 package es.unex.cum.mdai.studient.services;
 
+import java.util.Optional;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
 
@@ -52,5 +54,51 @@ public class UsuarioServiceImpl implements UsuarioService, CommandLineRunner{
 		
 		usuarioRepository.save(u);
 	}
+
+
+
+	@Override
+	public Optional<Usuario> findUsuarioById(Long usuarioId) {
+		// TODO Auto-generated method stub
+        return usuarioRepository.findById(usuarioId);
+	}
+
+
+
+	@Override
+	public Iterable<Usuario> deleteUsuarioById(Long id) {
+		// TODO Auto-generated method stub
+		usuarioRepository.deleteById(id);
+		return findAllUsers();
+		}
+
+
+
+	@Override
+	public Iterable<Usuario> updateUsuario(Usuario usuario) {
+		// TODO Auto-generated method stub
+		usuarioRepository.save(usuario);
+		return findAllUsers();
+		}
+
+
+
+	@Override
+	public Iterable<Usuario> updateNEmailAndContrasenaUsuario(Long id, String email, String contrasena) {
+		Usuario u = findUsuarioById(id).get();
+		u.setCorreo(email);
+		u.setContrasena(contrasena);
+		return findAllUsers();
+	}
+
+
+
+	@Override
+	public Iterable<Usuario> findAllUsers() {
+		// TODO Auto-generated method stub
+		return usuarioRepository.findAll();	
+	}
+	
+	
 	
 }
