@@ -22,6 +22,7 @@ public class Usuario {
 	private String correo;
 	private String contrasena;
 	private int monedero;
+	private int inicios_consecutivos;
 	
 
 	@OneToMany (mappedBy = "usuario", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
@@ -40,6 +41,7 @@ public class Usuario {
 		this.correo = email;
 		this.contrasena = password;
 		this.monedero = 100;
+		this.inicios_consecutivos = 0;
 		this.carpetas= new ArrayList<>();
 		this.sesiones = new ArrayList<>();
 	}
@@ -95,9 +97,20 @@ public class Usuario {
 		this.sesiones = sesiones;
 	}
 
+	public int getInicios_consecutivos() {
+		return inicios_consecutivos;
+	}
+
+
+	public void setInicios_consecutivos(int inicios_consecutivos) {
+		this.inicios_consecutivos = inicios_consecutivos;
+	}
+
+	
+	
 	@Override
 	public int hashCode() {
-		return Objects.hash(carpetas, contrasena, correo, id, monedero, sesiones);
+		return Objects.hash(carpetas, contrasena, correo, id, inicios_consecutivos, monedero, sesiones);
 	}
 
 
@@ -111,14 +124,18 @@ public class Usuario {
 			return false;
 		Usuario other = (Usuario) obj;
 		return Objects.equals(carpetas, other.carpetas) && Objects.equals(contrasena, other.contrasena)
-				&& Objects.equals(correo, other.correo) && id == other.id && monedero == other.monedero
+				&& Objects.equals(correo, other.correo) && id == other.id
+				&& inicios_consecutivos == other.inicios_consecutivos && monedero == other.monedero
 				&& Objects.equals(sesiones, other.sesiones);
 	}
+	
+	
 
 
 	@Override
 	public String toString() {
-		return "Usuario [correo=" + correo + ", contrasena=" + contrasena + ", monedero=" + monedero + "]";
+		return "Usuario [id=" + id + ", correo=" + correo + ", contrasena=" + contrasena + ", monedero=" + monedero
+				+ ", inicios_consecutivos=" + inicios_consecutivos+ "]";
 	}
 
 
