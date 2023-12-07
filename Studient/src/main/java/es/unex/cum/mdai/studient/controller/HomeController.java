@@ -25,9 +25,12 @@ public class HomeController {
 	
 	@GetMapping("/")
 	public String index(Model model) {
-		System.out.println("HOLAAAAA");
 		model.addAttribute("usuario", new Usuario(null, null));
+<<<<<<< Updated upstream
 		return "login";
+=======
+		return "dashboard";
+>>>>>>> Stashed changes
 	}
 	
 	@GetMapping("/doLogin")

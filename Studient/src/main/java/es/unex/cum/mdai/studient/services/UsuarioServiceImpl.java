@@ -34,8 +34,6 @@ public class UsuarioServiceImpl implements UsuarioService, CommandLineRunner{
 		
 	}
 
-
-
 	@Override
 	public void insertUsers(String email, String password) {
 		
