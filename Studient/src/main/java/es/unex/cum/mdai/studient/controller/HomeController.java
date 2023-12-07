@@ -27,7 +27,7 @@ public class HomeController {
 	public String index(Model model) {
 		System.out.println("HOLAAAAA");
 		model.addAttribute("usuario", new Usuario(null, null));
-		return "login.html";
+		return "login";
 	}
 	
 	@GetMapping("/doLogin")
@@ -36,30 +36,23 @@ public class HomeController {
 		Optional<Usuario> op= u.findByCorreo(usuario.getCorreo());
 		if (op.isEmpty()) {
 			System.out.println("No lo encuentra");
-			model.addAttribute("Error", "Las credenciales introducidas no son correctas" );
 			String mensaje=("El usuario introducido no existe");
 			boolean mostrarAlerta=true;
 			model.addAttribute("mensaje", mensaje);
 			model.addAttribute("mostrarAlerta", mostrarAlerta);
-			return "error.html";
+			return "login";
 		}else {
 			String contr=op.get().getContrasena();
 			if (contr.equals(usuario.getContrasena())) {
-				boolean mostrarAlerta=true;
-				
-				String mensaje=("Inicio de sesion correcto");
-				model.addAttribute("mensaje", mensaje);
-				model.addAttribute("mostrarAlerta", mostrarAlerta);
-				return "paginaInicial.html";
+				return "paginaInicial";
 			}
 			else {
 				System.out.println("No coincide la contrasena");
-				model.addAttribute("Error", "Error al iniciar sesion, las credenciales introducidas no son correctas" );
 				boolean mostrarAlerta=true;
 				String mensaje=("Las credenciales introducidas no son correctas");
 				model.addAttribute("mensaje", mensaje);
 				model.addAttribute("mostrarAlerta", mostrarAlerta);
-				return "error.html";
+				return "login";
 			}
 		}
 	}
@@ -82,12 +75,11 @@ public class HomeController {
 			model.addAttribute("mostrarAlerta", mostrarAlerta);
 			return "login";
 		}else {
-			model.addAttribute("Error", "No se ha podido crear el usuario introducido" );
 			boolean mostrarAlerta=true;
 			String mensaje=("No se ha podido crear el usuario introducido");
 			model.addAttribute("mensaje", mensaje);
 			model.addAttribute("mostrarAlerta", mostrarAlerta);
-			return "error";
+			return "login";
 		}
 	}
 	
