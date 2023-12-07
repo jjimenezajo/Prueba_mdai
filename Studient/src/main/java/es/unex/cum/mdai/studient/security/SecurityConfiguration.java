@@ -47,7 +47,7 @@ public class SecurityConfiguration {// extends WebSecurityConfigurerAdapter (cla
     	System.out.println("\tSecurityConfiguration::webSecurityCustomizer() ");
     	return (web)->web
               .ignoring()
-              .antMatchers( "/h2-console/**"); //Permitir acceso sin login a la consola H2
+              .antMatchers("/h2-console/**"); //Permitir acceso sin login a la consola H2
     }
 
 	//Creamos usuarios en memoria al arrancar la app-web y no necesitamos nada mas
