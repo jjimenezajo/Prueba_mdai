@@ -1,50 +1,48 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="">
-	<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-	<meta name="generator" content="Hugo 0.84.0">
-	<title>Dashboard Template · Bootstrap v5.0</title>
-	<link rel="stylesheet" href="/webjars/bootstrap/5.0.0/css/bootstrap.min.css">
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Studient</title> <!-- Lo que se muestra en la pestaña del navegador -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Barlow&display=swap" rel="stylesheet">
+	<link href="/css/cabecera.css" rel="stylesheet">
+	<link rel="stylesheet" href="/webjars/bootstrap/5.0.0/css/bootstrap.min.css">
+	<link rel="shortcut icon" type="image/png" href="/images/logo_mdai.png" />
 
-</head>
+<body>
 
-<style>
-	.body {
-		font-family: 'Barlow', sans-serif;
-	}
-</style>
+	<header class ="navbar-light bg-light">
+		<div class="contenedor">
+			<img src="/images/logo_mdai.png" id="logo">
+		</div>
+		<div class="contenedor centro">
+			<h1>Studient</h1>
+		</div>
+
+		<div class="contenedor derecho">
+			<div class="nav-item text-nowrap">
+				<a class="nav-link px-3" href="#">
+					<button style="position: relative; top: -30px"class="btn btn-outline-success my-2 my-sm-0" type="submit">
+						Cerrar sesión
+					</button>
+				</a>
+			</div>
+		</div>
+
+		<!--<div class="contenedor derecho">
+				<button id="login-boton">
+					<img src="/images/login.png" style="width: 50px;" />
+					<p>Iniciar sesión</p>
+				</button>
+			</div>-->
 
 
-<header class="navbar navbar-expand-lg navbar-light bg-light">
-	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03"
-		aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-		<span class="navbar-toggler-icon"></span>
-	</button>
-	<a class="navbar-brand" href="#">Navbar</a>
+	</header>
 
-	<div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-		<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-			<li class="nav-item active">
-				<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="#">Link</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link disabled" href="#">Disabled</a>
-			</li>
-		</ul>
-		<form class="form-inline my-2 my-lg-0">
-			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-				<p>Cerrar sesión</p>
-			</button>
-		</form>
-	</div>
-</header>
+</body>
 
 </html>
