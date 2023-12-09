@@ -195,7 +195,7 @@ public class StudientApplicationUserTests {
 		
 		System.out.println("INFO: recuperación de información de la base de datos...");
 		
-		i_t = carpetaRepository.findAllTareaByCarpetaId(c1.getId());
+		i_t =tareaRepository.findAllByCarpetaId(c1.getId());
 
 		for(Tarea t : i_t) {
 			System.out.println(t.toString());
@@ -233,7 +233,7 @@ public class StudientApplicationUserTests {
 		it_c = carpetaRepository.findByUsuarioId(u.getId());
 		for (Carpeta elemento : it_c) {
 			System.out.println("La carpeta "+elemento.getNombre()+" y sus tareas se eliminará");
-			elemento.setTareas(carpetaRepository.findAllTareaByCarpetaId(elemento.getId()));
+			elemento.setTareas(tareaRepository.findAllByCarpetaId(elemento.getId()));
 			elemento.getTareas().clear();
 			carpetaRepository.save(elemento);
 		}

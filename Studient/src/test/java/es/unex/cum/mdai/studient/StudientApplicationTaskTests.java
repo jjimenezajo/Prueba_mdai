@@ -169,7 +169,7 @@ public class StudientApplicationTaskTests {
 
 		System.out.println("INFO: recuperación de información de la base de datos...");
 
-		i_t = carpetaRepository.findAllTareaByCarpetaId(c1.getId());
+		i_t = tareaRepository.findAllByCarpetaId(c1.getId());
 
 		for (Tarea t : i_t) {
 			System.out.println(t.toString());
@@ -180,7 +180,7 @@ public class StudientApplicationTaskTests {
 		System.out.println("RECUPERAR TAREAS DE UNA CARPETA");
 		System.out.println("INFO: tareas según su estado y prioridad en la carpeta " + c1.getNombre() + "...");
 
-		i_t = carpetaRepository.orderByTaskPriority(c1.getId());
+		i_t = tareaRepository.orderByTaskPriority(c1.getId());
 
 		for (Tarea t : i_t) {
 			System.out.println(t.toString());
@@ -196,7 +196,7 @@ public class StudientApplicationTaskTests {
 
 		tareaRepository.save(t3);
 
-		i_t = carpetaRepository.orderByTaskPriority(c1.getId());
+		i_t = tareaRepository.orderByTaskPriority(c1.getId());
 
 		for (Tarea t : i_t) {
 			System.out.println(t.toString());
@@ -215,16 +215,26 @@ public class StudientApplicationTaskTests {
 		t3.setEstado(Estado.NULO);
 		t3.setPrioridad(null);
 
+		for (Carpeta c : it_c) {
+			System.out.println(c.toString());
+			i_t = tareaRepository.findAllByCarpetaId(c.getId());
+			for (Tarea t : i_t) {
+				System.out.println(t.toString());
+			}
+		}
+		
 		// Primero elimino la relación de la tarea con su antigua carpeta
 		// y luego la agrego a una nueva carpeta
-		baja = carpetaRepository.findById(2L).get();
-		baja.setTareas(carpetaRepository.findAllTareaByCarpetaId(baja.getId()));
+		baja = carpetaRepository.findById(10L).get();
+		System.out.println(baja.toString());
+		baja.setTareas(tareaRepository.findAllByCarpetaId(baja.getId()));
 		baja.getTareas().remove(0);
 		completadas.addTareas(t2);
-		alta = carpetaRepository.findById(1L).get();
-		alta.setTareas(carpetaRepository.findAllTareaByCarpetaId(alta.getId()));
+		alta = carpetaRepository.findById(9L).get();
+		alta.setTareas(tareaRepository.findAllByCarpetaId(alta.getId()));
 		alta.getTareas().remove(1);
 		nulas.addTareas(t3);
+		
 
 		tareaRepository.save(t2);
 		tareaRepository.save(t3);
@@ -236,13 +246,13 @@ public class StudientApplicationTaskTests {
 		it_c = carpetaRepository.findAll();
 		for (Carpeta c : it_c) {
 			System.out.println(c.toString());
-			i_t = carpetaRepository.findAllTareaByCarpetaId(c.getId());
+			i_t = tareaRepository.findAllByCarpetaId(c.getId());
 			for (Tarea t : i_t) {
 				System.out.println(t.toString());
 			}
 		}
 
-		i_t = carpetaRepository.orderByTaskPriority(c1.getId());
+		i_t = tareaRepository.findAllByCarpetaId(c1.getId());
 
 		for (Tarea t : i_t) {
 			System.out.println(t.toString());
@@ -253,8 +263,8 @@ public class StudientApplicationTaskTests {
 		System.out.println("MOVER UNA TAREA DE UNA CARPETA A OTRA");
 		System.out.println("Movemos la tarea informe de costes de la carpeta GPT a MDADM...");
 
-		Carpeta mdai = carpetaRepository.findById(5L).get();
-		mdai.setTareas(carpetaRepository.findAllTareaByCarpetaId(mdai.getId()));
+		Carpeta mdai = carpetaRepository.findById(13L).get();
+		mdai.setTareas(tareaRepository.findAllByCarpetaId(mdai.getId()));
 
 		mdai.getTareas().remove(0); // elimino la relación con la tarea
 
@@ -269,25 +279,25 @@ public class StudientApplicationTaskTests {
 		it_c = carpetaRepository.findAll();
 		for (Carpeta c : it_c) {
 			System.out.println(c.toString());
-			i_t = carpetaRepository.findAllTareaByCarpetaId(c.getId());
+			i_t = tareaRepository.findAllByCarpetaId(c.getId());
 			for (Tarea t : i_t) {
 				System.out.println(t.toString());
 			}
 		}
 
 		// BORRAR UNA TAREA
-		
+
 		System.out.println();
 		System.out.println("BORRAR UNA TAREA");
 		System.out.println("INFO: la tarea 'informe de costes' se eliminará de la carpeta 'MDADM'...");
-		
-		Carpeta mdadm = carpetaRepository.findById(7L).get();
-		mdadm.setTareas(carpetaRepository.findAllTareaByCarpetaId(mdadm.getId()));
+
+		Carpeta mdadm = carpetaRepository.findById(15L).get();
+		mdadm.setTareas(tareaRepository.findAllByCarpetaId(mdadm.getId()));
 
 		mdadm.getTareas().remove(0); // elimino la relación entre la carpeta y la tarea
 
-		alta = carpetaRepository.findById(1L).get();
-		alta.setTareas(carpetaRepository.findAllTareaByCarpetaId(alta.getId()));
+		alta = carpetaRepository.findById(9L).get();
+		alta.setTareas(tareaRepository.findAllByCarpetaId(alta.getId()));
 
 		alta.getTareas().remove(0);// elimino la relación entre la carpeta y la tarea
 
@@ -298,7 +308,7 @@ public class StudientApplicationTaskTests {
 		it_c = carpetaRepository.findAll();
 		for (Carpeta c : it_c) {
 			System.out.println(c.toString());
-			i_t = carpetaRepository.findAllTareaByCarpetaId(c.getId());
+			i_t = tareaRepository.findAllByCarpetaId(c.getId());
 			for (Tarea t : i_t) {
 				System.out.println(t.toString());
 			}
@@ -310,57 +320,61 @@ public class StudientApplicationTaskTests {
 		System.out.println("BORRAR TODAS LAS TAREAS DE UNA CARPETA MUTABLE");
 		System.out.println("INFO: esta operación conlleva la eliminación automática de las tareas de las"
 				+ "carpeta inmutables...");
-		
+
 		System.out.println("INFO: estas son las tareas existentes");
-		
+
 		i_t = tareaRepository.findAll();
 		for (Tarea t : i_t) {
 			System.out.println(t.toString());
 		}
-		
-		mdai = carpetaRepository.findById(5L).get();
-		mdai.setTareas(carpetaRepository.findAllTareaByCarpetaId(mdai.getId()));
-		alta = carpetaRepository.findById(1L).get();
-		alta.setTareas(carpetaRepository.findAllTareaByCarpetaId(alta.getId()));
-		baja = carpetaRepository.findById(2L).get();
-		baja.setTareas(carpetaRepository.findAllTareaByCarpetaId(baja.getId()));
-		completadas = carpetaRepository.findById(3L).get();
-		completadas.setTareas(carpetaRepository.findAllTareaByCarpetaId(completadas.getId()));
-		nulas = carpetaRepository.findById(4L).get();
-		nulas.setTareas(carpetaRepository.findAllTareaByCarpetaId(nulas.getId()));
-		i_t = carpetaRepository.findAllTareaByCarpetaId(mdai.getId());
+
+		mdai = carpetaRepository.findById(13L).get();
+		mdai.setTareas(tareaRepository.findAllByCarpetaId(mdai.getId()));
+		alta = carpetaRepository.findById(9L).get();
+		alta.setTareas(tareaRepository.findAllByCarpetaId(alta.getId()));
+		baja = carpetaRepository.findById(10L).get();
+		baja.setTareas(tareaRepository.findAllByCarpetaId(baja.getId()));
+		completadas = carpetaRepository.findById(11L).get();
+		completadas.setTareas(tareaRepository.findAllByCarpetaId(completadas.getId()));
+		nulas = carpetaRepository.findById(12L).get();
+		nulas.setTareas(tareaRepository.findAllByCarpetaId(nulas.getId()));
+		i_t = tareaRepository.findAllByCarpetaId(mdai.getId());
 
 		//
 		mdai.getTareas().clear(); // quito todas las relaciones con las tareas
 		carpetaRepository.save(mdai);
 
 		for (Tarea t : i_t) {
-			
+
 			switch (t.getEstado()) {
 
 			case COMPLETADO -> {
-				System.out.println("La tarea '"+t.getDescripcion()+"' se eliminará de la carpeta de tareas completas");
+				System.out.println(
+						"La tarea '" + t.getDescripcion() + "' se eliminará de la carpeta de tareas completas");
 				completadas.getTareas().remove(t);
 				carpetaRepository.save(completadas);
 			}
 
 			case NULO -> {
-				System.out.println("La tarea '"+t.getDescripcion()+"' se eliminará de la carpeta tareas no realizadas");
+				System.out.println(
+						"La tarea '" + t.getDescripcion() + "' se eliminará de la carpeta tareas no realizadas");
 				nulas.getTareas().remove(t);
 				carpetaRepository.save(nulas);
 			}
 
 			case PENDIENTE -> {
-				
+
 				if (t.getPrioridad().equals(Prioridad.ALTA)) {
-					System.out.println("La tarea '"+t.getDescripcion()+"' se eliminará de la carpeta de prioridad alta");
+					System.out.println(
+							"La tarea '" + t.getDescripcion() + "' se eliminará de la carpeta de prioridad alta");
 					alta.getTareas().remove(t);
 					carpetaRepository.save(alta);
-				}else {
-					System.out.println("La tarea '"+t.getDescripcion()+"' se eliminará de la carpeta de prioridad baja");
+				} else {
+					System.out.println(
+							"La tarea '" + t.getDescripcion() + "' se eliminará de la carpeta de prioridad baja");
 					baja.getTareas().remove(t);
 					carpetaRepository.save(baja);
-				}	
+				}
 			}
 
 			}
@@ -371,7 +385,7 @@ public class StudientApplicationTaskTests {
 		it_c = carpetaRepository.findAll();
 		for (Carpeta c : it_c) {
 			System.out.println(c.toString());
-			i_t = carpetaRepository.findAllTareaByCarpetaId(c.getId());
+			i_t = tareaRepository.findAllByCarpetaId(c.getId());
 			for (Tarea t : i_t) {
 				System.out.println(t.toString());
 			}

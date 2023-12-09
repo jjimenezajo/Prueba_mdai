@@ -6,39 +6,34 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
 
 import es.unex.cum.mdai.studient.model.Carpeta;
+import es.unex.cum.mdai.studient.model.Tarea;
 import es.unex.cum.mdai.studient.model.Usuario;
-import es.unex.cum.mdai.studient.repository.CarpetaRepository;
 import es.unex.cum.mdai.studient.repository.UsuarioRepository;
 
-
 @Service
-public class UsuarioServiceImpl implements UsuarioService, CommandLineRunner{
-	
+public class UsuarioServiceImpl implements UsuarioService, CommandLineRunner {
+
 	private final UsuarioRepository usuarioRepository;
-	
 
 	public UsuarioServiceImpl(UsuarioRepository usuarioRepository) {
-		
+
 		System.out.println("\t Arrancado automático");
 		this.usuarioRepository = usuarioRepository;
 	}
-	
-
 
 	@Override
 	public void run(String... args) throws Exception {
 		System.out.println("\t Usando CommandLineRunner");
-
 		insertUsers("pepe@gmail.com", "pepe");
 		insertUsers("alvaro@gmail.com", "alvaro");
-		
+
 	}
 
 	@Override
 	public void insertUsers(String email, String password) {
-		
+
 		Usuario u = new Usuario(email, password);
-		
+
 		Carpeta alta = new Carpeta("Prioridad Alta", false, u);
 		Carpeta baja = new Carpeta("Prioridad Baja", false, u);
 		Carpeta completadas = new Carpeta("Tareas completadas", false, u);
@@ -49,54 +44,79 @@ public class UsuarioServiceImpl implements UsuarioService, CommandLineRunner{
 		u.addCarpeta(baja);
 		u.addCarpeta(completadas);
 		u.addCarpeta(nulas);
-		
+
 		usuarioRepository.save(u);
 	}
-
-
 
 	@Override
 	public Optional<Usuario> findUsuarioById(Long usuarioId) {
 		// TODO Auto-generated method stub
-        return usuarioRepository.findById(usuarioId);
+		return usuarioRepository.findById(usuarioId);
 	}
 
-
+	@Override
+	public Optional<Usuario> findUsuarioByCorreo(String correo) {
+		return usuarioRepository.findByCorreo(correo);
+	}
 
 	@Override
-	public Iterable<Usuario> deleteUsuarioById(Long id) {
-		// TODO Auto-generated method stub
+	public boolean deleteUsuarioById(Long id) {
+		boolean successful = false;
+
+		int before = countUser();
 		usuarioRepository.deleteById(id);
-		return findAllUsers();
-		}
+		int after = countUser();
 
+		// Tras la eliminación debe haber un elemento menos en la BD
+		if (before - 1 == after)
+			successful = true;
 
+		return successful;
+	}
 
 	@Override
 	public Iterable<Usuario> updateUsuario(Usuario usuario) {
-		// TODO Auto-generated method stub
 		usuarioRepository.save(usuario);
-		return findAllUsers();
-		}
-
-
-
-	@Override
-	public Iterable<Usuario> updateNEmailAndContrasenaUsuario(Long id, String email, String contrasena) {
-		Usuario u = findUsuarioById(id).get();
-		u.setCorreo(email);
-		u.setContrasena(contrasena);
 		return findAllUsers();
 	}
 
+	@Override
+	public boolean updateNEmailAndContrasenaUsuario(Long id, String email, String contrasena) {
 
+		boolean successful = false;
+
+		Optional<Usuario> optional_updated = usuarioRepository.findById(id);
+		if (!optional_updated.isEmpty()) {
+			Usuario usuario = optional_updated.get();
+			usuario.setCorreo(email);
+			usuario.setContrasena(contrasena);
+			usuarioRepository.save(usuario);
+
+			Usuario aux = usuarioRepository.findById(id).get();
+			if (aux.getCorreo().equals(email) && aux.getContrasena().equals(contrasena))
+				successful = true;
+
+		}
+
+		return successful;
+	}
 
 	@Override
 	public Iterable<Usuario> findAllUsers() {
 		// TODO Auto-generated method stub
-		return usuarioRepository.findAll();	
+		return usuarioRepository.findAll();
 	}
-	
-	
-	
+
+	@Override
+	public int countUser() {
+		Iterable<Usuario> it_c = usuarioRepository.findAll();
+		int count = 0;
+
+		for (Usuario elemento : it_c) {
+			count++;
+		}
+
+		return count;
+	}
+
 }

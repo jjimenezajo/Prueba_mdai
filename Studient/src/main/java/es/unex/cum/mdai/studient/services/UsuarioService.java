@@ -11,11 +11,15 @@ public interface UsuarioService {
 	
 	public Optional<Usuario> findUsuarioById (Long usuarioId);
 
-	public Iterable<Usuario> deleteUsuarioById(Long id);
+	public boolean deleteUsuarioById(Long id);
 	
 	public Iterable<Usuario> updateUsuario(Usuario usuario);
 	
-	public Iterable<Usuario> updateNEmailAndContrasenaUsuario(Long id, String email, String contrasena);
+	public boolean updateNEmailAndContrasenaUsuario(Long id, String email, String contrasena);
 	
 	public Iterable <Usuario> findAllUsers();
+	
+	public Optional<Usuario> findUsuarioByCorreo(String correo);
+	
+	public int countUser();
 }

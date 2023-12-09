@@ -31,7 +31,11 @@ public class Carpeta {
 	List<Tarea> tareas;
 	
 	public Carpeta() {
-		
+		super();
+		this.nombre = "";
+		this.mutabilidad = true;
+		this.usuario = new Usuario();
+		tareas = new ArrayList<>();
 	}
 	
 	public Carpeta(String nombre, Usuario usuario) {

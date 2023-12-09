@@ -32,7 +32,12 @@ public class Usuario {
 	List<Sesion> sesiones;
 	
 	public Usuario() {
-		
+		this.correo = "";
+		this.contrasena = "";
+		this.monedero = 100;
+		this.inicios_consecutivos = 0;
+		this.carpetas= new ArrayList<>();
+		this.sesiones = new ArrayList<>();
 	}
 
 	

@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
-import es.unex.cum.mdai.studient.model.Carpeta;
 import es.unex.cum.mdai.studient.model.Sesion;
 
 public interface SesionRepository extends CrudRepository<Sesion, Long>{

@@ -195,7 +195,7 @@ public class StudientApplicationFolderTests {
 
 		System.out.println("INFO: recuperación de información de la base de datos...");
 
-		i_t = carpetaRepository.findAllTareaByCarpetaId(c1.getId());
+		i_t = tareaRepository.findAllByCarpetaId(c1.getId());
 
 		for (Tarea t : i_t) {
 			System.out.println(t.toString());
@@ -205,14 +205,14 @@ public class StudientApplicationFolderTests {
 		Carpeta gpt;
 		gpt = carpetaRepository.findById(5L).get();
 		alta = carpetaRepository.findById(1L).get();
-		alta.setTareas(carpetaRepository.findAllTareaByCarpetaId(alta.getId()));
+		alta.setTareas(tareaRepository.findAllByCarpetaId(alta.getId()));
 		baja = carpetaRepository.findById(2L).get();
-		baja.setTareas(carpetaRepository.findAllTareaByCarpetaId(baja.getId()));
+		baja.setTareas(tareaRepository.findAllByCarpetaId(baja.getId()));
 		completadas = carpetaRepository.findById(3L).get();
-		completadas.setTareas(carpetaRepository.findAllTareaByCarpetaId(completadas.getId()));
+		completadas.setTareas(tareaRepository.findAllByCarpetaId(completadas.getId()));
 		nulas = carpetaRepository.findById(4L).get();
-		nulas.setTareas(carpetaRepository.findAllTareaByCarpetaId(nulas.getId()));
-		i_t = carpetaRepository.findAllTareaByCarpetaId(gpt.getId());
+		nulas.setTareas(tareaRepository.findAllByCarpetaId(nulas.getId()));
+		i_t = tareaRepository.findAllByCarpetaId(gpt.getId());
 
 		for (Tarea t : i_t) {
 			
@@ -251,7 +251,7 @@ public class StudientApplicationFolderTests {
 		it_c = carpetaRepository.findAll();
 		for (Carpeta c : it_c) {
 			System.out.println(c.toString());
-			i_t = carpetaRepository.findAllTareaByCarpetaId(c.getId());
+			i_t = tareaRepository.findAllByCarpetaId(c.getId());
 			for (Tarea t : i_t) {
 				System.out.println(t.toString());
 			}

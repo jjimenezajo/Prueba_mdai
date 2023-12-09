@@ -27,7 +27,11 @@ public class Tarea {
 	
 	
 	public Tarea() {
-		
+		super();
+		this.prioridad = Prioridad.BAJA;
+		this.descripcion = "";
+		this.estado = Estado.PENDIENTE;
+	    this.carpetas = new ArrayList<>();
 	}
 	
 	public Tarea(Prioridad prioridad, String descripcion) {
