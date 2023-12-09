@@ -1,0 +1,34 @@
+body {
+	font-family: 'Barlow', sans-serif !important;
+}
+
+h1,
+h2 {
+	font-weight: bold !important;
+}
+
+.section{
+	margin-bottom: 1rem;
+}
+
+.right-box{
+		float: right;
+		width: 40%;
+}
+
+.left-box{
+	width: 60%;
+}
+
+.height{
+	height: calc(100vh - 121.75px);
+}
+
+.scroll {
+	margin-left: 1rem;
+}
+
+.position{
+	padding-left: 0 !important;
+	padding-bottom: 0 !important;
+}
