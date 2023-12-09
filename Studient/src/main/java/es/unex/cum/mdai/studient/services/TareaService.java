@@ -12,11 +12,11 @@ public interface TareaService {
 	
 	public Iterable<Tarea> findAllTareaByCarpetaId(Long tareaId);
 
-	public boolean deleteTareaById(Long id);
+	public boolean deleteTareaById(Long tareaId, Long carpetaId);
 	
 	public Iterable<Tarea> updateTarea(Tarea tarea);
 	
 	public boolean updateDescription(Long id, String descripcion); //Falta el resto de atributos por actualizar
 	
-	public int countTarea();
+	public int countTarea(Long carpetaId);
 }

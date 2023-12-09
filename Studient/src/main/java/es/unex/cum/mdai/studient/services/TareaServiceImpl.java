@@ -30,13 +30,13 @@ public class TareaServiceImpl implements TareaService {
 	}
 
 	@Override
-	public boolean deleteTareaById(Long id) {
+	public boolean deleteTareaById(Long tareaId, Long carpetaId) {
 		
 		boolean successful = false;
 		
-		int before = countTarea();
-		tareaRepository.deleteById(id);
-		int after = countTarea();
+		int before = countTarea(carpetaId);
+		tareaRepository.deleteById(tareaId);
+		int after = countTarea(carpetaId);
 		
 		//Tras la eliminación debe haber un elemento menos en la BD
 		if(before-1 == after)
@@ -54,14 +54,14 @@ public class TareaServiceImpl implements TareaService {
 	@Override
 	public boolean updateDescription(Long id, String descripcion) {
 		boolean successful=false;
-		Optional<Tarea> optional_updated = tareaRepository.findById(id);
+		Optional<Tarea> optional_updated = findTareaById(id);
 		if(!optional_updated.isEmpty()) {
 			Tarea updated = (Tarea) optional_updated.get();
 			updated.setDescripcion(descripcion);
 			tareaRepository.save(updated);
 			
 			//COMPROBACIÓN DE LA ACTUALIZACIÓN PREVIA
-			Tarea aux = tareaRepository.findById(id).get();
+			Tarea aux = findTareaById(id).get();
 			if(aux.getDescripcion() == descripcion)
 				successful = true;
 		}
@@ -70,8 +70,8 @@ public class TareaServiceImpl implements TareaService {
 	}
 
 	@Override
-	public int countTarea() {
-		Iterable<Tarea> it_c = tareaRepository.findAll();
+	public int countTarea(Long carpetaId) {
+		Iterable<Tarea> it_c = findAllTareaByCarpetaId(carpetaId);
 		int count = 0;
 		
 		for(Tarea elemento : it_c) {

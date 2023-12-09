@@ -85,14 +85,14 @@ public class UsuarioServiceImpl implements UsuarioService, CommandLineRunner {
 
 		boolean successful = false;
 
-		Optional<Usuario> optional_updated = usuarioRepository.findById(id);
+		Optional<Usuario> optional_updated = findUsuarioById(id);
 		if (!optional_updated.isEmpty()) {
 			Usuario usuario = optional_updated.get();
 			usuario.setCorreo(email);
 			usuario.setContrasena(contrasena);
 			usuarioRepository.save(usuario);
 
-			Usuario aux = usuarioRepository.findById(id).get();
+			Usuario aux = findUsuarioById(id).get();
 			if (aux.getCorreo().equals(email) && aux.getContrasena().equals(contrasena))
 				successful = true;
 
@@ -109,7 +109,7 @@ public class UsuarioServiceImpl implements UsuarioService, CommandLineRunner {
 
 	@Override
 	public int countUser() {
-		Iterable<Usuario> it_c = usuarioRepository.findAll();
+		Iterable<Usuario> it_c = findAllUsers();
 		int count = 0;
 
 		for (Usuario elemento : it_c) {

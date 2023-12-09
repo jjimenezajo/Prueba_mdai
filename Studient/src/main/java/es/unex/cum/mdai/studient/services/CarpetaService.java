@@ -12,11 +12,13 @@ public interface CarpetaService {
 	
 	public Iterable<Carpeta> findAllCarpetaByUsuarioId(Long usuarioId);
 
-	public boolean deleteCarpetaById(Long id);
+	public boolean deleteCarpetaById(Long carpetaId, Long usuarioId);
 	
 	public Iterable<Carpeta> updateCarpeta(Carpeta carpeta);
 	
 	public boolean updateName(Long id, String nombre);
 	
-	public int countCarpeta();
+	public Carpeta findCarpetaPrioridadAltaByUsuarioId(Long id);
+	
+	public int countCarpeta(Long usuarioId);
 }

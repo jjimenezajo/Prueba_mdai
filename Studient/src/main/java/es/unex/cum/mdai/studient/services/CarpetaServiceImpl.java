@@ -29,13 +29,13 @@ public class CarpetaServiceImpl implements CarpetaService {
 	}
 
 	@Override
-	public boolean deleteCarpetaById(Long id) {
+	public boolean deleteCarpetaById(Long carpetaId, Long usuarioId) {
 		
 		boolean successful = false;
 		
-		int before = countCarpeta();
-		carpetaRepository.deleteById(id);
-		int after = countCarpeta();
+		int before = countCarpeta(usuarioId);
+		carpetaRepository.deleteById(carpetaId);
+		int after = countCarpeta(usuarioId);
 		
 		//Tras la eliminación debe haber un elemento menos en la BD
 		if(before-1 == after)
@@ -53,14 +53,14 @@ public class CarpetaServiceImpl implements CarpetaService {
 	@Override
 	public boolean updateName(Long id, String nombre) {
 		boolean successful=false;
-		Optional<Carpeta> optional_updated = carpetaRepository.findById(id);
+		Optional<Carpeta> optional_updated = findCarpetaById(id);
 		if(!optional_updated.isEmpty()) {
 			Carpeta updated = (Carpeta) optional_updated.get();
 			updated.setNombre(nombre);
 			carpetaRepository.save(updated);
 			
 			//COMPROBACIÓN DE LA ACTUALIZACIÓN PREVIA
-			Carpeta aux = carpetaRepository.findById(id).get();
+			Carpeta aux = findCarpetaById(id).get();
 			if(aux.getNombre() == nombre)
 				successful = true;
 		}
@@ -70,8 +70,8 @@ public class CarpetaServiceImpl implements CarpetaService {
 	}
 
 	@Override
-	public int countCarpeta() {
-		Iterable<Carpeta> it_c = carpetaRepository.findAll();
+	public int countCarpeta(Long usuarioId) {
+		Iterable<Carpeta> it_c = findAllCarpetaByUsuarioId(usuarioId);
 		int count = 0;
 		
 		for(Carpeta elemento : it_c) {
@@ -79,6 +79,20 @@ public class CarpetaServiceImpl implements CarpetaService {
 		}
 		
 		return count;
+	}
+
+	@Override
+	public Carpeta findCarpetaPrioridadAltaByUsuarioId(Long id) {
+		Iterable<Carpeta> carpetas = findAllCarpetaByUsuarioId(id);
+		Carpeta alta = new Carpeta();
+		
+		for(Carpeta elemento : carpetas) {
+			if(elemento.getNombre().equals("Prioridad Alta")) {
+				alta = elemento;
+			}
+		}
+		
+		return alta;
 	}
 
 
