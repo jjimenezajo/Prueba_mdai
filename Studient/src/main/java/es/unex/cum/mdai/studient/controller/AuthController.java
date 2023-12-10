@@ -41,7 +41,7 @@ public class AuthController {
 	@GetMapping("/")
 	public String index(Model model) {
 		model.addAttribute("usuario", new Usuario());
-		return "dashboard";
+		return "login";
 	}
 
 	@PostMapping("/doLogin")
