@@ -24,6 +24,10 @@
 			-moz-user-select: none;
 			user-select: none;
 		}
+		
+		#timer {
+            font-size: 24px;
+        }
 
 		@media (min-width: 768px) {
 			.bd-placeholder-img-lg {
@@ -84,10 +88,20 @@
 					class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 					<h1 class="h2">Dashboard</h1>
 				</div>
-
-				<canvas class="my-4 left-box vertical-line" id="myChart"></canvas>
+				<div class="container">
+					<div class="row">
+				<div class="col-md-6">
+    					<label for="timeInput">Tiempo (HH:MM:SS): </label>
+    					<input type="text" id="timeInput" placeholder="00:00:00">
+    					<button onclick="startTimer()">Iniciar</button>
+    					<button onclick="stopTimer()">Detener</button>
+    					<button onclick="resetTimer()">Reiniciar</button>
+    					<p id="timer">00:00:00</p>
+				</div>
 				
-				<div class="right-box">
+				<div class="col-md-1 d-none d-md-block" style="border-right: 1px solid #ccc;"></div>
+				
+				<div class="col-md-5">
 					<h2 class="section">Tareas</h2>
 					<div th:if="${#lists.isEmpty(tareas)}">
 						<h5>No hay tareas</h5>
@@ -126,6 +140,8 @@
 							</table>
 						</div>
 					</div>
+					</div>
+				</div>
 				</div>
 			</main>
 
@@ -144,6 +160,69 @@
 		integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha"
 		crossorigin="anonymous"></script>
 	<script src="dashboard.js"></script>
+	
+	<script>
+    let timer;
+    let totalSeconds = 0;
+    let remainingSeconds = 0;
+
+    function startTimer() {
+        const inputTime = document.getElementById('timeInput').value;
+        totalSeconds = parseTimeToSeconds(inputTime);
+
+        if (!isNaN(totalSeconds) && totalSeconds > 0) {
+            remainingSeconds = totalSeconds;
+            updateTimerDisplay();
+            timer = setInterval(updateTimer, 1000);
+        } else {
+            alert('Por favor, ingrese un tiempo válido en formato HH:MM:SS.');
+        }
+    }
+
+    function stopTimer() {
+        clearInterval(timer);
+    }
+
+    function resetTimer() {
+        stopTimer();
+        totalSeconds = 0;
+        remainingSeconds = 0;
+        document.getElementById('timeInput').value = '';
+        updateTimerDisplay();
+    }
+
+    function updateTimer() {
+        if (remainingSeconds > 0) {
+            remainingSeconds--;
+            updateTimerDisplay();
+        } else {
+            stopTimer();
+            alert('¡Tiempo terminado!');
+        }
+    }
+
+    function updateTimerDisplay() {
+        const hours = Math.floor(remainingSeconds / 3600);
+        const minutes = Math.floor((remainingSeconds % 3600) / 60);
+        const seconds = remainingSeconds % 60;
+
+        const formattedTime = `${padNumber(hours)}:${padNumber(minutes)}:${padNumber(seconds)}`;
+        document.getElementById('timer').innerText = formattedTime;
+    }
+
+    function padNumber(number) {
+        return number.toString().padStart(2, '0');
+    }
+
+    function parseTimeToSeconds(time) {
+        const timeArray = time.split(':');
+        const hours = parseInt(timeArray[0]) || 0;
+        const minutes = parseInt(timeArray[1]) || 0;
+        const seconds = parseInt(timeArray[2]) || 0;
+
+        return hours * 3600 + minutes * 60 + seconds;
+    }
+</script>
 </body>
 
 </html>

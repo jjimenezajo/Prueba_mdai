@@ -1,8 +1,10 @@
 package es.unex.cum.mdai.studient.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import es.unex.cum.mdai.studient.model.Usuario;
 import es.unex.cum.mdai.studient.services.CarpetaService;
 import es.unex.cum.mdai.studient.services.TareaService;
 import es.unex.cum.mdai.studient.services.UsuarioService;
@@ -23,7 +25,8 @@ public class HomeController {
 	}
 	
 	@GetMapping("/logout")
-	public String doLogout() {
+	public String doLogout(Model model) {
+		model.addAttribute("usuario", new Usuario());
 		return "login";
 	}
 	
