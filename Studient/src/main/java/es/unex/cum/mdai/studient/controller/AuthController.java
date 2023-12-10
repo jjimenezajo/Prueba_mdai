@@ -8,6 +8,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -83,6 +84,14 @@ public class AuthController {
 		model.addAttribute("carpetas", lc.isEmpty() ? Collections.EMPTY_LIST : lc);
 		model.addAttribute("usuario", logged_user);
 		return "dashboard";
+	}
+	
+	@GetMapping("/perfil/{id}")
+	public String showPerfil(@PathVariable("id") Long usuarioId, Model model) {
+		Optional<Usuario> op = us.findUsuarioById(usuarioId);
+		Usuario user= op.get();
+		model.addAttribute("usuarioPerf", user);
+		return "perfil";
 	}
 
 	@GetMapping("/register")
