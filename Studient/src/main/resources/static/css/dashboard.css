@@ -9,37 +9,47 @@ p {
 h1,
 h2 {
 	font-weight: bold !important;
+	display: inline;
+}
+
+a {
+	display: inline !important;
 }
 
 .folder_title {
 	margin-left: 1rem;
-	margin-top: 1rem;
+	margin-top: 2rem;
 }
 
 .section {
-	margin-bottom: 1rem;
+	margin-bottom: 2rem;
 }
 
 .right-box {
 	float: right;
 	width: 40%;
-	height: 75%;
+	height: 70vh;
+}
+
+#cronometer {
+	text-align: center;
 }
 
 .left-box {
 	width: 55%;
-	margin-left: 2rem;
-	height: 75%;
+	height: 70vh;
+	display: inline-block;
 }
 
 .height {
-	height: calc(100vh - 121.75px);
+	height: calc(100vh - 113.75px);
 }
 
 .scroll {
 	margin-left: 1rem;
 	height: 75%;
 	overflow-y: scroll;
+	margin-top: .5rem
 }
 
 .position {
@@ -53,4 +63,57 @@ h2 {
 
 .vertical-line {
 	border-right: 1px solid #dee2e6;
+}
+
+.boundaries {
+	padding: 0 !important;
+	margin-bottom: .05rem !important;
+}
+
+.hover:hover .add_icon {
+	stroke: rgb(255, 255, 255);
+	/* Cambia el color de la línea del SVG al dejar el ratón encima */
+}
+
+.boton_add {
+	width: 10%;
+	position: relative;
+	top: -.5rem;
+}
+
+nav {
+	padding-top: 1rem;
+}
+
+#img-cronometer {
+	width: 275px;
+	display: block;
+	margin: 2rem auto;
+	position: relative;
+	/* Asegura que la imagen tenga una posición diferente de static */
+	z-index: 1;
+	/* Z-index menor que el del párrafo para que esté detrás */
+}
+
+.position-clock {
+	position: absolute;
+	top: 65%;
+	/* Ajusta según sea necesario para centrar verticalmente */
+	/* Centra el elemento en relación con su propio tamaño */
+	left: 37.4%;
+	z-index: 2;
+	/* Z-index mayor que el de la imagen para que esté encima */
+	background-color: white;
+	border: 1px solid;
+	border-radius: 5px;
+	padding: .2rem;
+	font-size: 25px !important;
+	width: 7rem;
+}
+
+.set-time{
+	margin-left: .5rem;
+	width: 5.3rem;
+	padding: .2rem;
+	text-align: center;
 }

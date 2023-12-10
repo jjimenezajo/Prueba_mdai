@@ -5,8 +5,10 @@ let remainingSeconds = 0;
 
 function startTimer() {
 	const inputTime = document.getElementById('timeInput').value;
+	document.getElementById('start').disabled = true;
+	document.getElementById('timeInput').disabled = true;
 	totalSeconds = parseTimeToSeconds(inputTime);
-
+	
 	if (!isNaN(totalSeconds) && totalSeconds > 0) {
 		remainingSeconds = totalSeconds;
 		updateTimerDisplay();
@@ -17,6 +19,8 @@ function startTimer() {
 }
 
 function stopTimer() {
+	document.getElementById('start').disabled = false;
+	document.getElementById('timeInput').disabled = false;
 	clearInterval(timer);
 }
 
