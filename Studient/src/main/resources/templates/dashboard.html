@@ -50,6 +50,11 @@
 		<div class="row" style="flex: 1">
 			<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light height sidebar collapse">
 				<h2 class="folder_title">Carpetas</h2>
+				<a class="nav-link px-3" th:href="@{/addCarpeta}">
+					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+						Crear carpeta
+					</button>
+				</a>
 				<div class="position-sticky pt-3 scroll">
 					<div th:if="${#lists.isEmpty(carpetas)}">
 						<h5>No hay carpetas</h5>
@@ -103,6 +108,11 @@
 				
 				<div class="col-md-5">
 					<h2 class="section">Tareas</h2>
+					<a class="nav-link px-3" th:href="@{/addTarea}">
+					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+						Añadir tarea
+					</button>
+					</a>
 					<div th:if="${#lists.isEmpty(tareas)}">
 						<h5>No hay tareas</h5>
 					</div>
