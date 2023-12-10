@@ -30,9 +30,44 @@
 	<link href="dashboard.css" rel="stylesheet">
 </head>
 <body>
+	<script th:if="${mostrarAlerta}" th:inline="javascript">
+        /*<![CDATA[*/
+        alert('[(${mensaje})]');
+        /*]]>*/
+    </script>
 	<div th:replace="../static/fragments/header.html"></div>
+	<a class="nav-link px-3" th:href="@{/dashboardVuelta/{id}(id=${usuarioUpdate.id})}">
+					<button style="position: relative; top: -30px"class="btn btn-outline-success my-2 my-sm-0" type="submit">
+						Volver
+					</button>
+				</a>
 	<div class="container-fluid">
 		<h2 class="folder_title">Perfil</h2>
+		<div class="contenido">
+			<form action="#" th:action="@{/updateUsuario/{id}(id=${usuarioUpdate.id})}" th:object="${usuarioUpdate}" method="post" th:method="put">                          		
+                <div class="form-row">                	
+                    <div class="form-group col-md-9">
+                        <label for="name" class="col-form-label">Correo:</label>
+                        <input type="text" th:field="*{correo}" class="form-control" id="correo" value="${usuarioUpdate.email}">
+                    </div>
+                    <div class="form-group col-md-9">
+                        <label for="contrasena" class="col-form-label">Contraseña:</label>
+                        <input th:field="*{contrasena}" class="form-control" id="contrasena" value="${usuarioUpdate.contrasena}"></input>
+                    </div>                                   
+
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mt-5">
+                        <input type="submit" class="btn btn-primary" value="Actualizar Usuario">
+                    </div>
+                </div>
+            </form>
+            <div>
+				<form action="#" th:action="@{/deleteUsuario/{id}(id=${usuarioUpdate.id})}" th:method="delete">
+                                <button type="submit" class="btn btn-danger" >Eliminar Usuario</button>
+                </form>
+            </div>
+		</div>
 		
 	</div>
 </body>
