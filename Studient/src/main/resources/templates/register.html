@@ -3,8 +3,8 @@
 
 <head> <!-- Información importante para el navegador -->
 	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Studient</title> <!-- Lo que se muestra en la pestaña del navegador -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,7 +19,9 @@
 	<header>
 
 		<h1 class="titulo">Studient</h1>
-		<img id="logo" src="/images/logo_mdai.png" alt="Logo Studient" />
+
+			<img id="escudo" src="/images/logo_mdai.png" alt="Logo Studient" />
+
 
 	</header>
 
@@ -32,14 +34,15 @@
 				<fieldset>
 					<div class="campo">
 						<label>Correo</label>
-						<input class="input-text" type="text" required="" th:field="*{correo}" placeholder="Mail" id="correo" name="correo">
+						<input class="input-text" type="text" required="" th:field="*{correo}" placeholder="Mail"
+							id="correo" name="correo">
 						<hr>
 					</div>
 					<br>
 
 					<div class="campo">
 						<label for="rep_contrasena">Repetir Contraseña</label>
-						<input class="input-text" type="password"  required="" id="rep_contrasena" placeholder="Repetir"
+						<input class="input-text" type="password" required="" id="rep_contrasena" placeholder="Repetir"
 							name="rep_contrasena">
 						<hr>
 					</div>
@@ -48,8 +51,8 @@
 
 					<div class="campo">
 						<label for="rep_contrasena">Contraseña</label>
-						<input class="input-text" type="password" th:field="*{contrasena}" required="" id="contrasena" placeholder="Contraseña"
-							name="contrasena">
+						<input class="input-text" type="password" th:field="*{contrasena}" required="" id="contrasena"
+							placeholder="Contraseña" name="contrasena">
 						<hr>
 					</div>
 

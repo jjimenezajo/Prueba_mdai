@@ -36,14 +36,15 @@ public class SecurityConfiguration {// extends WebSecurityConfigurerAdapter (cla
     	// 
     	http.authorizeHttpRequests((authorizeHttpRequests) ->
 			authorizeHttpRequests
-				.requestMatchers("/admin/**").hasRole("ADMIN") //para definir patrones de URL especificos y aplicar reglas de autorizacion a esos patrones.
+				 //para definir patrones de URL especificos y aplicar reglas de autorizacion a esos patrones.
                 .requestMatchers("/user/**").hasRole("USER")
                 .anyRequest().permitAll() //el resto de peticiones pueden ser realizadas sin login (index.html y hola)
                 )
     	.exceptionHandling((exception) -> exception.accessDeniedHandler(customAccessDeniedHandler) ) // deprecated o remove: .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler); //una vez logueado, si no es nuestro rol se lanzará la excepcion y mostraremos nuestra pag
-    			.formLogin((form) -> form
-    					.loginPage("/login")
-    					.permitAll()); //loginPage por defecto proporcionada por Spring. Acceso mediante form: /login y /logout respectivamente.     	
+		.formLogin(form -> form
+				.loginPage("/")
+				.permitAll()); //loginPage por defecto proporcionada por Spring. Acceso mediante form: /login y /logout respectivamente.     	
+    	
     	return http.build();
     	
 				
@@ -65,18 +66,13 @@ public class SecurityConfiguration {// extends WebSecurityConfigurerAdapter (cla
 	InMemoryUserDetailsManager userDetailsService() {
     	System.out.println("\t SecurityConfiguration::userDetailsService() ");
     	
-		UserDetails user = User.withUsername("user")
-				.passwordEncoder(passwordEncoder()::encode).password("password")
+		UserDetails user = User.withUsername("alvaro@gmail.com")
+				.passwordEncoder(passwordEncoder()::encode).password("alvaro")
 				.roles("USER").build();
-	    		
-		UserDetails admin = User.withUsername("admin")
-				.passwordEncoder(passwordEncoder()::encode).password("password")
-				.roles("ADMIN","USER").build();
 
 		InMemoryUserDetailsManager userDetailsManager = new InMemoryUserDetailsManager();
 
 		userDetailsManager.createUser(user);
-		userDetailsManager.createUser(admin);
 		
 		return userDetailsManager;  			
     }

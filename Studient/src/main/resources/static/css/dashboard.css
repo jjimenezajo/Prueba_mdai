@@ -2,33 +2,55 @@ body {
 	font-family: 'Barlow', sans-serif !important;
 }
 
+p {
+	font-size: 18px !important;
+}
+
 h1,
 h2 {
 	font-weight: bold !important;
 }
 
-.section{
+.folder_title {
+	margin-left: 1rem;
+	margin-top: 1rem;
+}
+
+.section {
 	margin-bottom: 1rem;
 }
 
-.right-box{
-		float: right;
-		width: 40%;
+.right-box {
+	float: right;
+	width: 40%;
+	height: 75%;
 }
 
-.left-box{
-	width: 60%;
+.left-box {
+	width: 55%;
+	margin-left: 2rem;
+	height: 75%;
 }
 
-.height{
+.height {
 	height: calc(100vh - 121.75px);
 }
 
 .scroll {
 	margin-left: 1rem;
+	height: 75%;
+	overflow-y: scroll;
 }
 
-.position{
+.position {
 	padding-left: 0 !important;
 	padding-bottom: 0 !important;
+}
+
+.horizontal-line {
+	height: .5px !important;
+}
+
+.vertical-line {
+	border-right: 1px solid #dee2e6;
 }

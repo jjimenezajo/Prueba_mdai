@@ -4,13 +4,15 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="description" content="">
 	<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
 	<meta name="generator" content="Hugo 0.84.0">
-	<title>Dashboard Template · Bootstrap v5.0</title>
+	<title>Studient</title>
 	<link rel="stylesheet" href="/webjars/bootstrap/5.0.0/css/bootstrap.min.css">
 	<link href="https://fonts.googleapis.com/css2?family=Barlow&display=swap" rel="stylesheet">
 	<link href="/css/dashboard.css" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="/images/logo_mdai.png" />
 
 
 
@@ -43,21 +45,37 @@
 	<div class="container-fluid">
 		<div class="row" style="flex: 1">
 			<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light height sidebar collapse">
+				<h2 class="folder_title">Carpetas</h2>
 				<div class="position-sticky pt-3 scroll">
-					<h2 class="section">Carpetas</h2>
 					<div th:if="${#lists.isEmpty(carpetas)}">
-						<h4>No hay carpetas</h4>
+						<h5>No hay carpetas</h5>
 					</div>
 					<div th:if="${not #lists.isEmpty(carpetas)}">
 						<ul class="nav flex-column">
 							<li class="nav-item" th:each="carpeta : ${carpetas}">
 								<a class="nav-link active position" aria-current="page" href="#">
 									<p th:text="${carpeta.nombre}"></p>
+									<p>CarpetaPrueba</p>
+									<p>CarpetaPrueba1</p>
 								</a>
 							</li>
 						</ul>
 					</div>
 
+				</div>
+				<hr class="horizontal-line">
+				<div>
+					<a class="nav-link active position" style="margin-left: 1rem; padding-top: 0;" href="#">
+						<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-circle"
+							width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#0d6efd" fill="none"
+							stroke-linecap="round" stroke-linejoin="round">
+							<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+							<path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+							<path d="M12 10m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+							<path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" />
+						</svg>
+						<p style="display: inline;">Perfil</p>
+					</a>
 				</div>
 			</nav>
 
@@ -65,22 +83,14 @@
 				<div
 					class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 					<h1 class="h2">Dashboard</h1>
-					<div class="btn-toolbar mb-2 mb-md-0">
-
-						<button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-							<span data-feather="calendar"></span>
-							This week
-						</button>
-					</div>
 				</div>
 
-				<canvas class="my-4 left-box" id="myChart"></canvas>
-
-
+				<canvas class="my-4 left-box vertical-line" id="myChart"></canvas>
+				
 				<div class="right-box">
 					<h2 class="section">Tareas</h2>
 					<div th:if="${#lists.isEmpty(tareas)}">
-						<h4>No hay tareas</h4>
+						<h5>No hay tareas</h5>
 					</div>
 					<div th:if="${not #lists.isEmpty(tareas)}">
 
