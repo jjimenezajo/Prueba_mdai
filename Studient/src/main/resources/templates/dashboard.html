@@ -171,7 +171,9 @@
         totalSeconds = parseTimeToSeconds(inputTime);
 
         if (!isNaN(totalSeconds) && totalSeconds > 0) {
-            remainingSeconds = totalSeconds;
+			if (remainingSeconds == 0 ){
+				remainingSeconds = totalSeconds;
+			}
             updateTimerDisplay();
             timer = setInterval(updateTimer, 1000);
         } else {
