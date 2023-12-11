@@ -18,6 +18,8 @@
 
 <body>
 
+	<div th:replace="../static/fragments/add_folder_dialog.html"></div>
+
 	<!-- Incluir el fragmento en la página -->
 	<div th:replace="../static/fragments/header.html"></div>
 
@@ -25,7 +27,7 @@
 		<div class="row" style="flex: 1">
 			<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-outline height sidebar collapse">
 				<h2 class="folder_title">Carpetas</h2>
-				<button class="btn btn-outline-success my-2 my-sm-0 hover boundaries boton-add-folder" type="submit">
+				<button id="openDialog" class="btn btn-outline-success my-2 my-sm-0 hover boundaries boton-add-folder" type="submit">
 					<svg xmlns="http://www.w3.org/2000/svg"
 						class="icon icon-tabler icon-tabler-circle-plus add_icon boundaries" width="25" height="25"
 						viewBox="0 0 24 24" stroke-width="1.5" stroke="#198754" fill="none" stroke-linecap="round"

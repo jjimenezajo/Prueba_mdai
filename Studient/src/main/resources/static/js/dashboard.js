@@ -70,3 +70,18 @@ function parseTimeToSeconds(time) {
 function reproducir() {
 	miMusica.play();
 }
+
+//Funciones para la visualización y cierre del diálogo
+document.getElementById('openDialog').addEventListener('click', function() {
+	document.getElementById('overlay').style.display = 'flex';
+});
+
+document.getElementById('closeDialog').addEventListener('click', function() {
+	document.getElementById('overlay').style.display = 'none';
+});
+
+document.getElementById('overlay').addEventListener('click', function(event) {
+	if (event.target.id === 'overlay') {
+		document.getElementById('overlay').style.display = 'none';
+	}
+});
