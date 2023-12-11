@@ -72,16 +72,34 @@ function reproducir() {
 }
 
 //Funciones para la visualización y cierre del diálogo
-document.getElementById('openDialog').addEventListener('click', function() {
-	document.getElementById('overlay').style.display = 'flex';
+document.getElementById('openDialogFolder').addEventListener('click', function() {
+	var dialog_name = "folder";
+	var close_name = "closeDialogFolder";
+	document.getElementById(dialog_name).style.display = 'flex';
+	dialogVisibility(dialog_name, close_name);
+
 });
 
-document.getElementById('closeDialog').addEventListener('click', function() {
-	document.getElementById('overlay').style.display = 'none';
+document.getElementById('openDialogTask').addEventListener('click', function() {
+	var dialog_name = "task";
+	var close_name = "closeDialogTask";
+	document.getElementById(dialog_name).style.display = 'flex';
+	dialogVisibility(dialog_name, close_name);
 });
 
-document.getElementById('overlay').addEventListener('click', function(event) {
-	if (event.target.id === 'overlay') {
-		document.getElementById('overlay').style.display = 'none';
-	}
-});
+function dialogVisibility(d_name, c_name) {
+	document.getElementById(c_name).addEventListener('click', function() {
+		document.getElementById(d_name).style.display = 'none';
+	});
+
+	document.getElementById(d_name).addEventListener('click', function(event) {
+		if (event.target.id === d_name) {
+			document.getElementById(d_name).style.display = 'none';
+		}
+	});
+}
+
+
+
+
+

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Studien't</title>
+
+	<style>
+		/* Estilo para mostrar los radio buttons en fila */
+
+		.prioridad {
+			display: flex;
+			gap: 7px;
+			width: 70vh;
+			margin-top: .5rem;
+			margin-bottom: 1rem;
+		}
+
+		input[type='radio'] {
+			position: relative;
+			top: -.2rem;
+			width: 3vh;
+		}
+
+		input[value='alta'] {
+			margin-left: 1rem;
+		}
+
+		input[value='baja'] {
+			margin-left: 2rem;
+		}
+
+		label[for='alta'],
+		label[for='baja'] {
+			font-weight: normal;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div class="overlay" id="task">
+		<div class="dialog">
+			<h5><b>Añadir tarea</b></h5>
+			<div class="close-button" id="closeDialogTask">✖</div>
+			<form method="post" action="#" style="margin-top: 1rem;">
+				<label for="nombre">Nombre:</label>
+				<input type="text" id="nombre" name="nombre" placeholder="Ingrese la descripción de la tarea">
+				<!-- Nuevo campo de prioridad -->
+
+				<div class="prioridad">
+					<label for="prioridad">Prioridad:</label>
+
+
+					<input type="radio" id="alta" name="prioridad" value="alta">
+					<label for="alta">Alta</label>
+					<input type="radio" id="baja" name="prioridad" value="baja">
+					<label for="baja">Baja</label>
+				</div>
+
+				<input type="hidden" id"id_usuario" value="#">
+				<button class="btn btn-primary " id="confirmar" type="submit">Confirmar</button>
+			</form>
+
+		</div>
+	</div>
+
+</body>
+
+</html>

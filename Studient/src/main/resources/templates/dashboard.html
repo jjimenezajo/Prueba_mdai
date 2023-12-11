@@ -19,6 +19,7 @@
 <body>
 
 	<div th:replace="add_folder_dialog.html"></div>
+	<div th:replace="add_task_dialog.html"></div>
 
 	<!-- Incluir el fragmento en la página -->
 	<div th:replace="../static/fragments/header.html"></div>
@@ -27,7 +28,8 @@
 		<div class="row" style="flex: 1">
 			<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-outline height sidebar collapse">
 				<h2 class="folder_title">Carpetas</h2>
-				<button id="openDialog" class="btn btn-outline-success my-2 my-sm-0 hover boundaries boton-add-folder" type="submit">
+				<button id="openDialogFolder" class="btn btn-outline-success my-2 my-sm-0 hover boundaries boton-add"
+					type="submit">
 					<svg xmlns="http://www.w3.org/2000/svg"
 						class="icon icon-tabler icon-tabler-circle-plus add_icon boundaries" width="25" height="25"
 						viewBox="0 0 24 24" stroke-width="1.5" stroke="#198754" fill="none" stroke-linecap="round"
@@ -97,8 +99,7 @@
 						<div style="margin-bottom: .5rem;">
 							<h2 class="section">Tareas</h2>
 							<div style="display: inline;" th:if="${mutable}">
-								<a class="nav-link px-3 boton-add-task" th:href="@{/addTarea}">
-									<button class="btn btn-outline-success my-2 my-sm-0 hover boundaries "
+									<button id="openDialogTask" class="btn btn-outline-success my-2 my-sm-0 hover boundaries boton-add"
 										type="submit">
 										<svg xmlns="http://www.w3.org/2000/svg"
 											class="icon icon-tabler icon-tabler-circle-plus add_icon boundaries "
@@ -109,7 +110,6 @@
 											<path d="M9 12h6" />
 											<path d="M12 9v6" />
 										</svg>
-									</button>
 								</a>
 							</div>
 						</div>
