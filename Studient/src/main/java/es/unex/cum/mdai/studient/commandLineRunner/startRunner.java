@@ -5,6 +5,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import es.unex.cum.mdai.studient.model.Carpeta;
+import es.unex.cum.mdai.studient.model.Estado;
 import es.unex.cum.mdai.studient.model.Prioridad;
 import es.unex.cum.mdai.studient.model.Tarea;
 import es.unex.cum.mdai.studient.model.Usuario;
@@ -62,7 +63,9 @@ public class startRunner implements CommandLineRunner{
 		Tarea t1 = new Tarea(Prioridad.ALTA, "Terminar informe de costes");
 		Tarea t2 = new Tarea(Prioridad.ALTA, "Terminar informe de riesgos");
 		Tarea t3 = new Tarea(Prioridad.ALTA, "Montaje Arduino");
-		Tarea t4 = new Tarea(Prioridad.BAJA, "Testeo de HW");
+		Tarea t4 = new Tarea(Prioridad.ALTA, "Testeo de HW");
+		
+		t4.setEstado(Estado.COMPLETADO);
 
 		// Añadimos las tareas a sus correspondientes carpetas inmutables
 		if (t1.getPrioridad().equals(Prioridad.ALTA)) {
