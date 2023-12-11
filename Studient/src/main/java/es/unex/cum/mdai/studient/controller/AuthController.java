@@ -125,6 +125,8 @@ public class AuthController {
 				}
 			}
 			lt=lt_final;
+			boolean mutable=true;
+			model.addAttribute("mutable", mutable);
 		}
 		model.addAttribute("tareas", lt.isEmpty() ? Collections.EMPTY_LIST : lt);
 		model.addAttribute("carpetas", lc.isEmpty() ? Collections.EMPTY_LIST : lc);
