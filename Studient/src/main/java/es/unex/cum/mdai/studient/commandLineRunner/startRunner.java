@@ -61,14 +61,17 @@ public class startRunner implements CommandLineRunner{
 		u.addCarpeta(mdai);
 		
 		Tarea t1 = new Tarea(Prioridad.ALTA, "Terminar informe de costes");
-		Tarea t2 = new Tarea(Prioridad.ALTA, "Terminar informe de riesgos");
+		Tarea t2 = new Tarea(Prioridad.BAJA, "Terminar informe de riesgos");
 		Tarea t3 = new Tarea(Prioridad.ALTA, "Montaje Arduino");
 		Tarea t4 = new Tarea(Prioridad.ALTA, "Testeo de HW");
-		
+		t1.setEstado(Estado.NULO);
+		u.getCarpetas().get(3).addTareas(t1);
+		t1.addCarpeta(u.getCarpetas().get(3));
 		t4.setEstado(Estado.COMPLETADO);
+		
 
 		// Añadimos las tareas a sus correspondientes carpetas inmutables
-		if (t1.getPrioridad().equals(Prioridad.ALTA)) {
+		/*if (t1.getPrioridad().equals(Prioridad.ALTA)) {
 			System.out.println(
 					"INFO: La tarea " + t1.getDescripcion() + " se añadió  a la carpeta de tareas de ALTA prioridad");
 			u.getCarpetas().get(0).addTareas(t1); // get(0) es la carpeta para tareas de alta prioridad
@@ -79,7 +82,7 @@ public class startRunner implements CommandLineRunner{
 			u.getCarpetas().get(1).addTareas(t1); // get(1) es la carpeta para tareas de baja prioridad
 			t1.addCarpeta(u.getCarpetas().get(1));
 		}
-
+*/
 		if (t2.getPrioridad().equals(Prioridad.ALTA)) {
 			System.out.println(
 					"INFO: La tarea " + t2.getDescripcion() + " se añadió  a la carpeta de tareas de ALTA prioridad");
@@ -103,7 +106,7 @@ public class startRunner implements CommandLineRunner{
 			u.getCarpetas().get(1).addTareas(t3);
 			t3.addCarpeta(u.getCarpetas().get(1));
 		}
-
+/*
 		if (t4.getPrioridad().equals(Prioridad.ALTA)) {
 			System.out.println(
 					"INFO: La tarea " + t4.getDescripcion() + " se añadió  a la carpeta de tareas de ALTA prioridad");
@@ -115,7 +118,9 @@ public class startRunner implements CommandLineRunner{
 			u.getCarpetas().get(1).addTareas(t4);
 			t4.addCarpeta(u.getCarpetas().get(1));
 		}
-
+*/
+		u.getCarpetas().get(2).addTareas(t4);
+		t4.addCarpeta(u.getCarpetas().get(2));
 		t1.addCarpeta(mdai);
 		t2.addCarpeta(mdai);
 		t3.addCarpeta(mdai);
