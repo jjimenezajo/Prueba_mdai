@@ -1,5 +1,6 @@
 package es.unex.cum.mdai.studient.controller;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -15,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import es.unex.cum.mdai.studient.model.Carpeta;
+import es.unex.cum.mdai.studient.model.Estado;
 import es.unex.cum.mdai.studient.model.Tarea;
 import es.unex.cum.mdai.studient.model.Usuario;
+import es.unex.cum.mdai.studient.repository.TareaRepository;
 import es.unex.cum.mdai.studient.repository.UsuarioRepository;
 import es.unex.cum.mdai.studient.services.CarpetaService;
 import es.unex.cum.mdai.studient.services.TareaService;
@@ -30,13 +33,15 @@ public class AuthController {
 	private CarpetaService cs;
 	private TareaService ts;
 	private UsuarioRepository ur;
+	private TareaRepository tr;
 
-	public AuthController(UsuarioService us, CarpetaService cs, TareaService ts, UsuarioRepository ur) {
+	public AuthController(UsuarioService us, CarpetaService cs, TareaService ts, UsuarioRepository ur, TareaRepository tr) {
 		System.out.println("\t AuthController builder");
 		this.us = us;
 		this.cs = cs;
 		this.ts = ts;
 		this.ur = ur;
+		this.tr = tr;
 	}
 
 	@GetMapping("/")
@@ -109,9 +114,19 @@ public class AuthController {
 	@GetMapping("/cargarCarpeta")
 	public String cargarCarpeta(@RequestParam Long id, @RequestParam Long id2, Model model) {
 		Usuario logged_user= us.findUsuarioById(id2).get();
-		List<Tarea> lt = (List<Tarea>) ts.findAllTareaByCarpetaId(id);
-		model.addAttribute("tareas", lt.isEmpty() ? Collections.EMPTY_LIST : lt);
+		List<Tarea> lt = (List<Tarea>) tr.orderByTaskPriority(id);
 		List<Carpeta> lc = (List<Carpeta>) cs.findAllCarpetaByUsuarioId(logged_user.getId());
+		List<Tarea> lt_final= new ArrayList<Tarea>();
+		Carpeta carp= cs.findCarpetaById(id).get();
+		if (carp.isMutabilidad()==true) {
+			for (int i=0; i<lt.size(); i++) {
+				if (lt.get(i).getEstado()!= Estado.NULO) {
+					lt_final.add(lt.get(i));
+				}
+			}
+			lt=lt_final;
+		}
+		model.addAttribute("tareas", lt.isEmpty() ? Collections.EMPTY_LIST : lt);
 		model.addAttribute("carpetas", lc.isEmpty() ? Collections.EMPTY_LIST : lc);
 		model.addAttribute("successful_login", logged_user);
 		return "dashboard";
