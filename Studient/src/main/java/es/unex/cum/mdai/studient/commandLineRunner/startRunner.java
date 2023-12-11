@@ -62,7 +62,7 @@ public class startRunner implements CommandLineRunner{
 		Tarea t1 = new Tarea(Prioridad.ALTA, "Terminar informe de costes");
 		Tarea t2 = new Tarea(Prioridad.ALTA, "Terminar informe de riesgos");
 		Tarea t3 = new Tarea(Prioridad.ALTA, "Montaje Arduino");
-		Tarea t4 = new Tarea(Prioridad.ALTA, "Testeo de HW");
+		Tarea t4 = new Tarea(Prioridad.BAJA, "Testeo de HW");
 
 		// Añadimos las tareas a sus correspondientes carpetas inmutables
 		if (t1.getPrioridad().equals(Prioridad.ALTA)) {

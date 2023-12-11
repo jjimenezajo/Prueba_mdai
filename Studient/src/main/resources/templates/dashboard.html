@@ -70,10 +70,8 @@
 					<div th:if="${not #lists.isEmpty(carpetas)}">
 						<ul class="nav flex-column">
 							<li class="nav-item" th:each="carpeta : ${carpetas}">
-								<a class="nav-link active position" aria-current="page" href="#">
+								<a class="nav-link active position"  th:href="@{/cargarCarpeta(id=${carpeta.id}, id2=${successful_login.id})}">
 									<p th:text="${carpeta.nombre}"></p>
-									<p>CarpetaPrueba</p>
-									<p>CarpetaPrueba1</p>
 								</a>
 							</li>
 						</ul>

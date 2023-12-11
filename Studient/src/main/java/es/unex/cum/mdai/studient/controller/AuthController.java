@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import es.unex.cum.mdai.studient.model.Carpeta;
@@ -102,7 +103,17 @@ public class AuthController {
 		model.addAttribute("tareas", lt.isEmpty() ? Collections.EMPTY_LIST : lt);
 		List<Carpeta> lc = (List<Carpeta>) cs.findAllCarpetaByUsuarioId(logged_user.getId());
 		model.addAttribute("carpetas", lc.isEmpty() ? Collections.EMPTY_LIST : lc);
-		model.addAttribute("usuario", logged_user);
+		model.addAttribute("successful_login", logged_user);
+		return "dashboard";
+	}
+	@GetMapping("/cargarCarpeta")
+	public String cargarCarpeta(@RequestParam Long id, @RequestParam Long id2, Model model) {
+		Usuario logged_user= us.findUsuarioById(id2).get();
+		List<Tarea> lt = (List<Tarea>) ts.findAllTareaByCarpetaId(id);
+		model.addAttribute("tareas", lt.isEmpty() ? Collections.EMPTY_LIST : lt);
+		List<Carpeta> lc = (List<Carpeta>) cs.findAllCarpetaByUsuarioId(logged_user.getId());
+		model.addAttribute("carpetas", lc.isEmpty() ? Collections.EMPTY_LIST : lc);
+		model.addAttribute("successful_login", logged_user);
 		return "dashboard";
 	}
 	
