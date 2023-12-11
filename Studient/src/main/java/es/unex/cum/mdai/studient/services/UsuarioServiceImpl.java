@@ -11,7 +11,7 @@ import es.unex.cum.mdai.studient.model.Usuario;
 import es.unex.cum.mdai.studient.repository.UsuarioRepository;
 
 @Service
-public class UsuarioServiceImpl implements UsuarioService, CommandLineRunner {
+public class UsuarioServiceImpl implements UsuarioService {
 
 	private final UsuarioRepository usuarioRepository;
 
@@ -19,14 +19,6 @@ public class UsuarioServiceImpl implements UsuarioService, CommandLineRunner {
 
 		System.out.println("\t Arrancado automático");
 		this.usuarioRepository = usuarioRepository;
-	}
-
-	@Override
-	public void run(String... args) throws Exception {
-		System.out.println("\t Usando CommandLineRunner");
-		insertUsers("pepe@gmail.com", "pepe");
-		insertUsers("alvaro@gmail.com", "alvaro");
-
 	}
 
 	@Override

@@ -27,7 +27,7 @@ a {
 
 .right-box {
 	float: right;
-	width: 40%;
+	width: 55% !important;
 	height: 70vh;
 }
 
@@ -36,7 +36,7 @@ a {
 }
 
 .left-box {
-	width: 55%;
+	width: 40%;
 	height: 70vh;
 	display: inline-block;
 }
@@ -100,7 +100,7 @@ nav {
 	top: 65%;
 	/* Ajusta según sea necesario para centrar verticalmente */
 	/* Centra el elemento en relación con su propio tamaño */
-	left: 37.4%;
+	left: 31.5%;
 	z-index: 2;
 	/* Z-index mayor que el de la imagen para que esté encima */
 	background-color: white;
@@ -117,3 +117,20 @@ nav {
 	padding: .2rem;
 	text-align: center;
 }
+
+#btn-update{
+	padding-top: .2rem !important;
+	padding-left: .2rem !important;
+	padding-right: .2rem !important;
+	padding-bottom: .5rem !important;
+}
+
+#btn-delete{
+	padding: .2rem !important;
+}
+
+.scroll-table {
+  height: 63vh;
+  overflow-y: scroll;
+}
+

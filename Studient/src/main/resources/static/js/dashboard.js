@@ -2,13 +2,14 @@
 let timer;
 let totalSeconds = 0;
 let remainingSeconds = 0;
+var miMusica = new Audio("/music/alarm_clock.mp3")
 
 function startTimer() {
 	const inputTime = document.getElementById('timeInput').value;
 	document.getElementById('start').disabled = true;
 	document.getElementById('timeInput').disabled = true;
 	totalSeconds = parseTimeToSeconds(inputTime);
-	
+
 	if (!isNaN(totalSeconds) && totalSeconds > 0) {
 		remainingSeconds = totalSeconds;
 		updateTimerDisplay();
@@ -37,6 +38,7 @@ function updateTimer() {
 		remainingSeconds--;
 		updateTimerDisplay();
 	} else {
+		reproducir();
 		stopTimer();
 		alert('¡Tiempo terminado!');
 	}
@@ -62,4 +64,9 @@ function parseTimeToSeconds(time) {
 	const seconds = parseInt(timeArray[2]) || 0;
 
 	return hours * 3600 + minutes * 60 + seconds;
+}
+
+// La música se reproduce al terminar la sesión de estudio
+function reproducir() {
+	miMusica.play();
 }
