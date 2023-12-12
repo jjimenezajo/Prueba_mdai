@@ -21,5 +21,7 @@ public interface UsuarioService {
 	
 	public Optional<Usuario> findUsuarioByCorreo(String correo);
 	
+	public Iterable<Usuario> saveUsuario(Usuario usuario);
+	
 	public int countUser();
 }

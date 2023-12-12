@@ -81,7 +81,18 @@ public class TareaServiceImpl implements TareaService {
 		return count;
 	}
 
+	@Override
+	public Iterable<Tarea> orderByTaskPriority(Long tareaId) {
+		
+		return tareaRepository.orderByTaskPriority(tareaId);
+	}
 
+	@Override
+	public Iterable<Tarea> saveTarea(Tarea tarea) {
+		tareaRepository.save(tarea);
+		
+		return tareaRepository.findAll();
+	}
 	
 
 }

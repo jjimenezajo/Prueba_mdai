@@ -87,7 +87,7 @@
         /*]]>*/
 	</script>
 	<div th:replace="../static/fragments/header.html"></div>
-	<a class="nav-link px-3" th:href="@{/dashboardVuelta/{id}(id=${usuarioUpdate.id})}">
+	<a class="nav-link px-3" th:href="@{/user/dashboardVuelta/{id}(id=${usuarioUpdate.id})}">
 		<button class="btn btn-outline-success my-2 my-sm-0 back-button" type="submit">
 			Volver
 		</button>
@@ -95,7 +95,7 @@
 	<div class="container-fluid middle">
 		<h2 class="folder_title">Perfil</h2>
 		<div class="contenido">
-			<form action="#" th:action="@{/updateUsuario/{id}(id=${usuarioUpdate.id})}" th:object="${usuarioUpdate}"
+			<form action="#" th:action="@{/user/updateUsuario/{id}(id=${usuarioUpdate.id})}" th:object="${usuarioUpdate}"
 				method="post" th:method="put">
 				<div class="form-row">
 					<div class="form-group col-md-9">
@@ -115,7 +115,7 @@
 				</div>
 			</form>
 			<div class="btn-display" style="margin-left: 2rem;">
-				<form action="#" th:action="@{/deleteUsuario/{id}(id=${usuarioUpdate.id})}" th:method="delete">
+				<form action="#" th:action="@{/user/deleteUsuario/{id}(id=${usuarioUpdate.id})}" th:method="delete">
 					<button type="submit" class="btn btn-danger">Eliminar cuenta</button>
 				</form>
 			</div>

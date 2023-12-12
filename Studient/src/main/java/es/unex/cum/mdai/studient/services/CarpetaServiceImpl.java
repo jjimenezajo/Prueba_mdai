@@ -95,6 +95,13 @@ public class CarpetaServiceImpl implements CarpetaService {
 		return alta;
 	}
 
+	@Override
+	public Iterable<Carpeta> saveCarpeta(Carpeta carpeta) {
+		carpetaRepository.save(carpeta);
+		
+		return carpetaRepository.findAll();
+	}
+
 
 	
 

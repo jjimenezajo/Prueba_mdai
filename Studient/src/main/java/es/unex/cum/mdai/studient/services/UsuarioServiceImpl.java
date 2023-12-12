@@ -111,4 +111,10 @@ public class UsuarioServiceImpl implements UsuarioService {
 		return count;
 	}
 
+	@Override
+	public Iterable<Usuario> saveUsuario(Usuario usuario) {
+		usuarioRepository.save(usuario);
+		return findAllUsers();
+	}
+
 }

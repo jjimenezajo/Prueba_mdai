@@ -21,4 +21,6 @@ public interface CarpetaService {
 	public Carpeta findCarpetaPrioridadAltaByUsuarioId(Long id);
 	
 	public int countCarpeta(Long usuarioId);
+	
+	public Iterable<Carpeta> saveCarpeta(Carpeta carpeta);
 }
