@@ -2,15 +2,17 @@
 let timer;
 let totalSeconds = 0;
 let remainingSeconds = 0;
-var miMusica = new Audio("/music/alarm_clock.mp3")
+var pattern = new RegExp("^[0-5][0-9]:[0-5][0-9]:[0-5][0-9]$");
+var miMusica = new Audio("/music/alarm_clock.mp3");
 
 function startTimer() {
 	const inputTime = document.getElementById('timeInput').value;
-	document.getElementById('start').disabled = true;
-	document.getElementById('timeInput').disabled = true;
+
 	totalSeconds = parseTimeToSeconds(inputTime);
 
-	if (!isNaN(totalSeconds) && totalSeconds > 0) {
+	if (!isNaN(totalSeconds) && totalSeconds > 0 && pattern.test(totalSeconds)) {
+		document.getElementById('start').disabled = true;
+		document.getElementById('timeInput').disabled = true;
 		remainingSeconds = totalSeconds;
 		updateTimerDisplay();
 		timer = setInterval(updateTimer, 1000);
@@ -38,9 +40,11 @@ function updateTimer() {
 		remainingSeconds--;
 		updateTimerDisplay();
 	} else {
-		reproducir();
-		stopTimer();
-		alert('¡Tiempo terminado!');
+		setTimeout(function() {
+			reproducir();
+			stopTimer();
+			alert('¡Tiempo terminado!');
+		}, 1);
 	}
 }
 
