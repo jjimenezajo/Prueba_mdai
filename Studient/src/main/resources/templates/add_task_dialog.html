@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<meta charset="UTF-8">
@@ -44,22 +44,23 @@
 		<div class="dialog">
 			<h5><b>Añadir tarea</b></h5>
 			<div class="close-button" id="closeDialogTask">✖</div>
-			<form method="post" action="#" style="margin-top: 1rem;">
+			<form method="post" th:action="@{/addTarea}" style="margin-top: 1rem;" th:object="${formularioTarea}" th:method="put">
 				<label for="nombre">Nombre:</label>
-				<input type="text" id="nombre" name="nombre" placeholder="Ingrese la descripción de la tarea">
+				<input type="text" id="nombre" name="nombre" th:field="*{nombre}" placeholder="Ingrese la descripción de la tarea">
 				<!-- Nuevo campo de prioridad -->
 
 				<div class="prioridad">
 					<label for="prioridad">Prioridad:</label>
 
 
-					<input type="radio" id="alta" name="prioridad" value="alta">
+					<input type="radio" id="alta" name="prioridad" th:value="alta" th:field="*{prioridad}">
 					<label for="alta">Alta</label>
-					<input type="radio" id="baja" name="prioridad" value="baja">
+					<input type="radio" id="baja" name="prioridad" th:value="baja" th:field="*{prioridad}">
 					<label for="baja">Baja</label>
 				</div>
 
-				<input type="hidden" id"id_usuario" value="#">
+				<input type="hidden" id"id_usuario" th:field="*{id}">
+				<input type="hidden" id"id_carpeta" th:field="*{idCarpeta}">
 				<button class="btn btn-primary " id="confirmar" type="submit">Confirmar</button>
 			</form>
 

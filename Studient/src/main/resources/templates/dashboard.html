@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<meta charset="utf-8">
@@ -17,7 +17,17 @@
 </head>
 
 <body>
-
+	<div th:attr="miVariable=${successful_login.id}"></div>
+	<div th:attr="miVariable2=${idCarpeta}"></div>
+	<script th:inline="javascript">
+    	var idUsuario = /*[(${miVariable})]*/ 'Default';
+    	var idCarpeta = /*[(${miVariable2})]*/ 'Default';
+    	var idus = document.getElementById('id_usuario');
+    	idus.value=idUsuario;
+    	var idcar = document.getElementById('id_carpeta');
+    	idcar.value=idCarpeta;
+    	
+	</script>
 	<div th:replace="add_folder_dialog.html"></div>
 	<div th:replace="add_task_dialog.html"></div>
 
