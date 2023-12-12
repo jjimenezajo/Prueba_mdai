@@ -37,14 +37,13 @@ public class SecurityConfiguration {// extends WebSecurityConfigurerAdapter (cla
     	http.authorizeHttpRequests((authorizeHttpRequests) ->
 			authorizeHttpRequests
 				 //para definir patrones de URL especificos y aplicar reglas de autorizacion a esos patrones.
-                .requestMatchers("/user/**").hasRole("USER")
+                .requestMatchers("/patata/**").hasRole("USER")
                 //.anyRequest().denyAll()
                 .anyRequest().permitAll() //el resto de peticiones pueden ser realizadas sin login (index.html y hola)
                 )
     	.exceptionHandling((exception) -> exception.accessDeniedHandler(customAccessDeniedHandler) ) // deprecated o remove: .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler); //una vez logueado, si no es nuestro rol se lanzará la excepcion y mostraremos nuestra pag
 		.formLogin(form -> form
-				.loginPage("/")
-				.loginProcessingUrl("/doLogin")
+				.loginPage("/login")
 				.permitAll()); //loginPage por defecto proporcionada por Spring. Acceso mediante form: /login y /logout respectivamente.     	
     	//.formLogin(Customizer.withDefaults());
     	return http.build();

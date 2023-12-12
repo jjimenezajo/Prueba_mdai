@@ -17,23 +17,21 @@
 </head>
 
 <body>
-	<div th:attr="miVariable=${successful_login.id}"></div>
-	<div th:attr="miVariable2=${idCarpeta}"></div>
+
 	<script th:inline="javascript">
-		/*<![CDATA[*/
+
         var miObjeto = /*[[${successful_login.id}]]*/ null;
-        /*]]>*/
-		console.log(miObjeto);
-    	var idUsuario = /*[(${miVariable})]*/ 'Default';
-    	var idCarpeta = /*[(${miVariable2})]*/ 'Default';
-    	var idus = document.getElementById('id_usuario');
+
+		console.log("Mi objeto "+miObjeto);
+    	/*var idus = document.getElementById('id_usuario');
     	idus.value=idUsuario;
     	var idcar = document.getElementById('id_carpeta');
-    	idcar.value=idCarpeta;
+    	idcar.value=idCarpeta;*/
     	
 	</script>
-	<div th:replace="add_folder_dialog.html"></div>
-	<div th:replace="add_task_dialog.html"></div>
+	
+	<div th:replace="~{add_folder_dialog.html}"></div>
+	<div th:replace="~{add_task_dialog.html}"></div>
 
 	<!-- Incluir el fragmento en la página -->
 	<div th:replace="../static/fragments/header.html"></div>
@@ -63,7 +61,7 @@
 						<ul class="nav flex-column">
 							<li class="nav-item" th:each="carpeta : ${carpetas}">
 								<a class="nav-link active position"
-									th:href="@{/cargarCarpeta(id=${carpeta.id}, id2=${successful_login.id})}">
+									th:href="@{/user/cargarCarpeta(id=${carpeta.id}, id2=${successful_login.id})}">
 									<p style="margin-bottom: 0.2rem !important;" th:text="${carpeta.nombre}"></p>
 								</a>
 							</li>

@@ -33,9 +33,16 @@ public class AuthController {
 		this.cs = cs;
 		this.ts = ts;
 	}
+	
+	@GetMapping("/")
+	public String index(Model model) {
+		model.addAttribute("usuario", new Usuario());
+		System.out.println("Controller de /");
+		return "login";
+	}
 
 	@GetMapping("/login")
-	public String index(Model model) {
+	public String login(Model model) {
 		model.addAttribute("usuario", new Usuario());
 		System.out.println("Controller de /");
 		return "login";
