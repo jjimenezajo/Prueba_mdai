@@ -16,6 +16,21 @@
 
 
 	<style>
+		body {
+			font-family: 'Barlow', sans-serif !important;
+		}
+
+		h1,
+		h2 {
+			font-weight: bold !important;
+			display: inline;
+		}
+
+		/*Color de fondo del encabezado y columna de la izquierda*/
+		.bg-outline {
+			background-color: #ececec;
+		}
+
 		.bd-placeholder-img {
 			font-size: 1.125rem;
 			text-anchor: middle;
@@ -23,52 +38,90 @@
 			-moz-user-select: none;
 			user-select: none;
 		}
+
+		.btn-display,
+		form {
+			/* Estilos para elementos input y button con type="submit" */
+			display: inline;
+
+		}
+
+		#correo {
+			margin-bottom: 1rem;
+		}
+
+		#contrasena {
+			margin-bottom: 2rem;
+		}
+
+		input[type="text"] {
+			width: 30%;
+		}
+
+		label {
+			font-weight: bold;
+		}
+
+		.middle {
+			width: 0 auto;
+		}
+		
+		.back-button{
+			position: relative; 
+			top: 1rem;
+			left: 1rem;
+		}
+		
+		
 	</style>
 
 
 	<!-- Custom styles for this template -->
 	<link href="dashboard.css" rel="stylesheet">
 </head>
+
 <body>
 	<script th:if="${mostrarAlerta}" th:inline="javascript">
-        /*<![CDATA[*/
-        alert('[(${mensaje})]');
+		/*<![CDATA[*/
+		alert('[(${mensaje})]');
         /*]]>*/
-    </script>
+	</script>
 	<div th:replace="../static/fragments/header.html"></div>
 	<a class="nav-link px-3" th:href="@{/dashboardVuelta/{id}(id=${usuarioUpdate.id})}">
-					<button style="position: relative; top: -30px"class="btn btn-outline-success my-2 my-sm-0" type="submit">
-						Volver
-					</button>
-				</a>
-	<div class="container-fluid">
+		<button class="btn btn-outline-success my-2 my-sm-0 back-button" type="submit">
+			Volver
+		</button>
+	</a>
+	<div class="container-fluid middle">
 		<h2 class="folder_title">Perfil</h2>
 		<div class="contenido">
-			<form action="#" th:action="@{/updateUsuario/{id}(id=${usuarioUpdate.id})}" th:object="${usuarioUpdate}" method="post" th:method="put">                          		
-                <div class="form-row">                	
-                    <div class="form-group col-md-9">
-                        <label for="name" class="col-form-label">Correo:</label>
-                        <input type="text" th:field="*{correo}" class="form-control" id="correo" value="${usuarioUpdate.email}">
-                    </div>
-                    <div class="form-group col-md-9">
-                        <label for="contrasena" class="col-form-label">Contraseña:</label>
-                        <input th:field="*{contrasena}" class="form-control" id="contrasena" value="${usuarioUpdate.contrasena}"></input>
-                    </div>                                   
+			<form action="#" th:action="@{/updateUsuario/{id}(id=${usuarioUpdate.id})}" th:object="${usuarioUpdate}"
+				method="post" th:method="put">
+				<div class="form-row">
+					<div class="form-group col-md-9">
+						<label for="name" class="col-form-label">Correo:</label>
+						<input type="text" th:field="*{correo}" class="form-control" id="correo"
+							value="${usuarioUpdate.email}">
+					</div>
+					<div class="form-group col-md-9">
+						<label for="contrasena" class="col-form-label">Contraseña:</label>
+						<input type="text" th:field="*{contrasena}" class="form-control" id="contrasena"
+							value="${usuarioUpdate.contrasena}"></input>
+					</div>
 
-                </div>
-                <div class="row">
-                    <div class="col-md-6 mt-5">
-                        <input type="submit" class="btn btn-primary" value="Actualizar Usuario">
-                    </div>
-                </div>
-            </form>
-            <div>
+				</div>
+				<div class="btn-display">
+					<input type="submit" class="btn btn-primary" value="Actualizar Usuario">
+				</div>
+			</form>
+			<div class="btn-display" style="margin-left: 2rem;">
 				<form action="#" th:action="@{/deleteUsuario/{id}(id=${usuarioUpdate.id})}" th:method="delete">
-                                <button type="submit" class="btn btn-danger" >Eliminar cuenta</button>
-                </form>
-            </div>
+					<button type="submit" class="btn btn-danger">Eliminar cuenta</button>
+				</form>
+			</div>
 		</div>
-		
+
 	</div>
 </body>
+
 </html>
