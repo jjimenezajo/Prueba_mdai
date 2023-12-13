@@ -195,7 +195,7 @@
 													</svg>
 											</td>
 											<td style="padding-top: .65rem;">
-												<form action="#" th:action="@{/deleteTarea/{id}(id=${tarea.id})}"
+												<form th:action="@{/user/deleteTarea(tareaId=${tarea.id}, idUser=${successful_login.id})}"
 													th:method="delete">
 													<button type="submit" class="btn btn-danger" id="btn-delete">
 														<svg xmlns="http://www.w3.org/2000/svg"

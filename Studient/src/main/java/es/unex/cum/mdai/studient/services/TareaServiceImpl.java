@@ -30,18 +30,12 @@ public class TareaServiceImpl implements TareaService {
 	}
 
 	@Override
-	public boolean deleteTareaById(Long tareaId, Long carpetaId) {
+	public boolean deleteTareaById(Long tareaId) {
 		
 		boolean successful = false;
 		
-		int before = countTarea(carpetaId);
 		tareaRepository.deleteById(tareaId);
-		int after = countTarea(carpetaId);
-		
-		//Tras la eliminación debe haber un elemento menos en la BD
-		if(before-1 == after)
-			successful =  true;
-		
+			
 		return successful;
 	}
 

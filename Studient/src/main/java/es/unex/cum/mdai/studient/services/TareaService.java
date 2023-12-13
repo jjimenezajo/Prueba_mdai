@@ -12,7 +12,7 @@ public interface TareaService {
 	
 	public Iterable<Tarea> findAllTareaByCarpetaId(Long tareaId);
 
-	public boolean deleteTareaById(Long tareaId, Long carpetaId);
+	public boolean deleteTareaById(Long tareaId);
 	
 	public Iterable<Tarea> updateTarea(Tarea tarea);
 	
