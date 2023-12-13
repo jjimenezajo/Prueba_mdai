@@ -18,7 +18,12 @@
 
 <body>
 
-
+	<script th:if="${mostrarAlerta}" th:inline="javascript">
+        /*<![CDATA[*/
+        alert('[(${mensaje})]');
+        /*]]>*/
+    </script>
+    <header>
 	
 	<div th:replace="~{add_folder_dialog.html}"></div>
 	<div th:replace="~{add_task_dialog.html}"></div>
@@ -240,20 +245,38 @@
 	<script th:inline="javascript">
 
 		var miObjeto = /*[[${successful_login.id}]]*/ null;
-
+ 		var miObjeto2 = /*[[${idCarpeta}]]*/ null;
 		console.log("Mi objeto " + miObjeto);
-
+		console.log("Mi objeto 2 " + miObjeto2);
 		init();
 
 		function init() {
 
 			var idUsuarioCarpetaElement = document.getElementById("id_usuario_carpeta");
-
+			
 			if (idUsuarioCarpetaElement) {
 				console.log("Valor asignado " + miObjeto);
 				idUsuarioCarpetaElement.value = miObjeto;
 			} else {
 				console.error("Element with ID 'id_usuario_carpeta' not found.");
+			}
+			
+			var idUsuarioTareaElement = document.getElementById("id_usuario_tarea");
+			
+			if (idUsuarioTareaElement) {
+				console.log("Valor asignado " + miObjeto);
+				idUsuarioTareaElement.value = miObjeto;
+			} else {
+				console.error("Element with ID 'id_usuario_tarea' not found.");
+			}
+			
+			var idCarpetaElement = document.getElementById("id_carpeta");
+			
+			if (idCarpetaElement) {
+				console.log("Valor asignado " + miObjeto2);
+				idCarpetaElement.value = miObjeto2;
+			} else {
+				console.error("Element with ID 'idCarpeta' not found.");
 			}
 		}
 

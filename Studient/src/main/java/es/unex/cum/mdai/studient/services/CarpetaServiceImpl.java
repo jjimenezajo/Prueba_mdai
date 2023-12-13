@@ -1,5 +1,6 @@
 package es.unex.cum.mdai.studient.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -100,6 +101,25 @@ public class CarpetaServiceImpl implements CarpetaService {
 		carpetaRepository.save(carpeta);
 		
 		return carpetaRepository.findAll();
+	}
+
+	@Override
+	public Carpeta findCarpetaPrioridadBajaByUsuarioId(Long idUser) {
+		Iterable<Carpeta> carpetas = findAllCarpetaByUsuarioId(idUser);
+		Carpeta alta = new Carpeta();
+		
+		for(Carpeta elemento : carpetas) {
+			if(elemento.getNombre().equals("Prioridad Baja")) {
+				alta = elemento;
+			}
+		}
+		
+		return alta;
+	}
+
+	@Override
+	public List<Carpeta> findCarpetaByDescripcion(String descripcion) {
+		return carpetaRepository.findByNombre(descripcion);
 	}
 
 

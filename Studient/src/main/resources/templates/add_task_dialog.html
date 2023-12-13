@@ -44,7 +44,7 @@
 		<div class="dialog">
 			<h5><b>Añadir tarea</b></h5>
 			<div class="close-button" id="closeDialogTask">✖</div>
-			<form method="post" th:action="@{/addTarea}" style="margin-top: 1rem;" th:object="${formularioTarea}" th:method="put">
+			<form method="post" th:action="@{/user/addTarea}" style="margin-top: 1rem;" th:object="${formularioTarea}" th:method="put">
 				<label for="nombre">Nombre:</label>
 				<input type="text" id="nombre" name="nombre" th:field="*{nombre}" placeholder="Ingrese la descripción de la tarea">
 				<!-- Nuevo campo de prioridad -->
@@ -59,8 +59,8 @@
 					<label for="baja">Baja</label>
 				</div>
 
-				<input type="hidden" id"id_usuario_tarea" th:field="*{id}">
-				<input type="hidden" id"id_carpeta" th:field="*{idCarpeta}">
+				<input type="hidden" id="id_usuario_tarea" th:field="*{id}">
+				<input type="hidden" id="id_carpeta" th:field="*{idCarpeta}">
 				<button class="btn btn-primary " id="confirmar" type="submit">Confirmar</button>
 			</form>
 

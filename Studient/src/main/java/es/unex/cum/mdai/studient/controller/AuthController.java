@@ -87,7 +87,7 @@ public class AuthController {
 		System.out.println(logged_user.toString());
 		// El dashboard se mostrará inicialmente con las tareas de alta prioridad
 		Carpeta alta = cs.findCarpetaPrioridadAltaByUsuarioId(logged_user.getId());
-		List<Tarea> lt = (List<Tarea>) ts.findAllTareaByCarpetaId(alta.getId());
+		List<Tarea> lt = (List<Tarea>) ts.orderByTaskPriority(alta.getId());
 		model.addAttribute("tareas", lt.isEmpty() ? Collections.EMPTY_LIST : lt);
 		List<Carpeta> lc = (List<Carpeta>) cs.findAllCarpetaByUsuarioId(logged_user.getId());
 		model.addAttribute("carpetas", lc.isEmpty() ? Collections.EMPTY_LIST : lc);

@@ -71,7 +71,7 @@
 		<div class="dialog">
 			<h5><b>Añadir carpeta</b></h5>
 			<div class="close-button" id="closeDialogFolder">✖</div>
-			<form method="post" th:action="@{/addCarpeta}" style="margin-top: 1rem;" th:object="${formularioCarpeta}">
+			<form method="post" th:action="@{/user/addCarpeta}" style="margin-top: 1rem;" th:object="${formularioCarpeta}" th:method="put">
 				<label for="nombre">Nombre:</label>
 				<input type="text" id="nombre" name="nombre" placeholder="Ingrese el nombre de la carpeta"
 					th:field="*{descripcion}">

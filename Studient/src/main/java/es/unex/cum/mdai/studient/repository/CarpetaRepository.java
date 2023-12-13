@@ -13,5 +13,7 @@ import es.unex.cum.mdai.studient.model.Tarea;
 public interface CarpetaRepository extends CrudRepository<Carpeta, Long>{
 
 	public List<Carpeta> findByUsuarioId(Long id);
+	
+	public List<Carpeta> findByNombre(String descripcion);
 
 }

@@ -1,5 +1,6 @@
 package es.unex.cum.mdai.studient.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import es.unex.cum.mdai.studient.model.Carpeta;
@@ -23,4 +24,8 @@ public interface CarpetaService {
 	public int countCarpeta(Long usuarioId);
 	
 	public Iterable<Carpeta> saveCarpeta(Carpeta carpeta);
+
+	public Carpeta findCarpetaPrioridadBajaByUsuarioId(Long idUser);
+	
+	public List<Carpeta> findCarpetaByDescripcion(String descripcion);
 }

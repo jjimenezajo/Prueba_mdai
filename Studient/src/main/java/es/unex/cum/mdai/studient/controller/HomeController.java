@@ -90,7 +90,7 @@ public class HomeController {
 		System.out.println(logged_user.toString());
 		// El dashboard se mostrará inicialmente con las tareas de alta prioridad
 		Carpeta alta = cs.findCarpetaPrioridadAltaByUsuarioId(logged_user.getId());
-		List<Tarea> lt = (List<Tarea>) ts.findAllTareaByCarpetaId(alta.getId());
+		List<Tarea> lt = (List<Tarea>) ts.orderByTaskPriority(alta.getId());
 		model.addAttribute("tareas", lt.isEmpty() ? Collections.EMPTY_LIST : lt);
 		List<Carpeta> lc = (List<Carpeta>) cs.findAllCarpetaByUsuarioId(logged_user.getId());
 		model.addAttribute("carpetas", lc.isEmpty() ? Collections.EMPTY_LIST : lc);
@@ -101,6 +101,44 @@ public class HomeController {
 		return "dashboard";
 	}
 
+	@PutMapping("/user/addCarpeta")
+	public String addCarpeta(@ModelAttribute("formularioCarpeta") FormularioCarpeta formularioCarpeta, Model model) {
+		Usuario userbus = us.findUsuarioById(formularioCarpeta.getId()).get();
+		List<Carpeta> c= cs.findCarpetaByDescripcion(formularioCarpeta.getDescripcion());
+		boolean contiene = false;
+		if (c.size()>=1) {
+			int contador=0;
+			while (contador<c.size() && contiene==false) {
+				if(c.get(contador).getUsuario().getId()==formularioCarpeta.getId()) {
+					contiene=true;
+				}
+				contador++;
+			}
+		}
+		//Si el usuario no contiene una carpeta que se llame asi (puede haber varios usuarios que tengan la carpeta matematicas por ejemplo)
+		if (contiene==false) {
+			Carpeta carp_new = new Carpeta(formularioCarpeta.getDescripcion(), true, userbus);
+			userbus.addCarpeta(carp_new);
+			cs.saveCarpeta(carp_new);
+		}
+		else {
+			boolean mostrarAlerta = true;
+			String mensaje = ("El usuario ya tiene una carpeta con esta descripcion");
+			model.addAttribute("mensaje", mensaje);
+			model.addAttribute("mostrarAlerta", mostrarAlerta);
+		}
+		Carpeta alta = cs.findCarpetaPrioridadAltaByUsuarioId(userbus.getId());
+		List<Tarea> lt = (List<Tarea>) ts.orderByTaskPriority(alta.getId());
+		model.addAttribute("tareas", lt.isEmpty() ? Collections.EMPTY_LIST : lt);
+		List<Carpeta> lc = (List<Carpeta>) cs.findAllCarpetaByUsuarioId(userbus.getId());
+		model.addAttribute("carpetas", lc.isEmpty() ? Collections.EMPTY_LIST : lc);
+		model.addAttribute("idCarpeta", alta.getId());
+		
+		model.addAttribute("successful_login", userbus);
+		model.addAttribute("formularioTarea", new FormularioTarea());
+		model.addAttribute("formularioCarpeta", new FormularioCarpeta());
+		return"dashboard";
+	}
 	@PutMapping("/user/addTarea")
 	public String addTarea(@ModelAttribute("formularioTarea") FormularioTarea formularioTarea, Model model) {
 		String descripcion = formularioTarea.getNombre();
@@ -116,17 +154,23 @@ public class HomeController {
 				Tarea t1 = new Tarea();
 				t1.setDescripcion(descripcion);
 				t1.setEstado(Estado.PENDIENTE);
+				Carpeta car = new Carpeta();
 				if (prioridad.equals("alta")) {
 					t1.setPrioridad(Prioridad.ALTA);
+					car = cs.findCarpetaPrioridadAltaByUsuarioId(idUser);
 
 				} else {
+					car = cs.findCarpetaPrioridadBajaByUsuarioId(idUser);
 					t1.setPrioridad(Prioridad.BAJA);
 				}
+				t1.addCarpeta(car);
+				car.addTareas(t1);
 				user_reg.getCarpetas().get(i).addTareas(t1);
 				t1.addCarpeta(carpetas.get(i));
 				ts.saveTarea(t1);
 				cs.saveCarpeta(user_reg.getCarpetas().get(i));
-				tareas = (List<Tarea>) ts.findAllTareaByCarpetaId(user_reg.getCarpetas().get(i).getId());
+				cs.saveCarpeta(car);
+				tareas = (List<Tarea>) ts.orderByTaskPriority(user_reg.getCarpetas().get(i).getId());
 			}
 		}
 		model.addAttribute("tareas", tareas.isEmpty() ? Collections.EMPTY_LIST : tareas);
