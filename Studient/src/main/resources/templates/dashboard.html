@@ -18,23 +18,13 @@
 
 <body>
 
-	<script th:inline="javascript">
 
-        var miObjeto = /*[[${successful_login.id}]]*/ null;
-
-		console.log("Mi objeto "+miObjeto);
-    	/*var idus = document.getElementById('id_usuario');
-    	idus.value=idUsuario;
-    	var idcar = document.getElementById('id_carpeta');
-    	idcar.value=idCarpeta;*/
-    	
-	</script>
 	
 	<div th:replace="~{add_folder_dialog.html}"></div>
 	<div th:replace="~{add_task_dialog.html}"></div>
 
 	<!-- Incluir el fragmento en la página -->
-	<div th:replace="../static/fragments/header.html"></div>
+	<div th:replace="~{../static/fragments/header.html}"></div>
 
 	<div class="container-fluid">
 		<div class="row" style="flex: 1">
@@ -245,6 +235,36 @@
 		crossorigin="anonymous"></script>
 	<!-- JAVASCRIPT -->
 	<script type="text/javascript" src="/js/dashboard.js"></script>
+	
+	<!--Paso de información a los diálogos (add task & add folder) ocultos-->
+	<script th:inline="javascript">
+
+		var miObjeto = /*[[${successful_login.id}]]*/ null;
+
+		console.log("Mi objeto " + miObjeto);
+
+		init();
+
+		function init() {
+
+			var idUsuarioCarpetaElement = document.getElementById("id_usuario_carpeta");
+
+			if (idUsuarioCarpetaElement) {
+				console.log("Valor asignado " + miObjeto);
+				idUsuarioCarpetaElement.value = miObjeto;
+			} else {
+				console.error("Element with ID 'id_usuario_carpeta' not found.");
+			}
+		}
+
+
+
+
+		/*idus.value=idUsuario;
+		var idcar = document.getElementById('id_carpeta');
+		idcar.value=idCarpeta;*/
+
+	</script>
 
 
 </body>

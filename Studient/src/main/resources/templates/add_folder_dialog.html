@@ -58,6 +58,9 @@
 		}
 	</style>
 
+
+
+
 </head>
 
 
@@ -70,8 +73,9 @@
 			<div class="close-button" id="closeDialogFolder">✖</div>
 			<form method="post" th:action="@{/addCarpeta}" style="margin-top: 1rem;" th:object="${formularioCarpeta}">
 				<label for="nombre">Nombre:</label>
-				<input type="text" id="nombre" name="nombre" placeholder="Ingrese el nombre de la carpeta" th:field="*{descripcion}">
-				<input type="hidden" id"id_usuario" value="${successful_login.id}" th:field="*{id}">
+				<input type="text" id="nombre" name="nombre" placeholder="Ingrese el nombre de la carpeta"
+					th:field="*{descripcion}">
+				<input type="hidden" id="id_usuario_carpeta" th:field="*{id}">
 
 				<button class="btn btn-primary " id="confirmar" type="submit">Confirmar</button>
 			</form>
@@ -80,5 +84,7 @@
 	</div>
 
 </body>
+
+
 
 </html>
