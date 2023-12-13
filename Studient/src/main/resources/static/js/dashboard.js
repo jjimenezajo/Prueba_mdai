@@ -10,7 +10,7 @@ function startTimer() {
 
 	totalSeconds = parseTimeToSeconds(inputTime);
 
-	if (!isNaN(totalSeconds) && totalSeconds > 0 && pattern.test(totalSeconds)) {
+	if (!isNaN(totalSeconds) && totalSeconds > 0 && pattern.test(inputTime)) {
 		document.getElementById('start').disabled = true;
 		document.getElementById('timeInput').disabled = true;
 		remainingSeconds = totalSeconds;
@@ -40,11 +40,12 @@ function updateTimer() {
 		remainingSeconds--;
 		updateTimerDisplay();
 	} else {
+
+		reproducir();
+		stopTimer();
 		setTimeout(function() {
-			reproducir();
-			stopTimer();
 			alert('¡Tiempo terminado!');
-		}, 1);
+		}, 4000);
 	}
 }
 
