@@ -13,7 +13,9 @@ function startTimer() {
 	if (!isNaN(totalSeconds) && totalSeconds > 0 && pattern.test(inputTime)) {
 		document.getElementById('start').disabled = true;
 		document.getElementById('timeInput').disabled = true;
-		remainingSeconds = totalSeconds;
+		if (remainingSeconds == 0) {
+			remainingSeconds = totalSeconds;
+		}
 		updateTimerDisplay();
 		timer = setInterval(updateTimer, 1000);
 	} else {
@@ -77,11 +79,15 @@ function reproducir() {
 }
 
 //Funciones para la visualización y cierre del diálogo
+var botones = document.getElementsByClassName('openDialogFolder2');
+
 document.getElementById('openDialogFolder').addEventListener('click', function() {
 	var dialog_name = "folder";
 	var close_name = "closeDialogFolder";
 	document.getElementById(dialog_name).style.display = 'flex';
 	dialogVisibility(dialog_name, close_name);
+	document.getElementById("modificar_carpeta").value = "no";
+	document.getElementById("id_carpeta_modificar").value = 0;
 
 });
 
@@ -91,6 +97,19 @@ document.getElementById('openDialogTask').addEventListener('click', function() {
 	document.getElementById(dialog_name).style.display = 'flex';
 	dialogVisibility(dialog_name, close_name);
 });
+
+function editFolder(boton) {
+			var dialog_name = "folder";
+			var close_name = "closeDialogFolder";
+			var id = boton.getAttribute('id_carpeta_selecta');
+			document.getElementById(dialog_name).style.display = 'flex';
+			dialogVisibility(dialog_name, close_name);
+			document.getElementById("modificar_carpeta").value = "si";
+			document.getElementById("id_carpeta_modificar").value = id;
+
+};
+
+
 
 function dialogVisibility(d_name, c_name) {
 	document.getElementById(c_name).addEventListener('click', function() {
@@ -102,6 +121,7 @@ function dialogVisibility(d_name, c_name) {
 			document.getElementById(d_name).style.display = 'none';
 		}
 	});
+	
 }
 
 

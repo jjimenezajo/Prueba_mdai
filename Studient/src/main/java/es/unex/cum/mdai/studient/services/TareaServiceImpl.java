@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import es.unex.cum.mdai.studient.model.Carpeta;
 import es.unex.cum.mdai.studient.model.Tarea;
 import es.unex.cum.mdai.studient.repository.TareaRepository;
 
@@ -36,6 +35,11 @@ public class TareaServiceImpl implements TareaService {
 		
 		tareaRepository.deleteById(tareaId);
 			
+		if (tareaRepository.findById(tareaId).isEmpty()) {
+			successful=true;
+		}else {
+			successful=false;
+		}
 		return successful;
 	}
 
@@ -61,18 +65,6 @@ public class TareaServiceImpl implements TareaService {
 		}
 		
 		return successful;
-	}
-
-	@Override
-	public int countTarea(Long carpetaId) {
-		Iterable<Tarea> it_c = findAllTareaByCarpetaId(carpetaId);
-		int count = 0;
-		
-		for(Tarea elemento : it_c) {
-			count++;
-		}
-		
-		return count;
 	}
 
 	@Override

@@ -93,6 +93,7 @@ public class AuthController {
 		model.addAttribute("carpetas", lc.isEmpty() ? Collections.EMPTY_LIST : lc);
 		model.addAttribute("successful_login", logged_user);
 		model.addAttribute("idCarpeta", alta.getId());
+		model.addAttribute("CarpetaMostrada", alta.getNombre());
 		model.addAttribute("formularioTarea", new FormularioTarea());
 		model.addAttribute("formularioCarpeta", new FormularioCarpeta());
 		return "dashboard";

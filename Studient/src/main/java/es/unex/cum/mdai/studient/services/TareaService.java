@@ -17,9 +17,7 @@ public interface TareaService {
 	public Iterable<Tarea> updateTarea(Tarea tarea);
 	
 	public boolean updateDescription(Long id, String descripcion); //Falta el resto de atributos por actualizar
-	
-	public int countTarea(Long carpetaId);
-	
+		
 	public Iterable<Tarea> orderByTaskPriority(Long tareaId);
 	
 	public Iterable<Tarea> saveTarea(Tarea tarea);
