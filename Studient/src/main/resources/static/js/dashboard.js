@@ -43,8 +43,8 @@ function updateTimer() {
 		updateTimerDisplay();
 	} else {
 
-		reproducir();
 		stopTimer();
+		reproducir();
 		setTimeout(function() {
 			alert('¡Tiempo terminado!');
 		}, 4000);

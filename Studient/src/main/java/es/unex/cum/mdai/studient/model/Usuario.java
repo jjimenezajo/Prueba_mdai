@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -23,7 +26,6 @@ public class Usuario {
 	private String contrasena;
 	private int monedero;
 	private int inicios_consecutivos;
-	
 
 	@OneToMany (mappedBy = "usuario", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	List<Carpeta> carpetas;
@@ -110,8 +112,6 @@ public class Usuario {
 	public void setInicios_consecutivos(int inicios_consecutivos) {
 		this.inicios_consecutivos = inicios_consecutivos;
 	}
-
-	
 	
 	@Override
 	public int hashCode() {
@@ -151,4 +151,5 @@ public class Usuario {
 	public void addSesion(Sesion s) {
 		sesiones.add(s);
 	}
+	
 }
