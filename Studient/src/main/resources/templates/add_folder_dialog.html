@@ -69,14 +69,15 @@
 
 	<div class="overlay" id="folder">
 		<div class="dialog">
-			<h5><b>Añadir carpeta</b></h5>
+			<h5><b id="texto_folder">Añadir carpeta</b></h5>
 			<div class="close-button" id="closeDialogFolder">✖</div>
-			<form method="post" th:action="@{/user/addCarpeta}" style="margin-top: 1rem;" th:object="${formularioCarpeta}" th:method="put">
+			<form method="post" th:action="@{/user/actionCarpeta}" style="margin-top: 1rem;" th:object="${formularioCarpeta}" th:method="put">
 				<label for="nombre">Nombre:</label>
 				<input type="text" id="nombre" name="nombre" placeholder="Ingrese el nombre de la carpeta"
 					th:field="*{descripcion}">
 				<input type="hidden" id="id_usuario_carpeta" th:field="*{id}">
-
+				<input type="hidden" id="modificar_carpeta" th:field="*{editar}">
+				<input type="hidden" id="id_carpeta_modificar" th:field="*{idEditar}">
 				<button class="btn btn-primary " id="confirmar" type="submit">Confirmar</button>
 			</form>
 
