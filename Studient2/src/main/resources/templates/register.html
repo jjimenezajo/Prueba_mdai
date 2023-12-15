@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head> <!-- Información importante para el navegador -->
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Studien't</title> <!-- Lo que se muestra en la pestaña del navegador -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Barlow&display=swap" rel="stylesheet">
+	<link href="/css/register.css" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="/images/logo_mdai.png" />
+
+</head>
+
+<body><!-- Contendrá información importante para el usuario -->
+
+	<header>
+
+		<h1 class="titulo">Studien't</h1>
+
+			<img id="escudo" src="/images/logo_mdai.png" alt="Logo Studient" />
+
+
+	</header>
+
+
+	<main class="contenedor sombra">
+
+		<section class="form-box">
+			<h2>Registrarse</h2>
+			<form class="formulario" method="post" th:action="@{/doRegister}" th:object="${usuarioRegister}" id="form">
+				<fieldset>
+					<div class="campo">
+						<label>Correo</label>
+						<input class="input-text" type="text" required="" th:field="*{correo}" placeholder="Mail"
+							id="correo" name="correo">
+						<hr>
+					</div>
+					<br>
+
+					<div class="campo">
+						<label for="rep_contrasena">Repetir Contraseña</label>
+						<input class="input-text" type="password" required="" id="rep_contrasena" placeholder="Repetir"
+							name="rep_contrasena">
+						<hr>
+					</div>
+					<br>
+
+
+					<div class="campo">
+						<label for="rep_contrasena">Contraseña</label>
+						<input class="input-text" type="password" th:field="*{contrasena}" required="" id="contrasena"
+							placeholder="Contraseña" name="contrasena">
+						<hr>
+					</div>
+
+					<div class="enviar">
+
+						<input class="boton w-sm-100 right" type="submit" value="Validar">
+						<!-- Son válidas (input o button) ambas formas, me quedaré con la primera -->
+						<!-- <button type="submit">Enviar</button> Tiene cierre y el texto del botón va entre las etiquetas -->
+						<input class="boton w-sm-100" type="reset" id="reset" value="reset" />
+					</div>
+
+				</fieldset>
+			</form>
+
+			<p>Si ya estás registrado, pulse <a th:href="@{/}">aquí</a></p>
+
+		</section>
+
+	</main>
+	<footer class="footer">
+		<p>Todos los derechos reservados. Álvaro Barroso y José Jiménez</p>
+	</footer>
+
+	<!-- JAVASCRIPT -->
+	<script type="text/javascript" src="/js/register.js"></script>
+
+</body>
+
+</html>
