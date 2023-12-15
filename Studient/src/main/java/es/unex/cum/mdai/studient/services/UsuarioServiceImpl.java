@@ -29,13 +29,11 @@ public class UsuarioServiceImpl implements UsuarioService {
 		Carpeta alta = new Carpeta("Prioridad Alta", false, u);
 		Carpeta baja = new Carpeta("Prioridad Baja", false, u);
 		Carpeta completadas = new Carpeta("Tareas completadas", false, u);
-		Carpeta nulas = new Carpeta("Tareas sin realizar", false, u);
 
 		// colocamos las distintas carpetas en la lista de carpetas del usuario
 		u.addCarpeta(alta);
 		u.addCarpeta(baja);
 		u.addCarpeta(completadas);
-		u.addCarpeta(nulas);
 
 		usuarioRepository.save(u);
 	}

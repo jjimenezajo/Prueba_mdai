@@ -224,11 +224,6 @@ public class StudientApplicationFolderTests {
 				carpetaRepository.save(completadas);
 			}
 
-			case NULO -> {
-				System.out.println("La tarea '"+t.getDescripcion()+"' se eliminará de la carpeta tareas no realizadas");
-				nulas.getTareas().remove(t);
-				carpetaRepository.save(nulas);
-			}
 
 			case PENDIENTE -> {
 				

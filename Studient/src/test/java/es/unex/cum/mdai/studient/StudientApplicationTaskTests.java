@@ -45,13 +45,11 @@ public class StudientApplicationTaskTests {
 		Carpeta alta = new Carpeta("Prioridad Alta", false, u);
 		Carpeta baja = new Carpeta("Prioridad Baja", false, u);
 		Carpeta completadas = new Carpeta("Tareas completadas", false, u);
-		Carpeta nulas = new Carpeta("Tareas sin realizar", false, u);
 
 		// colocamos las distintas carpetas en la lista de carpetas del usuario
 		u.addCarpeta(alta);
 		u.addCarpeta(baja);
 		u.addCarpeta(completadas);
-		u.addCarpeta(nulas);
 
 		// intentamos insertar el usuario junto a sus carpetas
 		it_u = usuarioRepository.findById(u.getId());
@@ -212,7 +210,7 @@ public class StudientApplicationTaskTests {
 		t2.setEstado(Estado.COMPLETADO);
 		t2.setPrioridad(null);
 
-		t3.setEstado(Estado.NULO);
+		t3.setEstado(Estado.PENDIENTE);
 		t3.setPrioridad(null);
 
 		for (Carpeta c : it_c) {
@@ -233,7 +231,6 @@ public class StudientApplicationTaskTests {
 		alta = carpetaRepository.findById(9L).get();
 		alta.setTareas(tareaRepository.findAllByCarpetaId(alta.getId()));
 		alta.getTareas().remove(1);
-		nulas.addTareas(t3);
 		
 
 		tareaRepository.save(t2);
@@ -241,7 +238,6 @@ public class StudientApplicationTaskTests {
 		carpetaRepository.save(alta);
 		carpetaRepository.save(baja);
 		carpetaRepository.save(completadas);
-		carpetaRepository.save(nulas);
 
 		it_c = carpetaRepository.findAll();
 		for (Carpeta c : it_c) {
@@ -336,8 +332,7 @@ public class StudientApplicationTaskTests {
 		baja.setTareas(tareaRepository.findAllByCarpetaId(baja.getId()));
 		completadas = carpetaRepository.findById(11L).get();
 		completadas.setTareas(tareaRepository.findAllByCarpetaId(completadas.getId()));
-		nulas = carpetaRepository.findById(12L).get();
-		nulas.setTareas(tareaRepository.findAllByCarpetaId(nulas.getId()));
+
 		i_t = tareaRepository.findAllByCarpetaId(mdai.getId());
 
 		//
@@ -355,12 +350,7 @@ public class StudientApplicationTaskTests {
 				carpetaRepository.save(completadas);
 			}
 
-			case NULO -> {
-				System.out.println(
-						"La tarea '" + t.getDescripcion() + "' se eliminará de la carpeta tareas no realizadas");
-				nulas.getTareas().remove(t);
-				carpetaRepository.save(nulas);
-			}
+
 
 			case PENDIENTE -> {
 

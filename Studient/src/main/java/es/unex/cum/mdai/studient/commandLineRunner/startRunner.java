@@ -50,21 +50,19 @@ public class startRunner implements CommandLineRunner{
 		Carpeta alta = new Carpeta("Prioridad Alta", false, u);
 		Carpeta baja = new Carpeta("Prioridad Baja", false, u);
 		Carpeta completadas = new Carpeta("Tareas completadas", false, u);
-		Carpeta nulas = new Carpeta("Tareas sin realizar", false, u);
 		Carpeta mdai = new Carpeta("Desarrollo de Aplicaciones para Dispositivos Móviles", true, u);
 
 		// colocamos las distintas carpetas en la lista de carpetas del usuario
 		u.addCarpeta(alta);
 		u.addCarpeta(baja);
 		u.addCarpeta(completadas);
-		u.addCarpeta(nulas);
 		u.addCarpeta(mdai);
 		
 		Tarea t1 = new Tarea(Prioridad.ALTA, "Terminar informe de costes");
 		Tarea t2 = new Tarea(Prioridad.BAJA, "Terminar informe de riesgos");
 		Tarea t3 = new Tarea(Prioridad.ALTA, "Montaje Arduino");
 		Tarea t4 = new Tarea(Prioridad.ALTA, "Testeo de HW");
-		t1.setEstado(Estado.NULO);
+		t1.setEstado(Estado.PENDIENTE);
 		u.getCarpetas().get(3).addTareas(t1);
 		t1.addCarpeta(u.getCarpetas().get(3));
 		t4.setEstado(Estado.COMPLETADO);
