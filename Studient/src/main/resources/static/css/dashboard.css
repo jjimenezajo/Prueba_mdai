@@ -1,0 +1,172 @@
+body {
+	font-family: 'Barlow', sans-serif !important;
+}
+
+p {
+	font-size: 18px !important;
+}
+
+h1,
+h2 {
+	font-weight: bold !important;
+	display: inline;
+}
+
+a {
+	display: inline !important;
+}
+
+.folder_title {
+	margin-left: 1rem;
+	margin-top: 2rem;
+}
+
+.section {
+	margin-bottom: 2rem;
+}
+
+/*Seccion del cronometro*/
+.right-box {
+	float: right;
+	width: 55% !important;
+	height: 70vh;
+}
+
+/*Seccion de tareas*/
+.left-box {
+	width: 40%;
+	height: 70vh;
+	display: inline-block;
+}
+
+#cronometer {
+	text-align: center;
+}
+
+/*Altura de la columna de la izquierda*/
+.height {
+	height: calc(100vh - 113.75px);
+}
+
+/*Lista de carpetas*/
+.scroll {
+	margin-left: 1rem;
+	height: 75%;
+	overflow-y: scroll;
+	margin-top: 1rem;
+}
+
+/*posición de cada elemento de la lista de carpetas*/
+.position {
+	padding-left: 0 !important;
+	padding-bottom: 0 !important;
+}
+
+.horizontal-line {
+	height: .5px !important;
+}
+
+.vertical-line {
+	border-right: 1px solid #dee2e6;
+}
+
+/*separación entre el icono de añadir y su botón*/
+.boundaries {
+	padding: 0 !important;
+	margin-bottom: .05rem !important;
+}
+
+/*Cambio de color del icono de añadir*/
+.hover:hover .add_icon {
+	stroke: rgb(255, 255, 255);
+	/* Cambia el color de la línea del SVG al dejar el ratón encima */
+}
+
+/*Botón para añadir carpetas y tareas*/
+.boton-add {
+	padding: 0 !important;
+	position: relative;
+	top: -0.5rem;
+	left: 1rem;
+}
+
+nav {
+	padding-top: 1rem;
+}
+
+#img-cronometer {
+	width: 275px;
+	display: block;
+	margin: 2rem auto;
+	position: relative;
+	/* Asegura que la imagen tenga una posición diferente de static */
+	z-index: 1;
+	/* Z-index menor que el del párrafo para que esté detrás */
+}
+
+.position-clock {
+	position: absolute;
+	top: 65%;
+	/* Ajusta según sea necesario para centrar verticalmente */
+	/* Centra el elemento en relación con su propio tamaño */
+	left: 31.5%;
+	z-index: 2;
+	/* Z-index mayor que el de la imagen para que esté encima */
+	background-color: white;
+	border: 1px solid;
+	border-radius: 5px;
+	padding: .2rem;
+	font-size: 25px !important;
+	width: 7rem;
+}
+
+.set-time {
+	margin-left: .5rem;
+	width: 6.7rem;
+	padding: .2rem;
+	text-align: center;
+}
+
+#btn-update {
+	padding-top: .2rem !important;
+	padding-left: .2rem !important;
+	padding-right: .2rem !important;
+	padding-bottom: .5rem !important;
+}
+
+#btn-delete {
+	padding: .2rem !important;
+}
+
+.scroll-table {
+	height: 63vh;
+	overflow-y: scroll;
+}
+
+/*Color de fondo del encabezado y columna de la izquierda*/
+.bg-outline {
+	background-color: #ececec;
+}
+
+table {
+	border-collapse: separate !important;
+	border-spacing: 5px;
+}
+
+.bd-placeholder-img {
+	font-size: 1.125rem;
+	text-anchor: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+}
+
+#timer {
+	font-size: 24px;
+}
+
+@media (min-width: 768px) {
+	.bd-placeholder-img-lg {
+		font-size: 3.5rem;
+	}
+}

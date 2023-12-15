@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head> <!-- Informacion importante para el navegador -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studien't</title> <!-- Lo que se muestra en la pestana del navegador -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" type="image/png" href="/images/logo_mdai.png" />
+    <link href="/css/login.css" rel="stylesheet">
+
+</head>
+
+<body> <!-- Contendra informacion importante para el usuario -->
+
+	<script th:if="${mostrarAlerta}" th:inline="javascript">
+        /*<![CDATA[*/
+        alert('[(${mensaje})]');
+        /*]]>*/
+    </script>
+    <header>
+
+        <h1 class="titulo">Studien't</h1>
+        <img id="escudo" src="/images/logo_mdai.png" alt="Logo Studient" />
+
+    </header>
+
+    <main class="contenedor sombra">
+
+        <h2>Inicio de Sesión</h2>
+        <section class="form-box">
+
+            <form class="formulario" method="post" th:action="@{/doLogin}" th:object="${usuario}" id="form">
+                <fieldset>
+
+                    <div class="campo">
+                        <label>Correo</label>
+                        <input class="input-text" type="text" required="" th:field="*{correo}" placeholder="Mail" id="correo" name="correo">
+                        <hr>
+                    </div>
+                    <br>
+                    <div class="campo">
+                        <label for="apellidos">Contraseña</label>
+                        <input class="input-text" type="password" th:field="*{contrasena}" required="" id="contrasena" placeholder="Contraseña"
+                            name="contrasena">
+                        <hr>
+                    </div>
+                    <br>
+                    <div class="enviar alinear-derecha">
+                        <input class="boton w-sm-100" type="submit" value="Validar">
+                        <!-- Son validas (input o button) ambas formas, me quedare con la primera -->
+                        <!-- <button type="submit">Enviar</button> Tiene cierre y el texto del boton va entre las etiquetas -->
+                    </div>
+
+                </fieldset>
+            </form>
+
+            <p>Si no estas registrado, pulse <a th:href="@{/register}">aquí</a></p>
+
+        </section>
+
+    </main>
+    <footer class="footer" style="margin-bottom: 22px;">
+        <p>Todos los derechos reservados. Álvaro Barroso y José Jiménez</p>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script type="text/javascript" src="/js/login.js"></script>
+
+</body>
+
+</html>
