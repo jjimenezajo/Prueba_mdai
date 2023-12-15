@@ -51,17 +51,9 @@ public class HomeController {
 		Usuario logged_user = us.findUsuarioById(id2).get();
 		List<Tarea> lt = (List<Tarea>) ts.orderByTaskPriority(id);
 		List<Carpeta> lc = (List<Carpeta>) cs.findAllCarpetaByUsuarioId(logged_user.getId());
-		List<Tarea> lt_final = new ArrayList<Tarea>();
 		Carpeta carp = cs.findCarpetaById(id).get();
 		if (carp.isMutabilidad() == true) {
-			for (int i = 0; i < lt.size(); i++) {
-				if (lt.get(i).getEstado() != Estado.NULO) {
-					lt_final.add(lt.get(i));
-				}
-			}
-			lt = lt_final;
-			boolean mutable = true;
-			model.addAttribute("mutable", mutable);
+			model.addAttribute("mutable", true);
 		}
 		model.addAttribute("tareas", lt.isEmpty() ? Collections.EMPTY_LIST : lt);
 		model.addAttribute("carpetas", lc.isEmpty() ? Collections.EMPTY_LIST : lc);
@@ -110,42 +102,28 @@ public class HomeController {
 		t.getCarpetas();
 		userbus.setCarpetas((List<Carpeta>)cs.findAllCarpetaByUsuarioId(userbus.getId()));
 		int borrado_carpetas=0;
-		Carpeta c = new Carpeta();
-		for (int i=0; i<userbus.getCarpetas().size(); i++) {
-			if(userbus.getCarpetas().get(i).getId()==t.getCarpetas().get(0).getId() || userbus.getCarpetas().get(i).getId()==t.getCarpetas().get(1).getId()) {
+		int v=0;
+		while (v<userbus.getCarpetas().size() && borrado_carpetas<2) {
+			if(userbus.getCarpetas().get(v).getId()==t.getCarpetas().get(0).getId() || userbus.getCarpetas().get(v).getId()==t.getCarpetas().get(1).getId()) {
 				int q=0;
 				int actual_borrado=borrado_carpetas;
-				while (q<userbus.getCarpetas().get(i).getTareas().size() && actual_borrado==borrado_carpetas) {
-					if (userbus.getCarpetas().get(i).getTareas().get(q).getId()==tareaId) {
-						userbus.getCarpetas().get(i).getTareas().remove(q);
-						cs.saveCarpeta(userbus.getCarpetas().get(i));
-						c=userbus.getCarpetas().get(i);
+				while (q<userbus.getCarpetas().get(v).getTareas().size() && actual_borrado==borrado_carpetas) {
+					if (userbus.getCarpetas().get(v).getTareas().get(q).getId()==tareaId) {
+						userbus.getCarpetas().get(v).getTareas().remove(q);
+						cs.saveCarpeta(userbus.getCarpetas().get(v));
 						borrado_carpetas++;
 					}
 					q++;
 				}
 			}
-			if (userbus.getCarpetas().get(i).getId()==idCarpetaSeleccionada) {
-				c=userbus.getCarpetas().get(i);
-			}
+			v++;
 		}
-		us.saveUsuario(userbus);
 		ts.deleteTareaById(tareaId);
 		List<Tarea> lt = (List<Tarea>) ts.orderByTaskPriority(idCarpetaSeleccionada);
-
-		List<Tarea> lt_final = new ArrayList<Tarea>();
 		Carpeta carp = cs.findCarpetaById(idCarpetaSeleccionada).get();
 		if (carp.isMutabilidad() == true) {
-			for (int i = 0; i < lt.size(); i++) {
-				if (lt.get(i).getEstado() != Estado.NULO) {
-					lt_final.add(lt.get(i));
-				}
-			}
-			lt = lt_final;
-			boolean mutable = true;
-			model.addAttribute("mutable", mutable);
+			model.addAttribute("mutable", true);
 		}
-		lt = lt_final;
 		model.addAttribute("tareas", lt.isEmpty() ? Collections.EMPTY_LIST : lt);
 		List<Carpeta> lc = (List<Carpeta>) cs.findAllCarpetaByUsuarioId(userbus.getId());
 		model.addAttribute("carpetas", lc.isEmpty() ? Collections.EMPTY_LIST : lc);
@@ -158,10 +136,12 @@ public class HomeController {
 
 		return"dashboard";
 	}
-	@PutMapping("/user/addCarpeta")
+	@PutMapping("/user/actionCarpeta")
 	public String addCarpeta(@ModelAttribute("formularioCarpeta") FormularioCarpeta formularioCarpeta, Model model) {
 		Usuario userbus = us.findUsuarioById(formularioCarpeta.getId()).get();
 		List<Carpeta> c= cs.findCarpetaByDescripcion(formularioCarpeta.getDescripcion());
+		Carpeta alta = new Carpeta();
+		if (formularioCarpeta.getEditar().equals("no")) {
 		boolean contiene = false;
 		if (c.size()>=1) {
 			int contador=0;
@@ -184,7 +164,15 @@ public class HomeController {
 			model.addAttribute("mensaje", mensaje);
 			model.addAttribute("mostrarAlerta", mostrarAlerta);
 		}
-		Carpeta alta = cs.findCarpetaPrioridadAltaByUsuarioId(userbus.getId());
+		alta = cs.findCarpetaPrioridadAltaByUsuarioId(userbus.getId());
+		}
+		else {
+			Carpeta carp_aux = cs.findCarpetaById(formularioCarpeta.getIdEditar()).get();
+			carp_aux.setNombre(formularioCarpeta.getDescripcion());
+			cs.saveCarpeta(carp_aux);
+			alta = carp_aux;
+
+		}
 		List<Tarea> lt = (List<Tarea>) ts.orderByTaskPriority(alta.getId());
 		model.addAttribute("tareas", lt.isEmpty() ? Collections.EMPTY_LIST : lt);
 		List<Carpeta> lc = (List<Carpeta>) cs.findAllCarpetaByUsuarioId(userbus.getId());
@@ -196,6 +184,9 @@ public class HomeController {
 		model.addAttribute("formularioCarpeta", new FormularioCarpeta());
 		model.addAttribute("CarpetaMostrada", alta.getNombre());
 
+		if (alta.isMutabilidad()==true) {
+			model.addAttribute("mutable", true);
+		}
 		return"dashboard";
 	}
 	@PutMapping("/user/addTarea")
@@ -231,7 +222,7 @@ public class HomeController {
 				cs.saveCarpeta(car);
 			}
 		}
-		Carpeta c= cs.findCarpetaPrioridadAltaByUsuarioId(idUser);
+		Carpeta c= cs.findCarpetaById(idCarpeta).get();
 		tareas=c.getTareas();
 		model.addAttribute("tareas", tareas.isEmpty() ? Collections.EMPTY_LIST : tareas);
 		model.addAttribute("carpetas",
@@ -240,6 +231,11 @@ public class HomeController {
 		model.addAttribute("idCarpeta", c.getId());
 		model.addAttribute("formularioTarea", new FormularioTarea());
 		model.addAttribute("formularioCarpeta", new FormularioCarpeta());
+		model.addAttribute("CarpetaMostrada", c.getNombre());
+
+		if (c.isMutabilidad()==true) {
+			model.addAttribute("mutable", true);
+		}
 		return "dashboard";
 	}
 

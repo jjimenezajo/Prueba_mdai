@@ -46,13 +46,11 @@ public class StudientApplicationUserTests {
 		Carpeta alta = new Carpeta("Prioridad Alta", false, u);
 		Carpeta baja = new Carpeta("Prioridad Baja", false, u);
 		Carpeta completadas = new Carpeta("Tareas completadas", false, u);
-		Carpeta nulas = new Carpeta("Tareas sin realizar", false, u);
 
 		// colocamos las distintas carpetas en la lista de carpetas del usuario
 		u.addCarpeta(alta);
 		u.addCarpeta(baja);
 		u.addCarpeta(completadas);
-		u.addCarpeta(nulas);
 
 		// intentamos insertar el usuario junto a sus carpetas
 		it_u = usuarioRepository.findById(u.getId());
