@@ -4,8 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.ElementCollection;
@@ -52,6 +57,7 @@ public class Usuario {
 		this.carpetas= new ArrayList<>();
 		this.sesiones = new ArrayList<>();
 	}
+
 
 	public String getCorreo() {
 		return correo;
@@ -112,7 +118,7 @@ public class Usuario {
 	public void setInicios_consecutivos(int inicios_consecutivos) {
 		this.inicios_consecutivos = inicios_consecutivos;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(carpetas, contrasena, correo, id, inicios_consecutivos, monedero, sesiones);
@@ -152,4 +158,9 @@ public class Usuario {
 		sesiones.add(s);
 	}
 	
+	public UserDetails asUser(PasswordEncoder encoder) {	
+		 return User.withUsername(getCorreo()) //
+		 .password(encoder.encode(getContrasena())) //
+		 .build();
+		}
 }

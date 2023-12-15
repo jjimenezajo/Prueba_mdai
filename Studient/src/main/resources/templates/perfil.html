@@ -68,8 +68,13 @@
 		
 		.back-button{
 			position: relative; 
-			top: 1rem;
+			top: 2rem;
 			left: 1rem;
+		}
+		
+		.container-fluid{
+			margin-left: 40%;
+			padding: 0 !important
 		}
 		
 		
@@ -94,7 +99,7 @@
 	</a>
 	<div class="container-fluid middle">
 		<h2 class="folder_title">Perfil</h2>
-		<div class="contenido">
+		<div>
 			<form action="#" th:action="@{/user/updateUsuario/{id}(id=${usuarioUpdate.id})}" th:object="${usuarioUpdate}"
 				method="post" th:method="put">
 				<div class="form-row">

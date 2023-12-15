@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import es.unex.cum.mdai.studient.model.Carpeta;
 import es.unex.cum.mdai.studient.model.Estado;
@@ -24,6 +28,8 @@ import es.unex.cum.mdai.studient.model.Usuario;
 import es.unex.cum.mdai.studient.services.CarpetaService;
 import es.unex.cum.mdai.studient.services.TareaService;
 import es.unex.cum.mdai.studient.services.UsuarioService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 /** CONTROLADOR DEL PANEL DE GESTIÓN DEL USUARIO **/
 @Controller
@@ -41,13 +47,24 @@ public class HomeController {
 	}
 
 	@GetMapping("/logout")
-	public String doLogout(Model model) {
+	public String doLogout(HttpServletRequest req, Model model) {
+        HttpSession session = req.getSession(true);
+        SecurityContextHolder.clearContext();
+        session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
+        session.invalidate();
 		model.addAttribute("usuario", new Usuario());
 		return "login";
 	}
 
 	@GetMapping("/user/cargarCarpeta")
 	public String cargarCarpeta(@RequestParam Long id, @RequestParam Long id2, Model model) {
+		
+		//comprobación de que el usuario que accede a esta URL es autenticado y no se accede
+		//a un dashboard ajeno
+		if ( checkId(id2) == false ) {
+			return "accessDenied";
+		}
+		
 		Usuario logged_user = us.findUsuarioById(id2).get();
 		List<Tarea> lt = (List<Tarea>) ts.orderByTaskPriority(id);
 		List<Carpeta> lc = (List<Carpeta>) cs.findAllCarpetaByUsuarioId(logged_user.getId());
@@ -69,12 +86,17 @@ public class HomeController {
 		model.addAttribute("idCarpeta", id);
 		model.addAttribute("formularioTarea", new FormularioTarea());
 		model.addAttribute("formularioCarpeta", new FormularioCarpeta());
-		model.addAttribute("CarpetaMostrada", carp.getNombre());
+
 		return "dashboard";
 	}
 
 	@DeleteMapping("/user/deleteUsuario/{id}")
 	public String deleteUsuario(@PathVariable("id") Long id, Model model) {
+		
+		if ( checkId(id) == false ) {
+			return "accessDenied";
+		}
+		
 		System.out.println("\t usuarioController::deleteUsuario");
 		// no es estrictamente necesario aniadir los usuarios al modelo en este caso
 		us.deleteUsuarioById(id);
@@ -84,6 +106,14 @@ public class HomeController {
 
 	@GetMapping("/user/dashboardVuelta/{id}")
 	public String accessBack(@PathVariable("id") Long usuarioId, Model model) {
+		
+
+		//comprobación de que el usuario que accede a esta URL es autenticado y no se accede
+		//a un dashboard ajeno
+		if ( checkId(usuarioId) == false ) {
+			return "accessDenied";
+		}
+		
 		Usuario logged_user = us.findUsuarioById(usuarioId).get();
 		// CARGAMOS EL MODELO CON LA INFORMACIÓN DEL USUARIO PARA MOSTRAR SU PANEL DE
 		// GESTIÓN
@@ -98,19 +128,23 @@ public class HomeController {
 		model.addAttribute("idCarpeta", alta.getId());
 		model.addAttribute("formularioTarea", new FormularioTarea());
 		model.addAttribute("formularioCarpeta", new FormularioCarpeta());
-		model.addAttribute("CarpetaMostrada", alta.getNombre());
-
 		return "dashboard";
 	}
 
 	@DeleteMapping("/user/deleteTarea")
-	public String deleteTarea(@RequestParam Long tareaId, @RequestParam Long idUser, @RequestParam Long idCarpetaSeleccionada, Model model) {
+	public String deleteTarea(@RequestParam Long tareaId, @RequestParam Long idUser, Model model) {
+		
+		//comprobación de que el usuario que accede a esta URL es autenticado y no se accede
+		//a un dashboard ajeno
+		if ( checkId(idUser) == false ) {
+			return "accessDenied";
+		}
+		
 		Usuario userbus = us.findUsuarioById(idUser).get();
 		Tarea t = ts.findTareaById(tareaId).get();
 		t.getCarpetas();
 		userbus.setCarpetas((List<Carpeta>)cs.findAllCarpetaByUsuarioId(userbus.getId()));
 		int borrado_carpetas=0;
-		Carpeta c = new Carpeta();
 		for (int i=0; i<userbus.getCarpetas().size(); i++) {
 			if(userbus.getCarpetas().get(i).getId()==t.getCarpetas().get(0).getId() || userbus.getCarpetas().get(i).getId()==t.getCarpetas().get(1).getId()) {
 				int q=0;
@@ -119,45 +153,27 @@ public class HomeController {
 					if (userbus.getCarpetas().get(i).getTareas().get(q).getId()==tareaId) {
 						userbus.getCarpetas().get(i).getTareas().remove(q);
 						cs.saveCarpeta(userbus.getCarpetas().get(i));
-						c=userbus.getCarpetas().get(i);
 						borrado_carpetas++;
 					}
 					q++;
 				}
 			}
-			if (userbus.getCarpetas().get(i).getId()==idCarpetaSeleccionada) {
-				c=userbus.getCarpetas().get(i);
-			}
-		}
-		us.saveUsuario(userbus);
-		ts.deleteTareaById(tareaId);
-		List<Tarea> lt = (List<Tarea>) ts.orderByTaskPriority(idCarpetaSeleccionada);
 
-		List<Tarea> lt_final = new ArrayList<Tarea>();
-		Carpeta carp = cs.findCarpetaById(idCarpetaSeleccionada).get();
-		if (carp.isMutabilidad() == true) {
-			for (int i = 0; i < lt.size(); i++) {
-				if (lt.get(i).getEstado() != Estado.NULO) {
-					lt_final.add(lt.get(i));
-				}
-			}
-			lt = lt_final;
-			boolean mutable = true;
-			model.addAttribute("mutable", mutable);
 		}
-		lt = lt_final;
+		ts.deleteTareaById(tareaId);
+		Carpeta alta = cs.findCarpetaPrioridadAltaByUsuarioId(userbus.getId());
+		List<Tarea> lt = (List<Tarea>) ts.orderByTaskPriority(alta.getId());
 		model.addAttribute("tareas", lt.isEmpty() ? Collections.EMPTY_LIST : lt);
 		List<Carpeta> lc = (List<Carpeta>) cs.findAllCarpetaByUsuarioId(userbus.getId());
 		model.addAttribute("carpetas", lc.isEmpty() ? Collections.EMPTY_LIST : lc);
-		model.addAttribute("idCarpeta", carp.getId());
+		model.addAttribute("idCarpeta", alta.getId());
 		
 		model.addAttribute("successful_login", userbus);
 		model.addAttribute("formularioTarea", new FormularioTarea());
 		model.addAttribute("formularioCarpeta", new FormularioCarpeta());
-		model.addAttribute("CarpetaMostrada", carp.getNombre());
-
 		return"dashboard";
 	}
+	
 	@PutMapping("/user/addCarpeta")
 	public String addCarpeta(@ModelAttribute("formularioCarpeta") FormularioCarpeta formularioCarpeta, Model model) {
 		Usuario userbus = us.findUsuarioById(formularioCarpeta.getId()).get();
@@ -194,12 +210,12 @@ public class HomeController {
 		model.addAttribute("successful_login", userbus);
 		model.addAttribute("formularioTarea", new FormularioTarea());
 		model.addAttribute("formularioCarpeta", new FormularioCarpeta());
-		model.addAttribute("CarpetaMostrada", alta.getNombre());
-
 		return"dashboard";
 	}
+	
 	@PutMapping("/user/addTarea")
 	public String addTarea(@ModelAttribute("formularioTarea") FormularioTarea formularioTarea, Model model) {
+		
 		String descripcion = formularioTarea.getNombre();
 		String prioridad = formularioTarea.getPrioridad();
 		Long idCarpeta = formularioTarea.getIdCarpeta();
@@ -245,13 +261,22 @@ public class HomeController {
 
 	@GetMapping("/user/perfil/{id}")
 	public String showPerfil(@PathVariable("id") Long usuarioId, Model model) {
+//		if ( checkId(usuarioId) == false ) {
+//			return "accessDenied";
+//		}
 		model.addAttribute("usuarioUpdate", us.findUsuarioById(usuarioId).get());
 		return "perfil";
 	}
 
 	@PutMapping("/user/updateUsuario/{id}")
 	public String updateUsuario(@PathVariable("id") Long id, Usuario usuario, Model model) {
+		
+		if ( checkId(id) == false ) {
+			return "accessDenied";
+		}
+		
 		Optional<Usuario> use = us.findUsuarioById(id);
+		
 		Usuario usuar = use.get();
 		Usuario us_act = usuario;
 		use = us.findUsuarioByCorreo(us_act.getCorreo());
@@ -290,4 +315,28 @@ public class HomeController {
 		model.addAttribute("usuarioUpdate", us.findUsuarioById(usuar.getId()).get());
 		return "perfil";
 	}
+	
+	
+	private String showAndReturnAuthenticathedUsername (){
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // Obtiene el nombre de usuario del objeto Authentication
+        String username = authentication.getName();        
+        // Ahora 'username' contiene el nombre de usuario del usuario autenticado
+        System.out.println("--------------");
+        System.out.println("\tNombre de usuario authenticado: " + username);
+        System.out.println("--------------");
+        return username;
+	}
+	
+	
+	private boolean checkId (Long usuarioId) {
+		
+		Optional<Usuario> op = us.findUsuarioByCorreo(showAndReturnAuthenticathedUsername());
+		if (op.get().getId()==usuarioId)
+			return true;
+		return false;
+	}
+	
+	
 }
