@@ -73,9 +73,12 @@
 		}
 		
 		.container-fluid{
-			margin-left: 40%;
-			padding: 0 !important
+			margin-left: 40% !important;
+			padding-left: 0!important;
+			padding-right: 0 !important;
 		}
+		
+		
 		
 		
 	</style>
@@ -99,7 +102,7 @@
 	</a>
 	<div class="container-fluid middle">
 		<h2 class="folder_title">Perfil</h2>
-		<div>
+		<div style="margin-top: 2rem;">
 			<form action="#" th:action="@{/user/updateUsuario/{id}(id=${usuarioUpdate.id})}" th:object="${usuarioUpdate}"
 				method="post" th:method="put">
 				<div class="form-row">
@@ -119,7 +122,7 @@
 					<input type="submit" class="btn btn-primary" value="Actualizar Usuario">
 				</div>
 			</form>
-			<div class="btn-display" style="margin-left: 2rem;">
+			<div class="btn-display" style="margin-left: 4rem;">
 				<form action="#" th:action="@{/user/deleteUsuario/{id}(id=${usuarioUpdate.id})}" th:method="delete">
 					<button type="submit" class="btn btn-danger">Eliminar cuenta</button>
 				</form>

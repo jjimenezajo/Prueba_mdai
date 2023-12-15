@@ -19,275 +19,281 @@
 <body>
 
 	<script th:if="${mostrarAlerta}" th:inline="javascript">
-        /*<![CDATA[*/
-        alert('[(${mensaje})]');
+		/*<![CDATA[*/
+		alert('[(${mensaje})]');
         /*]]>*/
-    </script>
-    <header>
-	
-	<div th:replace="~{add_folder_dialog.html}"></div>
-	<div th:replace="~{add_task_dialog.html}"></div>
+	</script>
+	<header>
 
-	<!-- Incluir el fragmento en la página -->
-	<div th:replace="~{../static/fragments/header.html}"></div>
+		<div th:replace="~{add_folder_dialog.html}"></div>
+		<div th:replace="~{add_task_dialog.html}"></div>
 
-	<div class="container-fluid">
-		<div class="row" style="flex: 1">
-			<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-outline height sidebar collapse">
-				<h2 class="folder_title">Carpetas</h2>
-				<button id="openDialogFolder" class="btn btn-outline-success my-2 my-sm-0 hover boundaries boton-add"
-					type="submit">
-					<svg xmlns="http://www.w3.org/2000/svg"
-						class="icon icon-tabler icon-tabler-circle-plus add_icon boundaries" width="25" height="25"
-						viewBox="0 0 24 24" stroke-width="1.5" stroke="#198754" fill="none" stroke-linecap="round"
-						stroke-linejoin="round">
-						<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-						<path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
-						<path d="M9 12h6" />
-						<path d="M12 9v6" />
-					</svg>
-				</button>
+		<!-- Incluir el fragmento en la página -->
+		<div th:replace="~{../static/fragments/header.html}"></div>
 
-				<div class="position-sticky scroll">
-					<div th:if="${#lists.isEmpty(carpetas)}">
-						<h5>No hay carpetas</h5>
-					</div>
-					<div th:if="${not #lists.isEmpty(carpetas)}">
-						<ul class="nav flex-column">
-							<li class="nav-item" th:each="carpeta : ${carpetas}">
-								<a class="nav-link active position"
-									th:href="@{/user/cargarCarpeta(id=${carpeta.id}, id2=${successful_login.id})}">
-									<p style="margin-bottom: 0.2rem !important;" th:text="${carpeta.nombre}"></p>
-								</a>
-							</li>
-						</ul>
-					</div>
-
-				</div>
-				<hr class="horizontal-line">
-				<div>
-					<a class="nav-link active position" style="margin-left: 1rem; padding-top: 0;"
-						th:href="@{/user/perfil/{id} (id=${successful_login.id})}">
-						<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-circle"
-							width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#0d6efd" fill="none"
-							stroke-linecap="round" stroke-linejoin="round">
+		<div class="container-fluid">
+			<div class="row" style="flex: 1">
+				<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-outline height sidebar collapse">
+					<h2 class="folder_title">Carpetas</h2>
+					<button id="openDialogFolder"
+						class="btn btn-outline-success my-2 my-sm-0 hover boundaries boton-add" type="submit">
+						<svg xmlns="http://www.w3.org/2000/svg"
+							class="icon icon-tabler icon-tabler-circle-plus add_icon boundaries" width="25" height="25"
+							viewBox="0 0 24 24" stroke-width="1.5" stroke="#198754" fill="none" stroke-linecap="round"
+							stroke-linejoin="round">
 							<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-							<path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
-							<path d="M12 10m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
-							<path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" />
+							<path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+							<path d="M9 12h6" />
+							<path d="M12 9v6" />
 						</svg>
-						<p style="display: inline;">Perfil</p>
-					</a>
-				</div>
-			</nav>
+					</button>
 
-			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-				<div
-					class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-					<h1 class="h2">Prioridad Alta</h1>
-				</div>
-				<div class="container">
-
-					<div class="left-box" style="border-right: 1px solid #ccc;">
-						<label for="timeInput"><b>Tiempo (HH:MM:SS): </b></label>
-						<input type="text" class="set-time" id="timeInput" placeholder="59:59:59 máx.">
-						<div id="cronometer">
-							<p id="timer" class="position-clock">00:00:00</p>
-							<img id="img-cronometer" src="/images/cronometer.png">
-							<button id="start" onclick="startTimer()">
-								<svg xmlns="http://www.w3.org/2000/svg"
-									class="icon icon-tabler icon-tabler-player-play-filled" width="30" height="35"
-									viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none"
-									stroke-linecap="round" stroke-linejoin="round">
-									<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-									<path
-										d="M6 4v16a1 1 0 0 0 1.524 .852l13 -8a1 1 0 0 0 0 -1.704l-13 -8a1 1 0 0 0 -1.524 .852z"
-										stroke-width="0" fill="currentColor" />
-								</svg>
-							</button>
-							<button id="pause" onclick="stopTimer()">
-								<svg xmlns="http://www.w3.org/2000/svg"
-									class="icon icon-tabler icon-tabler-player-pause-filled" width="30" height="35"
-									viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none"
-									stroke-linecap="round" stroke-linejoin="round">
-									<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-									<path
-										d="M9 4h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h2a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2z"
-										stroke-width="0" fill="currentColor" />
-									<path
-										d="M17 4h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h2a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2z"
-										stroke-width="0" fill="currentColor" />
-								</svg>
-							</button>
-							<button id="reset" onclick="resetTimer()">
-								<svg xmlns="http://www.w3.org/2000/svg"
-									class="icon icon-tabler icon-tabler-square-filled" width="25" height="35"
-									viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none"
-									stroke-linecap="round" stroke-linejoin="round">
-									<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-									<path
-										d="M19 2h-14a3 3 0 0 0 -3 3v14a3 3 0 0 0 3 3h14a3 3 0 0 0 3 -3v-14a3 3 0 0 0 -3 -3z"
-										stroke-width="0" fill="currentColor" />
-								</svg>
-							</button>
+					<div class="position-sticky scroll">
+						<div th:if="${#lists.isEmpty(carpetas)}">
+							<h5>No hay carpetas</h5>
 						</div>
+						<div th:if="${not #lists.isEmpty(carpetas)}">
+							<ul class="nav flex-column">
+								<li class="nav-item" th:each="carpeta : ${carpetas}">
+									<a class="nav-link active position"
+										th:href="@{/user/cargarCarpeta(id=${carpeta.id}, id2=${successful_login.id})}">
+										<p style="margin-bottom: 0.2rem !important;" th:text="${carpeta.nombre}"></p>
+									</a>
+								</li>
+							</ul>
+						</div>
+
 					</div>
+					<hr class="horizontal-line">
+					<div>
+						<a class="nav-link active position" style="margin-left: 1rem; padding-top: 0;"
+							th:href="@{/user/perfil/{id} (id=${successful_login.id})}">
+							<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-circle"
+								width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#0d6efd"
+								fill="none" stroke-linecap="round" stroke-linejoin="round">
+								<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+								<path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+								<path d="M12 10m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+								<path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" />
+							</svg>
+							<p style="display: inline;">Perfil</p>
+						</a>
+					</div>
+				</nav>
 
+				<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+					<div
+						class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+						<h1 class="h2">Prioridad Alta</h1>
+					</div>
+					<div class="container">
 
-					<div class="col-md-5 right-box">
+						<div class="left-box" style="border-right: 1px solid #ccc;">
+							<label for="timeInput"><b>Tiempo (HH:MM:SS): </b></label>
+							<input type="text" class="set-time" id="timeInput" placeholder="59:59:59 máx.">
+							<div id="cronometer">
+								<div style="position: relative;">
+								<p id="timer" class="position-clock">00:00:00</p>
+								<img id="img-cronometer" src="/images/cronometer.png">
+								</div>
 
-						<div style="margin-bottom: .5rem;">
-							<h2 class="section">Tareas</h2>
-							<div style="display: inline;" th:if="${mutable}">
-								<button id="openDialogTask"
-									class="btn btn-outline-success my-2 my-sm-0 hover boundaries boton-add"
-									type="submit">
+								<button id="start" onclick="startTimer()">
 									<svg xmlns="http://www.w3.org/2000/svg"
-										class="icon icon-tabler icon-tabler-circle-plus add_icon boundaries " width="25"
-										height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="#198754" fill="none"
+										class="icon icon-tabler icon-tabler-player-play-filled" width="30" height="35"
+										viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none"
 										stroke-linecap="round" stroke-linejoin="round">
 										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-										<path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
-										<path d="M9 12h6" />
-										<path d="M12 9v6" />
+										<path
+											d="M6 4v16a1 1 0 0 0 1.524 .852l13 -8a1 1 0 0 0 0 -1.704l-13 -8a1 1 0 0 0 -1.524 .852z"
+											stroke-width="0" fill="currentColor" />
 									</svg>
-									</a>
+								</button>
+								<button id="pause" onclick="stopTimer()">
+									<svg xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-player-pause-filled" width="30" height="35"
+										viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none"
+										stroke-linecap="round" stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path
+											d="M9 4h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h2a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2z"
+											stroke-width="0" fill="currentColor" />
+										<path
+											d="M17 4h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h2a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2z"
+											stroke-width="0" fill="currentColor" />
+									</svg>
+								</button>
+								<button id="reset" onclick="resetTimer()">
+									<svg xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-square-filled" width="25" height="35"
+										viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none"
+										stroke-linecap="round" stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path
+											d="M19 2h-14a3 3 0 0 0 -3 3v14a3 3 0 0 0 3 3h14a3 3 0 0 0 3 -3v-14a3 3 0 0 0 -3 -3z"
+											stroke-width="0" fill="currentColor" />
+									</svg>
+								</button>
 							</div>
 						</div>
-						<div th:if="${#lists.isEmpty(tareas)}">
-							<h5 style="margin-top: 1rem;">No hay tareas</h5>
-						</div>
-						<div th:if="${not #lists.isEmpty(tareas)}">
 
-							<div class="table-responsive scroll-table">
-								<table class="table table-striped table-sm" style="text-align: center">
-									<thead>
-										<tr>
-											<th scope="col">Prioridad</th>
-											<th scope="col">Descripcion</th>
-											<th scope="col">Estado</th>
-											<th scope="col">Carpeta</th>
-											<th scope="col">Editar</th>
-											<th scope="col">Eliminar</th>
 
-										</tr>
-									</thead>
+						<div class="col-md-5 right-box">
 
-									<tbody>
-										<tr th:each="tarea : ${tareas}">
-											<td th:text="${tarea.prioridad}"></td>
-											<td th:text="${tarea.descripcion}"></td>
-											<td th:text="${tarea.estado}"></td>
-											<td th:text="${tarea.carpetas[1].nombre}"></td>
-											<td style="padding-top: .7rem;"><a
-													th:href="@{/updateTarea/{id}(id=${tarea.id})}"
-													class="btn btn-primary" id="btn-update">
-													<svg xmlns="http://www.w3.org/2000/svg"
-														class="icon icon-tabler icon-tabler-edit" width="25" height="25"
-														viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff"
-														fill="none" stroke-linecap="round" stroke-linejoin="round">
-														<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-														<path
-															d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
-														<path
-															d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
-														<path d="M16 5l3 3" />
-													</svg>
-											</td>
-											<td style="padding-top: .65rem;">
-												<form th:action="@{/user/deleteTarea(tareaId=${tarea.id}, idUser=${successful_login.id})}"
-													th:method="delete">
-													<button type="submit" class="btn btn-danger" id="btn-delete">
+							<div style="margin-bottom: .5rem;">
+								<h2 class="section">Tareas</h2>
+								<div style="display: inline;" th:if="${mutable}">
+									<button id="openDialogTask"
+										class="btn btn-outline-success my-2 my-sm-0 hover boundaries boton-add"
+										type="submit">
+										<svg xmlns="http://www.w3.org/2000/svg"
+											class="icon icon-tabler icon-tabler-circle-plus add_icon boundaries "
+											width="25" height="25" viewBox="0 0 24 24" stroke-width="1.5"
+											stroke="#198754" fill="none" stroke-linecap="round" stroke-linejoin="round">
+											<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+											<path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+											<path d="M9 12h6" />
+											<path d="M12 9v6" />
+										</svg>
+										</a>
+								</div>
+							</div>
+							<div th:if="${#lists.isEmpty(tareas)}">
+								<h5 style="margin-top: 1rem;">No hay tareas</h5>
+							</div>
+							<div th:if="${not #lists.isEmpty(tareas)}">
+
+								<div class="table-responsive scroll-table">
+									<table class="table table-striped table-sm" style="text-align: center">
+										<thead>
+											<tr>
+												<th scope="col">Prioridad</th>
+												<th scope="col">Descripcion</th>
+												<th scope="col">Estado</th>
+												<th scope="col">Carpeta</th>
+												<th scope="col">Editar</th>
+												<th scope="col">Eliminar</th>
+
+											</tr>
+										</thead>
+
+										<tbody>
+											<tr th:each="tarea : ${tareas}">
+												<td th:text="${tarea.prioridad}"></td>
+												<td th:text="${tarea.descripcion}"></td>
+												<td th:text="${tarea.estado}"></td>
+												<td th:text="${tarea.carpetas[1].nombre}"></td>
+												<td style="padding-top: .7rem;"><a
+														th:href="@{/updateTarea/{id}(id=${tarea.id})}"
+														class="btn btn-primary" id="btn-update">
 														<svg xmlns="http://www.w3.org/2000/svg"
-															class="icon icon-tabler icon-tabler-trash" width="25"
+															class="icon icon-tabler icon-tabler-edit" width="25"
 															height="25" viewBox="0 0 24 24" stroke-width="1.5"
 															stroke="#ffffff" fill="none" stroke-linecap="round"
 															stroke-linejoin="round">
 															<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-															<path d="M4 7l16 0" />
-															<path d="M10 11l0 6" />
-															<path d="M14 11l0 6" />
-															<path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-															<path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+															<path
+																d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+															<path
+																d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+															<path d="M16 5l3 3" />
 														</svg>
-													</button>
-												</form>
-											</td>
-										</tr>
-									</tbody>
+												</td>
+												<td style="padding-top: .65rem;">
+													<form
+														th:action="@{/user/deleteTarea(tareaId=${tarea.id}, idUser=${successful_login.id})}"
+														th:method="delete">
+														<button type="submit" class="btn btn-danger" id="btn-delete">
+															<svg xmlns="http://www.w3.org/2000/svg"
+																class="icon icon-tabler icon-tabler-trash" width="25"
+																height="25" viewBox="0 0 24 24" stroke-width="1.5"
+																stroke="#ffffff" fill="none" stroke-linecap="round"
+																stroke-linejoin="round">
+																<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+																<path d="M4 7l16 0" />
+																<path d="M10 11l0 6" />
+																<path d="M14 11l0 6" />
+																<path
+																	d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+																<path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+															</svg>
+														</button>
+													</form>
+												</td>
+											</tr>
+										</tbody>
 
-								</table>
+									</table>
+								</div>
+
 							</div>
-
 						</div>
 					</div>
-				</div>
-			</main>
+				</main>
+
+			</div>
 
 		</div>
 
-	</div>
 
 
+		<script src="/webjars/bootstrap/5.0.0/js/bootstrap.min.js"></script>
 
-	<script src="/webjars/bootstrap/5.0.0/js/bootstrap.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
+			integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
+			crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"
+			integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha"
+			crossorigin="anonymous"></script>
+		<!-- JAVASCRIPT -->
+		<script type="text/javascript" src="/js/dashboard.js"></script>
 
-	<script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
-		integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
-		crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"
-		integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha"
-		crossorigin="anonymous"></script>
-	<!-- JAVASCRIPT -->
-	<script type="text/javascript" src="/js/dashboard.js"></script>
-	
-	<!--Paso de información a los diálogos (add task & add folder) ocultos-->
-	<script th:inline="javascript">
+		<!--Paso de información a los diálogos (add task & add folder) ocultos-->
+		<script th:inline="javascript">
 
-		var miObjeto = /*[[${successful_login.id}]]*/ null;
- 		var miObjeto2 = /*[[${idCarpeta}]]*/ null;
-		console.log("Mi objeto " + miObjeto);
-		console.log("Mi objeto 2 " + miObjeto2);
-		init();
+			var miObjeto = /*[[${successful_login.id}]]*/ null;
+			var miObjeto2 = /*[[${idCarpeta}]]*/ null;
+			console.log("Mi objeto " + miObjeto);
+			console.log("Mi objeto 2 " + miObjeto2);
+			init();
 
-		function init() {
+			function init() {
 
-			var idUsuarioCarpetaElement = document.getElementById("id_usuario_carpeta");
-			
-			if (idUsuarioCarpetaElement) {
-				console.log("Valor asignado " + miObjeto);
-				idUsuarioCarpetaElement.value = miObjeto;
-			} else {
-				console.error("Element with ID 'id_usuario_carpeta' not found.");
+				var idUsuarioCarpetaElement = document.getElementById("id_usuario_carpeta");
+
+				if (idUsuarioCarpetaElement) {
+					console.log("Valor asignado " + miObjeto);
+					idUsuarioCarpetaElement.value = miObjeto;
+				} else {
+					console.error("Element with ID 'id_usuario_carpeta' not found.");
+				}
+
+				var idUsuarioTareaElement = document.getElementById("id_usuario_tarea");
+
+				if (idUsuarioTareaElement) {
+					console.log("Valor asignado " + miObjeto);
+					idUsuarioTareaElement.value = miObjeto;
+				} else {
+					console.error("Element with ID 'id_usuario_tarea' not found.");
+				}
+
+				var idCarpetaElement = document.getElementById("id_carpeta");
+
+				if (idCarpetaElement) {
+					console.log("Valor asignado " + miObjeto2);
+					idCarpetaElement.value = miObjeto2;
+				} else {
+					console.error("Element with ID 'idCarpeta' not found.");
+				}
 			}
-			
-			var idUsuarioTareaElement = document.getElementById("id_usuario_tarea");
-			
-			if (idUsuarioTareaElement) {
-				console.log("Valor asignado " + miObjeto);
-				idUsuarioTareaElement.value = miObjeto;
-			} else {
-				console.error("Element with ID 'id_usuario_tarea' not found.");
-			}
-			
-			var idCarpetaElement = document.getElementById("id_carpeta");
-			
-			if (idCarpetaElement) {
-				console.log("Valor asignado " + miObjeto2);
-				idCarpetaElement.value = miObjeto2;
-			} else {
-				console.error("Element with ID 'idCarpeta' not found.");
-			}
-		}
 
 
 
 
-		/*idus.value=idUsuario;
-		var idcar = document.getElementById('id_carpeta');
-		idcar.value=idCarpeta;*/
+			/*idus.value=idUsuario;
+			var idcar = document.getElementById('id_carpeta');
+			idcar.value=idCarpeta;*/
 
-	</script>
+		</script>
 
 
 </body>

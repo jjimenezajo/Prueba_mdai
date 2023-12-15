@@ -48,7 +48,7 @@ public class AuthController {
 	public String index(Model model) {
 		model.addAttribute("usuario", new Usuario());
 		System.out.println("Controller de /");
-		return "redirect:/user/perfil/2";
+		return "login";
 	}
 
 	@GetMapping("/login")

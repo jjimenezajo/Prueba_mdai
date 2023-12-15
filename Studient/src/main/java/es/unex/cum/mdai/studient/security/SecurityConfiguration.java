@@ -42,7 +42,7 @@ public class SecurityConfiguration{// extends WebSecurityConfigurerAdapter (clas
 		http.authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
 				// para definir patrones de URL especificos y aplicar reglas de autorizacion a
 				// esos patrones.
-				.requestMatchers("/patata/**").authenticated()
+				.requestMatchers("/user/**").authenticated()
 				// .anyRequest().denyAll()
 				.anyRequest().permitAll() // el resto de peticiones pueden ser realizadas sin login (index.html y hola)
 		).exceptionHandling((exception) -> exception.accessDeniedHandler(customAccessDeniedHandler)) // deprecated o

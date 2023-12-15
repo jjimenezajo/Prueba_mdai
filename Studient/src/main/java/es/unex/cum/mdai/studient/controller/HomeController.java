@@ -261,9 +261,9 @@ public class HomeController {
 
 	@GetMapping("/user/perfil/{id}")
 	public String showPerfil(@PathVariable("id") Long usuarioId, Model model) {
-//		if ( checkId(usuarioId) == false ) {
-//			return "accessDenied";
-//		}
+		if ( checkId(usuarioId) == false ) {
+			return "accessDenied";
+		}
 		model.addAttribute("usuarioUpdate", us.findUsuarioById(usuarioId).get());
 		return "perfil";
 	}
@@ -324,7 +324,7 @@ public class HomeController {
         String username = authentication.getName();        
         // Ahora 'username' contiene el nombre de usuario del usuario autenticado
         System.out.println("--------------");
-        System.out.println("\tNombre de usuario authenticado: " + username);
+        System.out.println("\tNombre de usuario autenticado: " + username);
         System.out.println("--------------");
         return username;
 	}

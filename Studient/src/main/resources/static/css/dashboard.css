@@ -106,10 +106,10 @@ nav {
 
 .position-clock {
 	position: absolute;
-	top: 65%;
+	top: 50%;
 	/* Ajusta según sea necesario para centrar verticalmente */
 	/* Centra el elemento en relación con su propio tamaño */
-	left: 31.5%;
+	left: 50%;
 	z-index: 2;
 	/* Z-index mayor que el de la imagen para que esté encima */
 	background-color: white;
@@ -118,6 +118,8 @@ nav {
 	padding: .2rem;
 	font-size: 25px !important;
 	width: 7rem;
+	margin: 3rem 0;
+	transform: translate(-50%, -50%);
 }
 
 .set-time {
@@ -164,6 +166,7 @@ table {
 #timer {
 	font-size: 24px;
 }
+
 
 @media (min-width: 768px) {
 	.bd-placeholder-img-lg {
