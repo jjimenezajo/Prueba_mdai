@@ -1,0 +1,362 @@
+:root {
+    /*definimos variables y su valor*/
+    --blanco: #FFFFFF;
+    --oscuro: #212121;
+    --primario: #FFC107;
+    /*RGB: --primario: rgba(255, 193, 7, 1);le puedes quitar el último "1" pero se definiría como rgb*/
+    --secundario: #0097A7;
+    --gris: #757575;
+    --grisClaro: #d3e1f0;
+    /*a la hora de elegir un color podremos poner blanco en vez de white, lo vemos en la línea ...*/
+    --verde: #019653;
+    --verdeclaro: #80bda1;
+    --azul: #0059a7;
+    --fuente-principal: 3.8rem;
+    /*no solo se pueden declarar colores*/
+}
+
+/* Globales */
+
+
+html{
+	font-size: 62.5%; 
+    box-sizing: border-box; 
+	height:auto;
+}
+
+
+
+
+body {
+    font-size: 16px;
+    font-family: 'Barlow', sans-serif;
+    ;
+    /*puedo elegir un font-weight de ancho 400 o 700 (sin píxeles) porque así lo elegí en Google Fonts (se puede ver en el link pegado en el documento html que nos permite usar esta tipografía*/
+    background-image: linear-gradient(to top, var(--grisClaro) 0%, white 90%);
+    /*Para el degradado del fondo*/
+    margin: 0;
+    height: 100%;
+    
+}
+
+*, *:before, *:after{
+    box-sizing: inherit;
+}
+/*Las 5 líneas anteriores me permiten eliminar el modelo caja. Con ello evito resultados de tamaños inesperados. Si no lo pongo y defino en un elemento una altura de 100px y un padding de 20px, el tamaño final del elemento será de 140px (20+20 arriba y abajo ya que el padding se aplica en todas las direcciones). El caso es que yo quiero que tenga 100 de alto y me quiero olvidar de tener en cuenta lo anterior. Para esto sirven el fragmento de código anterior. En conclusión, evita que otras propiedades aumenten la altura o el ancho definidos en un comienzo en un elemento*/
+/*Utilidades=1 valor/propiedadd por clase*/
+
+header {
+    text-align: center;
+    position: relative;
+}
+
+.titulo {
+    display: inline-block;
+}
+
+
+.contenedor {
+    /*nos da lo mismo quitarlo y poner las propiedades en el selector de .navegacion principal, pero lo declaramos para especificar que estas características editan lo el contenedor de la navegación principal*/
+    max-width: 120rem;
+    /*podríamos poner más pixeles para que el fondo abarque hasta el final, pero lo dejaremos así para hacerlo de otra forma. Declaramos una nueva clase (nav-bg) en una etiqueta div que contenga a la navegación, de tal forma primero aparecería todo el fondo y luego se centra esa línea con los márgenes*/
+    margin: 3% auto;
+    /*nos podemos ahorrar escribir dos veces más 0 y auto ya que CSS supone, si no escribimos los dos valores restantes, que el primero (margin-top: 0) es coincidente con el margin-bottom. El segundo valor, correspondiente a margin-right, es coincidente, por tanto, a margin-left. El valor auto permite que el contenedor quede centrado, es decir, el número de píxeles a izquierda y derecha va a ser el mismo*/
+    width:fit-content;
+    padding: 2% 5%;
+    width: 40%;
+    overflow: hidden;
+    
+}
+
+#escudo{
+    width: 65px;
+    position: absolute;
+    left: 95%;
+    top: 7%;
+}
+
+
+/*imagen de red Natura*/
+#natura {
+    width: 20%;
+    margin-top: 2%;
+}
+
+
+
+.form-box{
+    width: 100%;
+}
+
+.contenido-hero h2 {
+    background-color: var(--grisClaro);
+    padding: 1%;
+    border-radius: 3px;
+    color: black;
+}
+
+.boton {
+    background-color: var(--verde);
+    color: var(--blanco);
+    padding: 1rem 3rem;
+    font-size: 2rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    /*Más recomendable esto que poner el texto en el documento HTML en mayúsculas*/
+    font-weight: bold;
+    border-radius: .5rem;
+    /*Para conseguir que el botón tenga bordes redondeados*/
+    width: 90px;
+    /*Definimos un tamaño de botón mayor dado que en un teléfono la precisión es menor*/
+    text-align: center;
+    border: none;
+    float:right;
+}
+
+.boton:hover {
+    cursor: pointer;
+    /*Cuando pongamos nuestro cursor encima de los elementos con esta propiedad, aparecerá una mano*/
+}
+
+.sombra {
+    box-shadow: 0px 5px 15px 0px rgba(112, 112, 112, 0.48);
+    -webkit-box-shadow: 0px 5px 15px 0px rgba(112, 112, 112, 0.48);
+    -moz-box-shadow: 0px 5px 15px 0px rgba(112, 112, 112, 0.48);
+    /*Sombreado del main del HTML*/
+    background-color: var(--blanco);
+}
+
+/*La siguiente estructura es muy útil para determinar jerárquicamente los tamaños de las fuentes según el heading. Se denomina Design System.*/
+/* Tipografía */
+h1 {
+    font-size: var(--fuente-principal);
+    /*en vez de 3.8rem (38 píxeles) a secas podemos poner esta variable con dicho valor*/
+
+}
+
+h2 {
+    font-size: 2.8rem;
+    background-color: var(--verde);
+    color: white;
+    width: 100%;
+    margin: 5% auto 2% auto;
+    padding: 1rem 0;
+
+}
+
+h1,
+h2 {
+    text-align: center;
+}
+
+
+
+/* Navegacion principal */
+.nav-bg {
+    /*Utility First (utilidades)*/
+    background-image: linear-gradient(to right, var(--verde) 0%, var(--verdeclaro) 50%, var(--verde) 100%);
+    /*Para el degradado del fondo*/
+}
+
+.navegacion-principal {
+    /*Módulos*/
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 768px) {
+    .navegacion-principal {
+        flex-direction: row;
+        /*solo ponemos lo que se modificará llegado a un tamaño, ya que las otras propiedades ya las definimos en .navegacion-principal*/
+        justify-content: space-between;
+        /*nos permitirá mover el elemento horizontalmente, en este caso, poniendo la "space-between" nos permite establecer cierta distancia entre los elementos.*/
+
+    }
+
+    .boton {
+        width: auto;
+        /*Cuando sea mayor que un teléfono o una tablet el tamaño de pantalla, el ancho del botón se volverá al valor predefinido, se reseteará*/
+    }
+    
+}
+
+.navegacion-principal a {
+    /*Cuando no tenemos el cursor encima de las palabras de navegación*/
+    /*display: block; con esto cambiaríamos el display que poseen los enlaces en la navegación de forma predeterminada (inline->block: se muestra uno debajo del otro)*/
+    text-align: center;
+    color: var(--blanco);
+    text-decoration: none;
+    /*le quita la línea de debajo de los texto que incluyen enlaces a otros sitios*/
+    font-size: 2rem;
+    font-weight: 700;
+    padding: 1rem;
+    /*ocurre igual que en margin, tiene 4 valores pero cuando solo hay un valor, este se supone que se repite en el resto de direcciones (right, left y bottom)*/
+}
+
+.navegacion-principal a:hover {
+    /*es una pseudoclase ya que se crea sobre la marcha (no se define en el código html. Nos permitirá conseguir que cada vez que pongamos el cursor encima del texto con los enlaces, cambien de color*/
+    background-color: var(--primario);
+    color: var(--oscuro);
+}
+
+/* Hero */
+.hero {
+    background-image: url(../img/grupo-ruta.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 450px;
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.contenido-hero {
+    position: absolute;
+    background-color:
+        /*rgb(0, 0, 0) para negro opaco*/
+        rgba(0, 0, 0, 0.6);
+    /*para negro transparente (el último dígito me dice como de transparente quiero el elemento siendo 1 opaco y 0 totalmente transparente*/
+    background-color: rgb(0 0 0 /70%);
+    /*Esta es otra sintaxis que equivale a lo mismo que en la línea anterior con la diferencia que evito comas y la transparencia se indica con /+porcentaje. El problema de esta sintaxis es que al ser nueva, puede que algunos navegadores no la soporten */
+
+    /*top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0; esto y las dos siguientes líneas son estructuras equivalentes. Me permitirá extender algo a lo largo de todo el contenedor */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    /*alineamos los elementos de izq. a der. habilitando FLEXBOX*/
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/*Pie de página*/
+.footer {
+    text-align: center;
+}
+
+/*Redes sociales y contacto*/
+#contacto{
+    width:100%;
+    margin: 5% 0 0 0;
+    background-color: var(--secundario);
+    border-radius: 100% 100% 0 0;
+    height: 12.3rem;
+    color: var(--blanco);
+    text-align: center;
+    padding-bottom: 5%;
+    padding-top: 0.05%;
+}
+
+#contacto p a{
+    color: var(--blanco);
+}
+
+#contacto p svg{
+    margin-left:4%;
+    margin-bottom: 0;
+}
+.w-sm-100{
+    width: 100%;
+    font-family: 'Barlow', sans-serif;
+    margin-top: 1rem;    
+}
+
+.enviar{
+    width: 50%;
+    margin-left: auto;
+}
+
+.enviar input:first-child{
+    margin-left:5%;
+}
+
+@media (min-width: 768px ) {
+    .w-sm-100{
+        width: auto;
+        font-family: 'Barlow', sans-serif;
+    }
+}
+
+.flex{
+    display: flex;
+}
+
+/*Contacto*/
+.formulario{
+    width: min(60rem, 100%); /*Utilizar el valor más pequeño: 600rem, es decir, en el navegador está por defecto el 100% que son más de 1000px. Al yo poner 60rem y 100% compara en qué caso el número de pixeles usados es más pequeños y es el que luego aplica. En conclusión 60rem=600px<+1000px (que se utilizan para mostrar el formulario), por tanto el formulario tendrá un ancho de 600px. Gracias a esta función nos podemos ahorrar varios media queries.*/
+    margin: 0 auto;
+    padding: 2rem;
+    border-radius: 1rem;
+}
+
+.formulario fieldset{
+    border: none; /*Quita el borde del área de los campos que el navegador pone por defecto*/
+}
+.formulario legend{
+    text-align: center;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 2rem; /*para separar el título del formulario del primer input*/
+    color: var(--primario);
+}
+@media (min-width: 768px) {
+    .contenedor-campos{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 1rem; /*Separación de columnas*/
+        grid-template-rows: auto, auto, 20rem;
+    }
+    .campo:nth-child(3), .campo:nth-child(4){/*si hay más de un elemento con el nombre de campo y yo quiero seleccionar el cuarto elemento únicamente con ese nombre de clase, pongo :nth-child(4). Si le pongo un 3, seleccionará el tercer elemento.*/
+        grid-column: 1 / 3; /*Con esto decimos que el input de correo irá desde la primera columna y se extenderá hasta la última, la columna 3. Incluso, esto me puede permitir, cambiar de sitio el input: prueba a poner grid-row: 3/4;*/
+    }
+    
+}
+
+
+.campo{
+    margin-bottom: 1rem;
+}
+.campo label{
+    color: #000000;
+    font-weight: bold;
+    margin-bottom: .5rem;
+    display: block;
+}
+.campo textarea{
+    height: 20rem; /*Le doy una altura al input del mensaje de 200px*/
+
+}
+
+.input-text{
+    width: 100%;
+    border: none; /*De forma predeterminada, los inputs poseen un borde, en este caso se lo quitaremos*/
+    padding: 1.5rem;
+    border-radius: .5rem;
+    font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+.msg-correo{
+    font-size: .8em;
+    font-weight: normal;
+    float: right;
+    margin-right: 29%;
+}
+
+.horario{
+    list-style: none;
+}
+
+.radio-button{
+    float:left;
+    margin-left: 0;
+}
+
+
+
+/*Pie de página*/
+.footer{
+    text-align: center;
+}
